@@ -1,13 +1,17 @@
 from cargo import Cargo
+from ship import Ship
 import math
 import heapq
 class TransferManager:
-    def transfer_list(userIn):
-        #read in and instantiate transferlist using cargo
-        #not sure how we want to read in the input from operator
-        transfer = []   #transfer is a list of cargo objects
-        transfer.append(userIn) #userIn is the cargo object to be added to the transferlist by the operator
-        print("TransferList:", transfer)
+    def __init__(self, load_list, unload_list, ship_grid: Ship):
+        self.load_list = load_list
+        self.unload_list = unload_list
+        self.ship_grid = ship_grid
+
+
+    def sort_lists(self):
+        for cargo_name in self.load_list
+
 
     def run_algorithm(optimized_transfer_list):
         #algorithm to perform on optimzed transferlist (A*)
@@ -19,10 +23,14 @@ class TransferManager:
 
     # checking edge cases to see if valid opeeration on 8 X 12 grid with 0 indexing
     # should also check if there is currently a container in the surrounding position
+    def is_valid_move(self, row, col):
+
+    
     def is_valid_left(j):
         if (j - 1 < 0):
             return False
         else:
+            if 
             return True
     def is_valid_right(j):
         if (j + 1 > 11):
@@ -47,10 +55,8 @@ class TransferManager:
 
 
 def  uniform_cost_search(start, end, board, container):
-
     # create a priority queue
     queue = []
- 
     # insert the starting index
     queue.append(start)
  

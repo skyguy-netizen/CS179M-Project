@@ -13,3 +13,4 @@ class Ship:
                 
         return (-1, -1) # Not found in the ship
 
+    def set_initial_heuristics(self, goal, containers)
