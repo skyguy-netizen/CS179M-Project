@@ -1,2 +1,3 @@
 FLASK_APP=app
-FLASK_ENV=developmet
+FLASK_DEBUG=1
+flask run

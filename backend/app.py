@@ -1,5 +1,4 @@
-from flask import Flask, request, jsonify
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, request, jsonify, redirect, render_template
 from flask_cors import CORS
 from utils import manifest_handler
 from models import user
@@ -9,7 +8,7 @@ CORS(app)
 
 @app.route("/home", methods=["POST"])
 def home():
-    return "Hello from flask"
+    return render_template('../frontend/src/LandingPage.jsx')
 
 @app.route("/fileUpload", methods=["POST"])
 def fileUpload():
@@ -17,7 +16,7 @@ def fileUpload():
         return "File not found!", 400
     file = request.files['file']
     manifest_handler.retrieval(file)
-    return {1}
+    return redirect('/home')
 
 @app.route("/login", methods=["POST"])
 def login():
