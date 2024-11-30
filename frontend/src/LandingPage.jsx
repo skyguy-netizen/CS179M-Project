@@ -1,8 +1,11 @@
 import React from 'react'
 import NavButton from './NavButtons'
+import NavButtonUpload from './NavButtonUpload'
+import UploadModal from './Components/UploadModal'
 import UploadIcon from './assets/upload.svg?react'
 import LoadIcon from './assets/load.svg?react'
 import BalanceIcon from './assets/balance.svg?react'
+import SignInModal from './Components/SignInModal'
 
 const LandingPage = () => {
   return (
@@ -12,9 +15,10 @@ const LandingPage = () => {
     </div>
     <div className='h-screen overflow-hidden items-center flex'>
       <div className='flex justify-center space-x-40 w-screen mb-32'>
-        <NavButton Icon={UploadIcon} Text="Upload"/>
+        <UploadModal/>
         <NavButton Icon={LoadIcon} Text="Load/Unload"/>
         <NavButton Icon={BalanceIcon} Text="Balance"/>
+        <SignInModal/>
       </div>
     </div>
     </>
