@@ -16,7 +16,7 @@ def fileUpload():
         return "File not found!", 400
     file = request.files['file']
     manifest_handler.retrieval(file)
-    return redirect('/home')
+    return "test"
 
 @app.route("/login", methods=["POST"])
 def login():
