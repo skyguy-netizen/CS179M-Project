@@ -1,6 +1,6 @@
 // Credit: https://github.com/ecole-du-web/react-modal
 
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from 'axios';
 import "./Modal.css";
 
@@ -61,7 +61,7 @@ export default function SignInModal() {
               />
             </p>
             <button className="close-modal" onClick={toggleModal}>
-              CLOSE
+              Close
             </button>
             <button className="log-modal" onClick={handleName}>
               Log In
