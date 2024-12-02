@@ -62,31 +62,53 @@ class TransferManager:
         #optimizes list to be ran on algorithm
         print ("Optimizing TransferList")
 
+    def a_star_searching (self,start,goal):
+        empty_set = []
+        heapq.heappush(empty_set, (0,start))
+        original = {}
+        start_score = {start: 0}
+        final_score = {start: self.manhattan_distance_calculation(start,goal)}
+
+        while empty_set:
+            curr = heapq.heappop(empty_set)
+            if curr == goal:
+                return start_score[curr]
+            
+            for neighbor in self.ship.find_neighbors(curr):
+                curr_score = start_score[curr] + 1
+                if neighbor not in start_score or curr_score < start_score[neighbor]:
+                    original [neighbor] = curr
+                    start_score [neighbor] = curr_score
+                    final_score [neighbor] = curr_score + self.manhattan_distance_calculation(neighbor,goal)
+                    if neighbor not in [item[1] for item in empty_set]:
+                        heapq.heappush(empty_set,(final_score[neighbor], neighbor)) 
+
     # checking edge cases to see if valid opeeration on 8 X 12 grid with 0 indexing
     # should also check if there is currently a container in the surrounding position
     #def is_valid_move(self, row, col):
 
-    
-    def is_valid_left(j):
-        if (j - 1 < 0):
-            return False
-        else:
-            return True
-    def is_valid_right(j):
-        if (j + 1 > 11):
-            return False
-        else:
-            return True
-    def is_valid_up(i):
-        if (i - 1 < 0):
-            return False
-        else:
-            return True
-    def is_valid_down(i):
-        if (i + 1 > 7):
-            return False
-        else:
-            return True 
+    #probably don't need
+
+    # def is_valid_left(j):
+    #     if (j - 1 < 0):
+    #         return False
+    #     else:
+    #         return True
+    # def is_valid_right(j):
+    #     if (j + 1 > 11):
+    #         return False
+    #     else:
+    #         return True
+    # def is_valid_up(i):
+    #     if (i - 1 < 0):
+    #         return False
+    #     else:
+    #         return True
+    # def is_valid_down(i):
+    #     if (i + 1 > 7):
+    #         return False
+    #     else:
+    #         return True 
 
     
 

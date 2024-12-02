@@ -38,3 +38,16 @@ class Ship:
         for row in range (len(self.shipgrid)):
             if self.shipgrid[row][col]:
                 return (row,col)
+
+    def find_neighbors(self,location):
+        row,col = location
+        neighbors = []
+        if row > 0: #up
+            neighbors.append((row - 1, col)) 
+        if row <  len(self.shipgrid) - 1: #down
+            neighbors.append((row + 1, col))
+        if col > 0: #left
+            neighbors.append((row, col - 1))
+        if col < len(self.shipgrid[0]) - 1: #right
+            neighbors.append((row, col + 1))
+        return neighbors
