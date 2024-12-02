@@ -61,9 +61,9 @@ export default function LoadModal() {
         <div className="modal">
           <div onClick={toggleModal} className="overlay"></div>
           <div className="modal-content">
-            <h2 className='mt-4 text-[#0087ff]'> {"Upload File"}</h2>
+            <h2 className='modal-file'> {"Upload File"}</h2>
             <p>
-              <input onChange = { (e) => setFile(e.target.files[0]) } type="file"/>
+              <input className='modal-input' onChange = { (e) => setFile(e.target.files[0]) } type="file"/>
             </p>
             <button className="close-modal" onClick={toggleModal}>
               Close

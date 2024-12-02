@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, redirect, render_template
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 from utils import manifest_handler
 from models import user

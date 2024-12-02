@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import axios from 'axios';
-import "./Modal.css";
+import "./ModalLogIn.css";
 
 const baseUrl = "http://127.0.0.1:5000"
 
@@ -43,16 +43,16 @@ export default function SignInModal() {
   return (
     <>
       <button onClick={toggleModal} className="btn-modal">
-        Log In
+        Sign In
       </button>
 
       {modal && (
         <div className="modal">
           <div onClick={toggleModal} className="overlay"></div>
           <div className="modal-content">
-            <h2>Sign In</h2>
-            <p>
-              Name: 
+            <h2 className="modal-sign"> Sign In</h2>
+            <p className="modal-input">
+              Name:  
               <input 
                 type="text"
                 id="firstName"

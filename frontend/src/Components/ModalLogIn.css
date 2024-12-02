@@ -5,10 +5,17 @@ body.active-modal {
 }
 
 .btn-modal {
-    padding: 10px 20px;
+    padding: 8px 20px;
+    position: absolute;
+    text-align: right;
+    top: 3%;
+    right: 5%;
     display: block;
-    margin: 100px auto 0;
+    margin: 0 auto;
     font-size: 18px;
+    color:#0087ff;
+    background: #f1f1f1;
+    border-radius: 3px
 }
 
 .modal, .overlay {
@@ -26,8 +33,8 @@ body.active-modal {
 }
 .modal-content {
     position: absolute;
-    top: 50%;
-    left: 40%;
+    top: 40%;
+    left: 50%;
     transform: translate(-50%, -50%);
     line-height: 1.4;
     background: #f1f1f1;
@@ -39,12 +46,16 @@ body.active-modal {
     text-align: center;
 }
 
-.modal-input{
-    margin-top: 10px
+.log-modal {
+    margin-top: 20px;
 }
 
-.modal-file{
-    color: #0087ff
+.modal-input {
+    margin-top: 15px;
+}
+
+.modal-sign {
+    color:#0087ff;
 }
 
 .close-modal {

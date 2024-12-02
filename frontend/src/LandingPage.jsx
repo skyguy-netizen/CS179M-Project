@@ -5,6 +5,7 @@ import SignInModal from './components/SignInModal'
 const LandingPage = () => {
   return (
     <>
+    <SignInModal/>
     <div className='flex flex-center justify-center p-4'>
       <h1>DockerTech Co.</h1>
     </div>
@@ -12,7 +13,6 @@ const LandingPage = () => {
       <div className='flex justify-center space-x-40 w-screen mb-32'>
         <LoadModal/>
         <BalanceModal/>
-        <SignInModal/>
       </div>
     </div>
     </>
