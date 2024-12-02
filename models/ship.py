@@ -13,4 +13,28 @@ class Ship:
                 
         return (-1, -1) # Not found in the ship
 
-    def set_initial_heuristics(self, goal, containers)
+    #def set_initial_heuristics(self, goal, containers):
+
+    def can_move_container(self,location):
+        x,y = location #row and column set to location passed in
+        #check if row above container to be unloaded is open or not
+        if x == len(self.shipgrid) - 1:
+            return True
+        else:
+            return not self.shipgrid[len(self.shipgrid + 1)][len(self.shipgrid[0])]
+
+    def find_shortest_column (self, col):
+        for row in range (len(self.shipgrid) - 1):
+            if not self.shipgrid[row][col]:
+                return (row,col)
+    
+    def move_container (self, start, end):
+        cargo = self.shipgrid[start[0]][start[1]]
+        self.shipgrid[start[0]][start[1]] = None
+        self.shipgrid[end[0]][end[1]] = cargo
+        cargo.pos = end
+
+    def top_most_container (self, col):
+        for row in range (len(self.shipgrid)):
+            if self.shipgrid[row][col]:
+                return (row,col)

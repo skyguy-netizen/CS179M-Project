@@ -20,4 +20,4 @@ class Cargo:
     def set_heuristic(self, goal_pos):
         self.heuristic = abs(goal_pos[0] - self.pos[0]) + abs(goal_pos[1] - self.pos[1])
 
-    def get 
+    #def get 

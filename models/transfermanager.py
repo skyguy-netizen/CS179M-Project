@@ -7,11 +7,52 @@ class TransferManager:
         self.load_list = load_list
         self.unload_list = unload_list
         self.ship_grid = ship_grid
+        self.container_log = []
 
+    def create_transfer_list(self):
+        #rows and cols may not work correctly
+        for row in range (self.ship.len(self.ship.shipgrid)):
+            for col in range (self.ship.len(self.ship.shipgrid[0])):
+                cargo = self.ship_grid[row][col]
+                if cargo and cargo.container_name in self.load_list:
+                    self.unload_list.append(cargo)
+        self.unload_list.sort()
 
-    def sort_lists(self):
-        for cargo_name in self.load_list
+    #def sort_lists(self):
+    #   for cargo_name in self.load_list
 
+    def goal_locations (self,goal): #second parameter to store goal position
+        for cargo in self.unload_list:
+            cargo.heuristic = self.manhattan_distance_calculation(cargo.pos, goal)
+
+    def manhattan_distance_calculation (start, goal):
+        return abs(start[0] - goal[0]) + abs(start[1] - goal[1])
+    
+    def transfer(self):
+        while self.unload_list:
+            cargo = self.unload_list.pop(0)
+    
+    def unload (self, cargo):
+        while not self.ship.can_move_container(cargo.pos):
+            cargo_above = self.ship.top_most_container(cargo.pos[1])
+            cargo_object = self.ship_grid[cargo_above[0]][cargo_above[1]]
+            self.move_blocking_containers(cargo_object)
+        #need to log any moves
+        self.update_log(cargo)
+        self.ship_grid[cargo.pos[0]][cargo.pos[1]] = None
+
+    def move_blocking_containers (self, cargo):
+        curr_pos = cargo.pos
+        if curr_pos[1] < len(self.ship_grid[0]) - 1:
+            goal_column = curr_pos[1] - 1
+        else:
+            goal_column = curr_pos[1] + 1
+        new_pos = self.ship.find_shortest_column(goal_column)
+        self.ship.move_container(curr_pos,new_pos)
+        self.update_log(cargo, new_pos)
+
+    def update_log (self,cargo,goal):
+        self.container_log.append (f"Move {cargo.container_name} from {cargo.pos} to {goal}")
 
     def run_algorithm(optimized_transfer_list):
         #algorithm to perform on optimzed transferlist (A*)
@@ -23,14 +64,13 @@ class TransferManager:
 
     # checking edge cases to see if valid opeeration on 8 X 12 grid with 0 indexing
     # should also check if there is currently a container in the surrounding position
-    def is_valid_move(self, row, col):
+    #def is_valid_move(self, row, col):
 
     
     def is_valid_left(j):
         if (j - 1 < 0):
             return False
         else:
-            if 
             return True
     def is_valid_right(j):
         if (j + 1 > 11):
