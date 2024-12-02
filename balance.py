@@ -1,5 +1,61 @@
 import copy
 
+
+def find_distance(grid, start, end):
+
+    current_states = []
+    past_states = set()
+    hx = abs(start[0] - end[0]) + abs(start[1] - end[1])
+    current_states.append([hx, 0, start[0], start[1]])
+
+
+    past_states.add(str(start[0]) + str(start[1]))
+    while True:
+        if len(current_states) == 0:
+            return -1
+        curr = current_states.pop(0)
+
+        
+        if curr[2] == end[0] and curr[3] == end[1]:
+            return curr[1]
+
+        #up
+        if curr[2]+1 < 10 and grid.grid[curr[2]+1][curr[3]] == 0:
+            hx = abs(curr[2]+1 - end[0]) + abs(curr[3] - end[1])
+            gx = curr[1]+1
+            fx = hx+gx
+            if not str(curr[2]+1) + str(curr[3]) in past_states:
+                current_states.append([fx, gx, curr[2]+ 1, curr[3]])
+                past_states.add(str(curr[2]+1) + str(curr[3]))
+        #down
+        
+        if curr[2]-1 >= 0 and grid.grid[curr[2]-1][curr[3]] == 0:
+            hx = abs(curr[2]-1 - end[0]) + abs(curr[3] - end[1])
+            gx = curr[1]+1
+            fx = hx+gx
+            if not str(curr[2]-1) + str(curr[3]) in past_states:
+                current_states.append([fx, gx, curr[2]- 1, curr[3]])
+                past_states.add(str(curr[2]-1) + str(curr[3]))
+        #left
+        if curr[3]-1 >= 0 and grid.grid[curr[2]][curr[3]-1] == 0:
+            hx = abs(curr[2] - end[0]) + abs(curr[3]-1 - end[1])
+            gx = curr[1]+1
+            fx = hx+gx
+            if not str(curr[2]) + str(curr[3]-1 ) in past_states:
+                current_states.append([fx, gx, curr[2], curr[3]-1])
+                past_states.add(str(curr[2]) + str(curr[3]-1 ))
+        #down
+        if curr[3]+1 < 12 and grid.grid[curr[2]][curr[3]+1] == 0:
+            hx = abs(curr[2] - end[0]) + abs(curr[3]+1 - end[1])
+            gx = curr[1]+1
+            fx = hx+gx
+            if not str(curr[2]) + str(curr[3] +1) in past_states:
+                current_states.append([fx, gx, curr[2], curr[3]+1])
+                past_states.add(str(curr[2]) + str(curr[3] +1))
+
+        current_states= sorted(current_states, key=lambda x: x[0])
+
+
 class Grid:
     def __init__(self, fx= 0, grid=None, hx=0,gx=0, goal_state = False, lower_bound = 0, upper_bound = 0, id = 0, compression="", sift=False, moves = []):
         if grid is None:
@@ -42,7 +98,6 @@ class Grid:
                     curr_val = int(self.grid[y][x])
         self.compression=compression
 
-    #calculate h(x) values, how many steps away from solution
     def calculate_hx(self):
         left_sum = 0
         right_sum = 0
@@ -80,7 +135,6 @@ class Grid:
         if left_sum > right_sum:
             counter = 0
             while not (right_sum > lower_bound and right_sum < upper_bound):
-                # print("enter")
                 if counter == len(left_values):
                     self.sift = True
                     break
@@ -124,7 +178,7 @@ class Grid:
             
         
 #initial state grid from file input
-f = open("ShipCase4.txt", "r+")
+f = open("SilverQueen.txt", "r+")
 lines = f.readlines() 
 
 initial_state = Grid()
@@ -146,8 +200,6 @@ initial_state.calculate_hx()
 
 
 
-
-
 grids_states = []
 past_states = set()
 
@@ -161,8 +213,11 @@ if not initial_state.sift:
     id = 1
     i = 1
     while True:
-       # print("ITERATION: " + str(i))
+
         i+=1
+        if len(grids_states) == 0:
+            print("Unsolveable")
+            break
         current_grid = grids_states[0][1]
         del grids_states[0]
 
@@ -191,6 +246,8 @@ if not initial_state.sift:
 
 
         counter = 0
+
+
         for container_y, container_x in container_location:
 
             if current_grid.grid[container_y+1][container_x] != 0:
@@ -203,9 +260,9 @@ if not initial_state.sift:
                 new_grid.grid[space_y][space_x] = current_grid.grid[container_y][container_x]
                 new_grid.grid[container_y][container_x] = 0
 
+                
 
-                distance = abs(container_x - space_x) + abs(container_y - space_y)
-                new_grid.gx += distance
+                new_grid.gx += find_distance(current_grid, [container_y, container_x],[space_y, space_x])
                 new_grid.set_id(id)
                 id+=1
                 new_grid.calculate_hx()
@@ -213,7 +270,10 @@ if not initial_state.sift:
 
                 if not new_grid.compression in past_states:
                     grids_states.append((new_grid.fx,new_grid))
+
                     past_states.add(new_grid.compression)
+
+
 
         
         grids_states= sorted(grids_states, key=lambda x: x[0])
