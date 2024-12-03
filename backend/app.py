@@ -1,22 +1,26 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from utils import manifest_handler
 from models import user
 
 app = Flask(__name__)
 cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route("/fileUpload", methods=["POST", "GET"])
+@cross_origin()
 def fileUpload():
     if (request.method == 'POST'):
         if 'file' not in request.files:
             return "File not found!", 400
         file = request.files['file']
         manifest_handler.set_file(file)
+        manifest_handler.set_name(file.filename)
         return("Success")
     return {'message': manifest_handler.get_file()}
 
 @app.route("/login", methods=["POST", "GET"])
+@cross_origin()
 def login():
     if (request.method == 'POST'):
         first_name = request.get_json()
