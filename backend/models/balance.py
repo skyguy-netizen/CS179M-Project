@@ -1,4 +1,6 @@
 import copy
+import utils.manifest_handler
+
 
 def find_distance(grid, start, end):
 
@@ -147,7 +149,9 @@ class Grid:
                         hx+=1
                         break
                     else:
-                        counter+=1               
+                        counter+=1
+            
+                    
 
         else:
             counter = 0
@@ -175,7 +179,8 @@ class Grid:
             
         
 #initial state grid from file input
-f = open("SilverQueen.txt", "r+")
+file_name = utils.manifest_handler.get_name()
+f = open(file_name, "r+")
 lines = f.readlines() 
 
 initial_state = Grid()
@@ -332,3 +337,9 @@ else:
             sift_x -= sift_increment
             sift_increment +=1
             sift_shift = True
+
+
+
+
+
+
