@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios';
-import SignInModal from './components/SignInModal';
+import SignInModal from './Components/SignInModal';
 
 const baseUrl = "http://127.0.0.1:5000"
 
