@@ -1,4 +1,5 @@
 import pandas as pd
+from flask import jsonify
 
 def set_file(file_):
     global file
@@ -6,7 +7,8 @@ def set_file(file_):
     
     df = pd.read_csv(file_, header=None, delimiter = ', ', engine='python')
     matrix = df.to_numpy()
-    file = df.to_string()
+    matrix = matrix.tolist()
+    file = matrix
 
 def get_file():
     global file
