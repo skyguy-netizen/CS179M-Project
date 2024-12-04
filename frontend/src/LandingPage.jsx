@@ -1,6 +1,6 @@
-import LoadModal from './components/LoadModal'
-import BalanceModal from './components/BalanceModal'
-import SignInModal from './components/SignInModal'
+import LoadModal from './Components/LoadModal'
+import BalanceModal from './Components/BalanceModal'
+import SignInModal from './Components/SignInModal'
 
 const LandingPage = () => {
   return (
