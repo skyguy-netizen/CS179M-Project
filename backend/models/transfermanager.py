@@ -33,7 +33,7 @@ class TransferManager:
         move_cost = self.manhattan_distance_calculation(start,goal)
         self.ship_grid.move_container(start, goal)
         cargo.pos = goal
-        self.update_log(cargo,goal,move_cost)
+        self.update_log(cargo, goal, move_cost)
 
     def load(self, cargo: Cargo):
         # Here we simply find the closest position to load it
@@ -95,7 +95,7 @@ class TransferManager:
                 print("\n")
 
 
-    def update_log(self, cargo, goal,cost): 
+    def update_log(self, cargo, goal, cost): 
         self.container_log.append (f"Move {cargo.container_name} from {cargo.pos} to {goal}") 
         self.time_estimate += cost
 
