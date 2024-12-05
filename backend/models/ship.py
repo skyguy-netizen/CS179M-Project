@@ -1,4 +1,4 @@
-from models.cargo import Cargo
+from backend.models.cargo import Cargo
 from typing import List
 
 class Ship:
@@ -9,6 +9,17 @@ class Ship:
         self.shipgrid = shipgrid
         self.rows = len(shipgrid)
         self.cols = len(shipgrid[0])
+    
+    def __repr__(self):
+        cell_width = 10
+        fin_str = ""
+        for row in self.shipgrid:
+            fin_str += " | ".join(
+                    f"{str(cell):^{cell_width}}" if cell is not None else f"{'None':^{cell_width}}"
+                    for cell in row
+                )
+            fin_str += "\n"
+        return fin_str
 
     def get_container_pos_by_name(self, container_name: str) -> tuple[int, int]:
         # Search from top to bottom, to get the topmost container

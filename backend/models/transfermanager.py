@@ -1,6 +1,6 @@
 from typing import List
-from models.cargo import Cargo
-from models.ship import Ship
+from backend.models.cargo import Cargo
+from backend.models.ship import Ship
 
 class TransferManager:
     def __init__(self, load_list: List[Cargo], unload_list: List[Cargo], ship_grid: Ship):

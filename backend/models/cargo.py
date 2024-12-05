@@ -8,7 +8,7 @@ class Cargo:
         self.f_score = 0
 
     def __repr__(self):
-        return self.container_name
+        return self.container_name[:3]
 
     def set_weight(self, weight: int):
         self.weight = weight
