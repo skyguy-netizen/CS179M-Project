@@ -37,27 +37,20 @@ from backend.models.transfermanager import TransferManager
 def main():
     # Initialize a sample ship grid (8x12 grid)
     ship_grid = [[None for _ in range(12)] for _ in range(8)]
-
+    
     ship = set_file('SilverQueen.txt')
-
-    # Add some cargo to the grid
-    # ship_grid[0][3] = Cargo("Samsung", (0, 3))
-    # ship_grid[1][3] = Cargo("Apple", (1, 3))
-    # ship_grid[2][3] = Cargo("LG", (2, 3))  # Blocking cargo
-    # ship_grid[0][6] = Cargo("Sony", (0, 6))
-
+    ship_grid = ship.shipgrid
     # # Initialize the Ship object
     # ship = Ship(ship_grid)
 
     # Create load and unload lists
     load_list = [
-        Cargo("Panasonic", None),  
-        Cargo("Toshiba", None),    
+        Cargo("Natron", None),      
     ]
 
     unload_list = [
         deepcopy(ship_grid[0][3]),  
-        deepcopy(ship_grid[1][3]),  
+        deepcopy(ship_grid[0][1]),  
     ]
     tm = TransferManager(load_list, unload_list, ship)
 

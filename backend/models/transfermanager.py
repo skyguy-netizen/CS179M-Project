@@ -30,20 +30,21 @@ class TransferManager:
         # Move container to goal
         start = cargo.pos
         goal = (8, 0)
-        move_cost = self.manhattan_distance_calculation(start,goal)
-        self.ship_grid.move_container(start, goal)
+        move_cost = self.manhattan_distance_calculation(start,goal) + 2
+        path = self.ship_grid.move_container(start, goal)
         cargo.pos = goal
-        self.update_log(cargo, start, move_cost, load=False)
+        self.update_log(cargo, start, move_cost, path, load=False)
 
     def load(self, cargo: Cargo):
         # Here we simply find the closest position to load it
         for i in range(12):
             open_pos = self.ship_grid.find_shortest_column(i)
             if open_pos != (None, None):
+                path = [9,9]
                 move_cost = self.manhattan_distance_calculation((8,0), open_pos) + 2
                 self.ship_grid.shipgrid[open_pos[0]][open_pos[1]] = cargo
                 cargo.pos = open_pos
-                self.update_log(cargo,open_pos,move_cost)
+                self.update_log(cargo,open_pos,move_cost,path)
                 return
         
 
@@ -55,8 +56,8 @@ class TransferManager:
             goal_column = curr_pos[1] + 1
         new_pos = self.ship_grid.find_shortest_column(goal_column)
         move_cost = self.manhattan_distance_calculation(curr_pos,new_pos)
-        self.ship_grid.move_container(curr_pos, new_pos)
-        self.update_log(cargo,new_pos,move_cost)
+        path = self.ship_grid.move_container(curr_pos, new_pos)
+        self.update_log(cargo,curr_pos,move_cost, path, load=False, move_blocking=True)
 
     def print_grid(self):
         cell_width = 10
@@ -94,12 +95,17 @@ class TransferManager:
                 self.print_grid()
                 print("\n")
 
+        print(f"\n Total Time Estimate: {self.time_estimate} minutes")
 
-    def update_log(self, cargo: Cargo, start, cost, load=True): 
-        if load:
-            self.container_log.append(f"Loaded {cargo.get_name()} from truck to {cargo.get_pos()}")
+
+    def update_log(self, cargo: Cargo, start, cost, path, load=True, move_blocking = False): 
+        path_trace = "->".join(map(str,[start] + path))
+        if move_blocking:
+            self.container_log.append(f"Move {cargo.get_name()} from {start} to {cargo.get_pos()}, Cost: {cost} minutes, Path taken: {path_trace}") 
+        elif load:
+            self.container_log.append(f"Loaded {cargo.get_name()} from truck to {cargo.get_pos()}, Cost: {cost} minutes, Path taken: {path_trace}")
         else:
-            self.container_log.append(f"Move {cargo.get_name()} from {start} to truck") 
+            self.container_log.append(f"Move {cargo.get_name()} from {start} to truck, Cost: {cost} minutes, Path taken: {path_trace}") 
         self.time_estimate += cost
 
         
