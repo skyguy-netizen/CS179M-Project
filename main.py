@@ -47,27 +47,21 @@ def main():
 
     # Create load and unload lists
     load_list = [
-        Cargo("Panasonic", None),  # To be loaded at (8, 0)
-        Cargo("Toshiba", None),    # To be loaded at (8, 0)
+        Cargo("Panasonic", None),  
+        Cargo("Toshiba", None),    
     ]
 
     unload_list = [
-        ship_grid[0][3],  # Samsung at (7, 3)
-        ship_grid[1][3],  # Apple at (6, 3)
+        ship_grid[0][3],  
+        ship_grid[1][3],  
     ]
-
-    # Initialize TransferManager
     tm = TransferManager(load_list, unload_list, ship)
 
-    # Set goal locations for all cargos
     tm.set_goal_locations()
 
-    # Run the transfer algorithm
-    print("\n--- Starting Transfer Algorithm ---")
     tm.transfer_algorithm()
-    print("\n--- Transfer Completed ---")
 
-    # Print the log of operations
+
     print("\n--- Operation Log ---")
     for log in tm.container_log:
         print(log)
