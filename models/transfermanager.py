@@ -8,7 +8,7 @@ class TransferManager:
         self.unload_list = unload_list
         self.ship_grid = ship_grid
         self.container_log = []
-
+        self.time_estimate = 0
 
     def set_goal_locations(self,):
         for cargo in self.unload_list:
@@ -18,7 +18,7 @@ class TransferManager:
             cargo.set_pos((8, 0))
             cargo.set_heuristic_score((0,0))
         
-    def manhattan_distance_calculation(start, goal):
+    def manhattan_distance_calculation(self,start, goal):
         return abs(start[0] - goal[0]) + abs(start[1] - goal[1])
 
     def unload(self, cargo: Cargo):
@@ -30,16 +30,20 @@ class TransferManager:
         # Move container to goal
         start = cargo.pos
         goal = (8, 0)
+        move_cost = self.manhattan_distance_calculation(start,goal)
         self.ship_grid.move_container(start, goal)
         cargo.pos = goal
+        self.update_log(cargo,goal,move_cost)
 
     def load(self, cargo: Cargo):
         # Here we simply find the closest position to load it
         for i in range(12):
             open_pos = self.ship_grid.find_shortest_column(i)
             if open_pos != (None, None):
+                move_cost = self.manhattan_distance_calculation((8,0), open_pos) + 2
                 self.ship_grid.shipgrid[open_pos[0]][open_pos[1]] = cargo
                 cargo.pos = open_pos
+                self.update_log(cargo,open_pos,move_cost)
                 return
         
 
@@ -50,8 +54,9 @@ class TransferManager:
         else:
             goal_column = curr_pos[1] + 1
         new_pos = self.ship_grid.find_shortest_column(goal_column)
+        move_cost = self.manhattan_distance_calculation(curr_pos,new_pos)
         self.ship_grid.move_container(curr_pos, new_pos)
-        self.update_log(cargo, new_pos)
+        self.update_log(cargo,new_pos,move_cost)
 
     def print_grid(self):
         cell_width = 10
@@ -90,7 +95,9 @@ class TransferManager:
                 print("\n")
 
 
-    def update_log(self, cargo, goal):
-        self.container_log.append (f"Move {cargo.container_name} from {cargo.pos} to {goal}")
+    def update_log(self, cargo, goal,cost): 
+        self.container_log.append (f"Move {cargo.container_name} from {cargo.pos} to {goal}") 
+        self.time_estimate += cost
 
+        
     
