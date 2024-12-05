@@ -91,6 +91,6 @@ class TransferManager:
 
 
     def update_log(self, cargo, goal):
-        self.container_log.append (f"Move {cargo.container_name} from {cargo.pos} to {goal}")
+        self.container_log.append(f"Move {cargo.container_name} from {cargo.pos} to {goal}")
 
     
