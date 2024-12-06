@@ -2,6 +2,8 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 from models.user import set_user, get_user
 from utils.manifest_handler import set_file, set_name, get_file
+from models.balance import Balance
+from models.init_balance import create_ship
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -26,9 +28,10 @@ def fileUploadBalance():
         if 'file' not in request.files:
             return "File not found!", 400
         file = request.files['file']
-        set_file(file)
-        set_name(file.filename)
-        balance
+        file_name = file.filename
+        ship = create_ship(file)
+        balance_instance = Balance(ship, file_name)
+        balance_instance.det_bal_type()
         return{"Success": 200}
     return {'message': get_file()}
 
