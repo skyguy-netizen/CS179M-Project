@@ -66,7 +66,7 @@ class Balance:
                 self.sub_moves = current_grid.total_moves
 
                 for i in range(len(self.moves)):
-                    self.process.append([current_grid.names[i], current_grid.distances[i], current_grid.total_moves[i]])
+                    self.process.append([str(current_grid.names[i])[2:(len(current_grid.names[i]))], current_grid.distances[i], current_grid.total_moves[i]])
 
                 break
 
@@ -204,7 +204,7 @@ class Balance:
                 
                 if isinstance(self.initial.shipgrid[y][x],Cargo):
                     weight_zeros = 5-len(str(self.initial.shipgrid[y][x].weight))
-                    f.write("[0"+str(y)+","+ x_zeros*str("0")+str(x)+"], {"+weight_zeros*str("0") + str(self.initial.shipgrid[y][x].weight)+"}, "+str(self.initial.shipgrid[y][x].container_name))
+                    f.write("[0"+str(y)+","+ x_zeros*str("0")+str(x)+"], {"+weight_zeros*str("0") + str(self.initial.shipgrid[y][x].weight)+"}, "+str(self.initial.shipgrid[y][x].container_name)[2:len(self.initial.shipgrid[y][x].container_name)] + '\n')
                 elif self.initial.shipgrid[y][x] == 0:
                     f.write("[0"+str(y)+","+  x_zeros*str("0")+str(x)+"], {00000}, UNUSED\n")
                 elif self.initial.shipgrid[y][x] == -1:
