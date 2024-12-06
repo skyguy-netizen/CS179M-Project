@@ -30,8 +30,15 @@ def login():
         return("Success")
     return {'first_name': user.get_user()}
 
-
-# def get_transfer_info()
+@app.route("/load", methods=["POST"])
+@cross_origin()
+def get_transfer_info():
+    data = request.get_json()
+    load = data.get('load')
+    unload = data.get('unload')
+    print(load)
+    print(unload)
+    return{'load': load, 'unload': unload}
     
 # You will get a list of container ids to unload/load
 # Use that and create the load and unload lists and run the algorithm, algorithm should have the steps in lists, which you can get using .get_unload_paths and .get_load_paths

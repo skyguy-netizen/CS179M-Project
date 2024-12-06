@@ -47,7 +47,6 @@ def set_file(file_):
     return ship
 
         
-            
 def set_name(name):
     global file_name
     file_name = name

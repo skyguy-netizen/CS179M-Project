@@ -43,6 +43,26 @@ const LoadPage = () => {
     setLoadName("");
   }
 
+  function handleLoad(event) {
+    event.preventDefault()
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        'Accept' : 'application/json',
+      },
+    };
+    
+    const data = {load: load, unload: unload};
+
+    axios
+      .post(`${baseUrl}/load`, JSON.stringify(data), config)
+      .then(response => response.json())
+      .then(console.log(unload))
+      .then(console.log(load))
+      .catch(err=>console.warn(err))
+  }
+
   return (
     <div className='w-screen h-screen flex justify-center items-center'>
       {manifest !== null && <PhaserGame ref={phaserRef} currentActiveScene={currentScene} gameData={manifest} updateUnload={setUnload} />}
@@ -55,7 +75,7 @@ const LoadPage = () => {
           setLoadName(e.target.value)
         }}
         />
-        <button type="submit">Load</button>
+        <button type="submit"onClick={handleLoad}>Load</button>
       </form>
     </div>
   )
