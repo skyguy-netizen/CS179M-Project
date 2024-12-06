@@ -179,9 +179,6 @@ class Ship:
 
             current_states= sorted(current_states, key=lambda x: x[0])
 
-                    self.rows = len(shipgrid)
-        self.cols = len(shipgrid[0])
-    
     def __repr__(self):
         cell_width = 10
         fin_str = ""
@@ -241,46 +238,4 @@ class Ship:
         for row in range(self.rows - 1, -1, -1):        
             if self.shipgrid[row][col]:
                 return (row,col)
-    def can_move_container(self,location):
-        x,y = location #row and column set to location passed in
-        #check if row above container to be unloaded is open or not
-        if x == len(self.shipgrid) - 1:
-            return True
-        else:
-            print("Location to check", location)
-            return not self.shipgrid[x + 1][y]
-
-    def find_shortest_column(self, col):
-        # This will go from bottom to top in that column and will return the lowest open positions
-        for row in range(self.rows):
-            if not self.shipgrid[row][col]:
-                return (row,col)
-        return (None, None)
-    
-    def move_container(self, old_pos, new_pos):
-        cargo = self.shipgrid[old_pos[0]][old_pos[1]]
-        self.shipgrid[old_pos[0]][old_pos[1]] = None
-        if new_pos != self.OPEN_POS:
-            self.shipgrid[new_pos[0]][new_pos[1]] = cargo
-        cargo.set_pos(new_pos)  # Update cargo's position
-
-
-    def top_most_container(self, col):
-        # This will go top to bottom and find the highest occupied spot
-        # print(self.shipgrid)
-        for row in range(self.rows - 1, -1, -1):        
-            if self.shipgrid[row][col]:
-                return (row,col)
-
-    # def find_neighbors(self,location):
-    #     row,col = location
-    #     neighbors = []
-    #     if row > 0 and not self.shipgrid[row + 1][col]: #up
-    #         neighbors.append((row - 1, col)) 
-    #     if row < len(self.shipgrid) - 1 and not self.shipgrid[row - 1][col]: #down
-    #         neighbors.append((row + 1, col))
-    #     if col > 0 and not self.shipgrid[row][col - 1]: #left
-    #         neighbors.append((row, col - 1))
-    #     if col < len(self.shipgrid[0]) - 1 and not self.shipgrid[row][col + 1]: #right
-    #         neighbors.append((row, col + 1))
-    #     return neighbors
+            
