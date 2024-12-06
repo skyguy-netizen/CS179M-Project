@@ -1,9 +1,9 @@
 from models.ship import Ship
-from backend.models.cargo import Cargo
-from backend.models.buffer import Buffer
-from backend.models.balance import Balance
+from models.cargo import Cargo
+from models.buffer import Buffer
+from models.balance import Balance
 
-input_file = "ShipCase5.txt"
+input_file = "SilverQueen.txt"
 f = open(input_file, "r+")
 lines = f.readlines() 
 
