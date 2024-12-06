@@ -31,7 +31,8 @@ def fileUploadBalance():
         file_name = file.filename
         ship = create_ship(file)
         balance_instance = Balance(ship, file_name)
-        balance_instance.det_bal_type()
+        balance_instance.balance()
+        print(balance_instance.process)
         return{"Success": 200}
     return {'message': get_file()}
 
