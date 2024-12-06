@@ -73,6 +73,9 @@ class TransferManager:
 
     def get_load_paths(self,):
         return self.load_paths
+    
+    def get_paths(self,):
+        return self.paths_ordered
 
     def move_blocking_container(self, cargo: Cargo):
         curr_pos = cargo.pos
