@@ -19,8 +19,12 @@ class Balance:
     def __init__ (self, ship: Ship, input_file):
         self.initial = ship
         self.input_file = input_file
+        self.moves = []
+        self.sub_moves = []
+        self.process = []
 
-    def det_bal_type(self):
+    
+    def balance(self):
         self.initial.calculate_hx()
         print_grid(self.initial.shipgrid)
         if self.initial.goal_state:
@@ -57,10 +61,12 @@ class Balance:
             del grids_states[0]
             if current_grid.goal_state: 
                 self.initial = copy.deepcopy(current_grid)
-                for move in current_grid.moves:
-                    print("Move container from " + str(move[0]) + " to " + str(move[1]))
-                for moves in current_grid.total_moves:
-                    print(moves)
+
+                self.moves = current_grid.moves
+                self.sub_moves = current_grid.total_moves
+
+                for i in range(len(self.moves)):
+                    self.process.append([current_grid.names[i], current_grid.distances[i], current_grid.total_moves[i]])
 
                 break
 
@@ -70,7 +76,7 @@ class Balance:
                     if current_grid.shipgrid[y][x] == 0: 
                         empty_spaces.append([y,x])
                         break
-
+            
             container_location = []
             for x in range(0,12):
                 for y in range(0,8):
@@ -78,20 +84,30 @@ class Balance:
                         container_location.append([y,x])
                     elif current_grid.shipgrid[y][x] == 0:
                         break
-
+            
             for container_y, container_x in container_location:
                 if current_grid.shipgrid[container_y+1][container_x] != 0:
                     continue
                 for space_y, space_x in empty_spaces:
                     if space_x == container_x:
                         continue
+
                     new_grid = copy.deepcopy(current_grid)
-                    new_grid.moves.append([[container_y,container_x],[space_y,space_x]])
                     new_grid.shipgrid[space_y][space_x] = current_grid.shipgrid[container_y][container_x]
                     new_grid.shipgrid[container_y][container_x] = 0
+                    
                     dist, moves = current_grid.find_distance([container_y, container_x],[space_y, space_x])
-                    new_grid.gx += dist
                     new_grid.total_moves.append(moves)
+                    new_grid.moves.append([[container_y, container_x],[space_y, space_x]])
+                    new_grid.names.append(current_grid.shipgrid[container_y][container_x].container_name)
+                    new_grid.distances.append(dist)
+
+                    new_grid.gx += dist
+
+                    if len(new_grid.times) == 0:
+                        new_grid.times.append(dist)
+                    else:
+                        new_grid.times.append(new_grid.times[len(new_grid.times)-1] + dist)
                     new_grid.calculate_hx()
                     new_grid.compress()
 
@@ -101,8 +117,8 @@ class Balance:
                         past_states.add(new_grid.compression)
 
             grids_states= sorted(grids_states, key=lambda x: x[0])
-
-
+    
+    
     def sift(self):
         containers = []
         for x in range(0,12):
@@ -117,22 +133,30 @@ class Balance:
 
 
         buffer = Buffer()
-
+        
         start_y=0
         start_x = 23
         for weight, container in sorted_weights:
             print("Move container at ship location " + str(container.pos[1]) + "," + str(container.pos[0]) + " to buffer " + str(start_y) + "," + str(start_x) )
+            self.moves.append([['ship to ship exit'], [[container.pos[1],container.pos[0]], [8,0]]])
+            print(type(container.pos[1]))
+            dist, moves = self.initial.find_distance([container.pos[1], container.pos[0]],[start_y, start_x])
+            dist, sub_move = self.initial.find_distance([container.pos[1], container.pos[0]],[start_y, start_x])
+            self.sub_moves.append(sub_move)
+
+
+
             self.initial.shipgrid[container.pos[1]][ container.pos[0]] = 0 
             buffer.grid[start_y][start_x] = container 
             container.pos = (start_x, start_y)
-
+            
             start_y+=1
             if start_y == 4:
                 start_x-=1
                 start_y = 0
 
-
-
+        
+        
         sift_y = 0
         sift_x = 5
 
@@ -167,17 +191,17 @@ class Balance:
             if start_y < 0:
                 start_y = 3
                 start_x+=1
-
+            
 
     def update_manifest(self):
         print_grid(self.initial.shipgrid)
 
-        f = open(self.input_file[:len(self.input_file)-4]+"OUTBOUND", "w")
+        f = open(self.input_file[:len(self.input_file)-4]+"OUTBOUND.txt", "w")
 
         for y in range(8):
             for x in range(12):
                 x_zeros = + 2-len(str(x))
-
+                
                 if isinstance(self.initial.shipgrid[y][x],Cargo):
                     weight_zeros = 5-len(str(self.initial.shipgrid[y][x].weight))
                     f.write("[0"+str(y)+","+ x_zeros*str("0")+str(x)+"], {"+weight_zeros*str("0") + str(self.initial.shipgrid[y][x].weight)+"}, "+self.initial.shipgrid[y][x].container_name)
@@ -185,3 +209,6 @@ class Balance:
                     f.write("[0"+str(y)+","+  x_zeros*str("0")+str(x)+"], {00000}, UNUSED\n")
                 elif self.initial.shipgrid[y][x] == -1:
                     f.write("[0"+str(y)+"," + x_zeros*str("0")+str(x)+"], {00000}, NAN\n")
+                    
+            
+        
