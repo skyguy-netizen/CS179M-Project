@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 from models.user import set_user, get_user
 from utils.manifest_handler import set_file, set_name, get_file
-from models import transfermanager as TransferManager
+from models.transfermanager import TransferManager
 from models.balance import Balance
 from models.init_balance import create_ship
 from copy import deepcopy
@@ -65,9 +65,11 @@ def get_transfer_info():
     tm.set_goal_locations()
     tm.transfer_algorithm()
 
+    moves = tm.get_paths()
+
     print(load)
     print(unload)
-    return{'load': load, 'unload': unload}
+    return{'paths': moves}
     
 # You will get a list of container ids to unload/load
 # Use that and create the load and unload lists and run the algorithm, algorithm should have the steps in lists, which you can get using .get_unload_paths and .get_load_paths
