@@ -1,6 +1,6 @@
 from models.ship import Ship
 from models.cargo import Cargo
-from models.buffer import Buffer
+from backend.models.buffer import Buffer
 from models.balance import Balance
 
 input_file = "ShipCase5.txt"
