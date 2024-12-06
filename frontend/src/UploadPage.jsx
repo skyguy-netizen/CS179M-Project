@@ -39,6 +39,7 @@ const LoadPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoad(load.concat(loadName));
+    console.log(`Added ${loadName} to load list`)
     setLoadName("");
   }
 
