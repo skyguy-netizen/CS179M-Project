@@ -12,6 +12,8 @@ app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
+ship = None
+
 @app.route("/fileUploadLoad", methods=["POST", "GET"])
 @cross_origin()
 def fileUploadLoad():
@@ -19,7 +21,8 @@ def fileUploadLoad():
         if 'file' not in request.files:
             return "File not found!", 400
         file = request.files['file']
-        set_file(file)
+        global ship
+        ship = set_file(file)
         set_name(file.filename)
         return{"Success":200}
     return {'message': get_file()}
@@ -57,7 +60,7 @@ def get_transfer_info():
     load = data.get('load')
     unload = data.get('unload')
     ship_grid = [[None for _ in range(12)] for _ in range(8)]
-    ship = set_file(data)
+    # ship = set_file(data)
     ship_grid = ship.shipgrid
     load_list = [Cargo(name, None) for name in load]
     unload_list = [deepcopy(ship_grid[pos[0]][pos[1]]) for pos in unload]
