@@ -27,7 +27,7 @@ const LoadPage = () => {
 
   useEffect(() => {
     axios
-      .get(`${baseUrl}/fileUpload`)
+      .get(`${baseUrl}/fileUploadLoad`)
       .then(async response => {
         setManifest(response.data)
       })
@@ -66,7 +66,7 @@ const LoadPage = () => {
   return (
     <div className='w-screen h-screen flex justify-center items-center'>
       {manifest !== null && <PhaserGame ref={phaserRef} currentActiveScene={currentScene} gameData={manifest} updateUnload={setUnload} />}
-      <button onClick={() => console.log(unload)}>Send</button>
+      <button onClick={handleLoad}>Send</button>
       <form onSubmit={handleSubmit}>
         <input
         type="text"
@@ -75,7 +75,7 @@ const LoadPage = () => {
           setLoadName(e.target.value)
         }}
         />
-        <button type="submit"onClick={handleLoad}>Load</button>
+        <button type="submit">Load</button>
       </form>
     </div>
   )

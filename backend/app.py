@@ -1,23 +1,36 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
-from utils import manifest_handler
-from models import user
+from models.user import set_user, get_user
+from utils.manifest_handler import set_file, set_name, get_file
 
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-@app.route("/fileUpload", methods=["POST", "GET"])
+@app.route("/fileUploadLoad", methods=["POST", "GET"])
 @cross_origin()
-def fileUpload():
+def fileUploadLoad():
     if (request.method == 'POST'):
         if 'file' not in request.files:
             return "File not found!", 400
         file = request.files['file']
-        manifest_handler.set_file(file)
-        manifest_handler.set_name(file.filename)
-        return("Success")
-    return {'message': manifest_handler.get_file()}
+        set_file(file)
+        set_name(file.filename)
+        return{"Success":200}
+    return {'message': get_file()}
+
+@app.route("/fileUploadBalance", methods=["POST", "GET"])
+@cross_origin()
+def fileUploadBalance():
+    if (request.method == 'POST'):
+        if 'file' not in request.files:
+            return "File not found!", 400
+        file = request.files['file']
+        set_file(file)
+        set_name(file.filename)
+        balance
+        return{"Success": 200}
+    return {'message': get_file()}
 
 @app.route("/login", methods=["POST", "GET"])
 @cross_origin()
@@ -26,9 +39,9 @@ def login():
         first_name = request.get_json()
         if not first_name:
             return (jsonify({"Message": "You must include a first name."}), 400)
-        user.set_user(first_name)
-        return("Success")
-    return {'first_name': user.get_user()}
+        set_user(first_name)
+        return{"Success":200}
+    return {'first_name': get_user()}
 
 @app.route("/load", methods=["POST"])
 @cross_origin()
@@ -50,5 +63,12 @@ def get_transfer_info():
 #   ids: should match the above indices -> list
 #   times: should match the above indices -> list
 # }    
+
+@app.route("/balance", methods=["POST"])
+@cross_origin()
+def balance():
+    
+    return{'Success':200}
+
 if __name__ == '__main__':
     app.run(debug=True)
