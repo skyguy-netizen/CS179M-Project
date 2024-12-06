@@ -19,7 +19,7 @@ class Balance:
     def __init__ (self, ship: Ship, input_file):
         self.initial = ship
         self.input_file = input_file
-    
+
     def det_bal_type(self):
         self.initial.calculate_hx()
         print_grid(self.initial.shipgrid)
@@ -70,7 +70,7 @@ class Balance:
                     if current_grid.shipgrid[y][x] == 0: 
                         empty_spaces.append([y,x])
                         break
-            
+
             container_location = []
             for x in range(0,12):
                 for y in range(0,8):
@@ -78,7 +78,7 @@ class Balance:
                         container_location.append([y,x])
                     elif current_grid.shipgrid[y][x] == 0:
                         break
-            
+
             for container_y, container_x in container_location:
                 if current_grid.shipgrid[container_y+1][container_x] != 0:
                     continue
@@ -101,8 +101,8 @@ class Balance:
                         past_states.add(new_grid.compression)
 
             grids_states= sorted(grids_states, key=lambda x: x[0])
-    
-    
+
+
     def sift(self):
         containers = []
         for x in range(0,12):
@@ -117,7 +117,7 @@ class Balance:
 
 
         buffer = Buffer()
-        
+
         start_y=0
         start_x = 23
         for weight, container in sorted_weights:
@@ -125,14 +125,14 @@ class Balance:
             self.initial.shipgrid[container.pos[1]][ container.pos[0]] = 0 
             buffer.grid[start_y][start_x] = container 
             container.pos = (start_x, start_y)
-            
+
             start_y+=1
             if start_y == 4:
                 start_x-=1
                 start_y = 0
 
-        
-        
+
+
         sift_y = 0
         sift_x = 5
 
@@ -167,7 +167,7 @@ class Balance:
             if start_y < 0:
                 start_y = 3
                 start_x+=1
-            
+
 
     def update_manifest(self):
         print_grid(self.initial.shipgrid)
@@ -177,7 +177,7 @@ class Balance:
         for y in range(8):
             for x in range(12):
                 x_zeros = + 2-len(str(x))
-                
+
                 if isinstance(self.initial.shipgrid[y][x],Cargo):
                     weight_zeros = 5-len(str(self.initial.shipgrid[y][x].weight))
                     f.write("[0"+str(y)+","+ x_zeros*str("0")+str(x)+"], {"+weight_zeros*str("0") + str(self.initial.shipgrid[y][x].weight)+"}, "+self.initial.shipgrid[y][x].container_name)
@@ -185,16 +185,3 @@ class Balance:
                     f.write("[0"+str(y)+","+  x_zeros*str("0")+str(x)+"], {00000}, UNUSED\n")
                 elif self.initial.shipgrid[y][x] == -1:
                     f.write("[0"+str(y)+"," + x_zeros*str("0")+str(x)+"], {00000}, NAN\n")
-                    
-            
-        
-
-
-
-
-
-
-
-
-
-
