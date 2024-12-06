@@ -1,7 +1,10 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 from utils import manifest_handler
+from models import transfermanager as TransferManager
 from models import user
+from copy import deepcopy
+from models import cargo as Cargo
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -36,6 +39,15 @@ def get_transfer_info():
     data = request.get_json()
     load = data.get('load')
     unload = data.get('unload')
+    ship_grid = [[None for _ in range(12)] for _ in range(8)]
+    ship = manifest_handler.set_file(data)
+    ship_grid = ship.shipgrid
+    load_list = [Cargo(name, None) for name in load]
+    unload_list = [deepcopy(ship_grid[pos[0]][pos[1]]) for pos in unload]
+    tm = TransferManager(load_list,unload_list,ship)
+    tm.set_goal_locations()
+    tm.transfer_algorithm()
+
     print(load)
     print(unload)
     return{'load': load, 'unload': unload}
