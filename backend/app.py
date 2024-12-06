@@ -29,6 +29,19 @@ def login():
         user.set_user(first_name)
         return("Success")
     return {'first_name': user.get_user()}
+
+
+# def get_transfer_info()
     
+# You will get a list of container ids to unload/load
+# Use that and create the load and unload lists and run the algorithm, algorithm should have the steps in lists, which you can get using .get_unload_paths and .get_load_paths
+# Also add container_id to the path lists, instead of name (or keep name it doesn't matter)
+# this will probably have to be converted into a dictionary like:
+
+# {
+#   paths: [all the paths] -> list of lists
+#   ids: should match the above indices -> list
+#   times: should match the above indices -> list
+# }    
 if __name__ == '__main__':
     app.run(debug=True)
