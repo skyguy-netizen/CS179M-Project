@@ -22,9 +22,10 @@ const config = {
     ],
 };
 
-const StartGame = (parent, gameData) => {
+const StartGame = (parent, gameData, updateUnload) => {
     var game = new Phaser.Game({ ...config, parent });
     game.registry.set('gameData', gameData);
+    game.registry.set('updateUnload', updateUnload);
     return game;
 
 }

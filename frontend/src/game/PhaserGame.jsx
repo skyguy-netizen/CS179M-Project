@@ -3,7 +3,7 @@ import { forwardRef, useEffect, useLayoutEffect, useRef } from 'react';
 import StartGame from './main';
 import { EventBus } from './EventBus';
 
-export const PhaserGame = forwardRef(function PhaserGame ({ currentActiveScene, gameData }, ref)
+export const PhaserGame = forwardRef(function PhaserGame ({ currentActiveScene, gameData, updateUnload }, ref)
 {
     const game = useRef();
 
@@ -12,7 +12,7 @@ export const PhaserGame = forwardRef(function PhaserGame ({ currentActiveScene, 
         
         if (game.current === undefined)
         {
-            game.current = StartGame("game-container", gameData);
+            game.current = StartGame("game-container", gameData, updateUnload);
             
             if (ref !== null)
             {
