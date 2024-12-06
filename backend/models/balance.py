@@ -172,7 +172,7 @@ class Balance:
     def update_manifest(self):
         print_grid(self.initial.shipgrid)
 
-        f = open(self.input_file[:len(self.input_file)-4]+"OUTBOUND", "w")
+        f = open("../" + self.input_file[:len(self.input_file)-4]+"OUTBOUND.txt", "w")
 
         for y in range(8):
             for x in range(12):
@@ -180,8 +180,10 @@ class Balance:
 
                 if isinstance(self.initial.shipgrid[y][x],Cargo):
                     weight_zeros = 5-len(str(self.initial.shipgrid[y][x].weight))
-                    f.write("[0"+str(y)+","+ x_zeros*str("0")+str(x)+"], {"+weight_zeros*str("0") + str(self.initial.shipgrid[y][x].weight)+"}, "+self.initial.shipgrid[y][x].container_name)
+                    f.write("[0"+str(y)+","+ x_zeros*str("0")+str(x)+"], {"+weight_zeros*str("0") + str(self.initial.shipgrid[y][x].weight)+"}, "+str(self.initial.shipgrid[y][x].container_name))
                 elif self.initial.shipgrid[y][x] == 0:
                     f.write("[0"+str(y)+","+  x_zeros*str("0")+str(x)+"], {00000}, UNUSED\n")
                 elif self.initial.shipgrid[y][x] == -1:
                     f.write("[0"+str(y)+"," + x_zeros*str("0")+str(x)+"], {00000}, NAN\n")
+        
+        f.close()
