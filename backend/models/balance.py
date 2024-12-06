@@ -3,7 +3,6 @@ import utils.manifest_handler
 
 
 def find_distance(grid, start, end):
-
     current_states = []
     past_states = set()
     hx = abs(start[0] - end[0]) + abs(start[1] - end[1])
@@ -192,6 +191,7 @@ for y in range(0,8):
             initial_state.grid[y][x] = int(lines[12*y+x][10:15])
         else:
             initial_state.grid[y][x] = 0
+            
 for y in range(8,10):
     for x in range(0,12):
         initial_state.grid[y][x] = 0

@@ -1,4 +1,5 @@
 from backend.models.cargo import Cargo
+from backend.utils.functions_util import get_path
 from typing import List
 
 class Ship:
@@ -46,33 +47,22 @@ class Ship:
                 return (row,col)
         return (None, None)
     
+    def manhattan_distance_calculation(self,start, goal):
+        return abs(start[0] - goal[0]) + abs(start[1] - goal[1])
+
     def move_container(self, old_pos, new_pos):
-        path_trace = []
         cargo = self.shipgrid[old_pos[0]][old_pos[1]]
 
-        curr_pos = old_pos
-        while curr_pos != new_pos:
-            #check down
-            if curr_pos[0] < new_pos[0]:
-                curr_pos = (curr_pos[0] + 1, curr_pos[1])
-            #check up
-            elif curr_pos[0] > new_pos[0]:
-                curr_pos = (curr_pos[0] - 1, curr_pos[1])
-            #check right
-            elif curr_pos[1] < new_pos[1]:
-                curr_pos = (curr_pos[0], curr_pos[1] + 1)
-            #check left
-            elif curr_pos[1] > new_pos[1]:
-                curr_pos = (curr_pos[0], curr_pos[1] - 1)
-
-            path_trace.append(curr_pos)
+        path_trace = get_path(old_pos, new_pos)
+        move_cost = self.manhattan_distance_calculation(old_pos, new_pos) + 2
+        name = cargo.get_name()
 
         self.shipgrid[old_pos[0]][old_pos[1]] = None
         if new_pos != self.OPEN_POS:
             self.shipgrid[new_pos[0]][new_pos[1]] = cargo
         cargo.set_pos(new_pos)  # Update cargo's position
 
-        return path_trace
+        return (name, path_trace, move_cost)
 
     def top_most_container(self, col):
         # This will go top to bottom and find the highest occupied spot
@@ -80,16 +70,3 @@ class Ship:
         for row in range(self.rows - 1, -1, -1):        
             if self.shipgrid[row][col]:
                 return (row,col)
-
-    # def find_neighbors(self,location):
-    #     row,col = location
-    #     neighbors = []
-    #     if row > 0 and not self.shipgrid[row + 1][col]: #up
-    #         neighbors.append((row - 1, col)) 
-    #     if row < len(self.shipgrid) - 1 and not self.shipgrid[row - 1][col]: #down
-    #         neighbors.append((row + 1, col))
-    #     if col > 0 and not self.shipgrid[row][col - 1]: #left
-    #         neighbors.append((row, col - 1))
-    #     if col < len(self.shipgrid[0]) - 1 and not self.shipgrid[row][col + 1]: #right
-    #         neighbors.append((row, col + 1))
-    #     return neighbors
