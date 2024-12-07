@@ -33,7 +33,8 @@ export class MainMenu extends Scene
             align: 'center',
         });
 
-        const text2 = this.add.text(0, 0, itemID, {
+        let pos = '[' + locX + ',' + locY + ']';
+        const text2 = this.add.text(0, 0, pos, {
             fontSize: '0px',
         });
     
@@ -65,10 +66,10 @@ export class MainMenu extends Scene
 
         for(let i = 0;i < containersList.length;i++) {
             containersList[i].list[1]._text !== "" && containersList[i].on('pointerdown', (pointer, x, y, event) => {
-                if(!unload.find(c => c === containersList[i].list[1]._text))
-                    unload = unload.concat(containersList[i].list[1]._text);
+                if(!unload.find(c => c === containersList[i].list[2]._text))
+                    unload = unload.concat(containersList[i].list[2]._text);
                 else
-                    unload = unload.filter(c => c !== containersList[i].list[1]._text);
+                    unload = unload.filter(c => c !== containersList[i].list[2]._text);
                 var updateUnloadFunc = this.game.registry.get('updateUnload');
                 updateUnloadFunc(unload);
                 console.log(`Unload list: ${unload}`);
