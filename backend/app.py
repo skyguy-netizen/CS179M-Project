@@ -65,12 +65,15 @@ def get_transfer_info():
     # ship = set_file(data)
     ship_grid = ship.shipgrid
     load_list = [Cargo(name, None) for name in load]
-    # unload_list = [deepcopy(ship_grid[int(pos[0])][int(pos[1])]) for pos in unload]
     unload_list = []
+    print(ship_grid)
+    for coord in unload:
+        x, y = map(int, coord.strip("[]").split(","))
+        unload_list.append(ship_grid[x - 1][ y - 1])
+    print(unload_list)
     tm = TransferManager(load_list,unload_list,ship)
     tm.set_goal_locations()
     tm.transfer_algorithm()
-
     moves = tm.get_paths()
 
     print(moves)
