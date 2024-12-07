@@ -6,7 +6,7 @@ from models.transfermanager import TransferManager
 from models.balance import Balance
 from models.init_balance import create_ship
 from copy import deepcopy
-from models import cargo as Cargo
+from models.cargo import Cargo
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -59,19 +59,21 @@ def get_transfer_info():
     data = request.get_json()
     load = data.get('load')
     unload = data.get('unload')
+    print(load)
+    print(unload)
     ship_grid = [[None for _ in range(12)] for _ in range(8)]
     # ship = set_file(data)
     ship_grid = ship.shipgrid
     load_list = [Cargo(name, None) for name in load]
-    unload_list = [deepcopy(ship_grid[pos[0]][pos[1]]) for pos in unload]
+    # unload_list = [deepcopy(ship_grid[int(pos[0])][int(pos[1])]) for pos in unload]
+    unload_list = []
     tm = TransferManager(load_list,unload_list,ship)
     tm.set_goal_locations()
     tm.transfer_algorithm()
 
     moves = tm.get_paths()
 
-    print(load)
-    print(unload)
+    print(moves)
     return{'paths': moves}
     
 # You will get a list of container ids to unload/load
