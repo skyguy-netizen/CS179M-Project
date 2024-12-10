@@ -18,6 +18,9 @@ class Ship:
         self.sift = sift
         self.moves = moves
         self.total_moves = total_moves
+        self.times = []
+        self.names = []
+        self.distances= []
     
     def calculate_hx(self):
         left_sum = 0
