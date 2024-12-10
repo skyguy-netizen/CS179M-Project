@@ -11,6 +11,9 @@ const LoadPage = () => {
   const [unload, setUnload] = useState([])
   const [load, setLoad] = useState([])
   const [loadName, setLoadName] = useState("")
+  const [nextButton, setNextButton] = useState(false)
+  const [containerUnloadIndex, setContainerUnloadIndex] = useState(0)
+  const [containersToMoveLength, setContainersToMoveLength] = useState(0);
 
   const [canMoveSprite, setCanMoveSprite] = useState(true);
     
@@ -57,10 +60,18 @@ const LoadPage = () => {
 
     axios
       .post(`${baseUrl}/load`, JSON.stringify(data), config)
-      .then(response => response.json())
-      .then(console.log(unload))
-      .then(console.log(load))
+      .then(response => {
+        phaserRef.current.scene.events.emit('move-container', response.data);
+        setNextButton(true);
+        setContainerUnloadIndex(0);
+        setContainersToMoveLength(response.data.ids.length);
+      })
       .catch(err=>console.warn(err))
+  }
+
+  function handleAnimationChange() {
+    setContainerUnloadIndex(containerUnloadIndex+1);
+    phaserRef.current.scene.events.emit('next-container');
   }
 
   return (
@@ -75,7 +86,7 @@ const LoadPage = () => {
           setLoadName(e.target.value)
         }}
         />
-        <button type="submit">Load</button>
+        {(containerUnloadIndex < containersToMoveLength) && <button onClick={handleAnimationChange}>Next</button>}
       </form>
     </div>
   )

@@ -65,6 +65,7 @@ def login():
 @app.route("/load", methods=["POST", "GET"])
 @cross_origin()
 def get_transfer_info():
+    print("test")
     if(request.method == "POST"):
         data = request.get_json()
         load = data.get('load')
@@ -84,15 +85,14 @@ def get_transfer_info():
         tm.set_goal_locations()
         tm.transfer_algorithm()
         moves = tm.get_paths()
-        return{"Success":200}
-    path = []
-    ids = []
-    times = []
-    for move in moves:
-        ids.append(move[0])
-        path.append(move[1])
-        times.append(move[2])
-    return{'paths': path, 'ids': ids, 'times': times}
+        path = []
+        ids = []
+        times = []
+        for move in moves:
+            ids.append(move[0])
+            path.append(move[1])
+            times.append(move[2])
+        return{'paths': path, 'ids': ids, 'times': times}
     
 # You will get a list of container ids to unload/load
 # Use that and create the load and unload lists and run the algorithm, algorithm should have the steps in lists, which you can get using .get_unload_paths and .get_load_paths
