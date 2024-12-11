@@ -1,4 +1,8 @@
 from typing import List
+import sys, os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+
 from backend.models.cargo import Cargo
 from backend.models.ship import Ship
 from backend.utils.functions_util import get_path
@@ -73,6 +77,9 @@ class TransferManager:
 
     def get_load_paths(self,):
         return self.load_paths
+    
+    def get_paths(self,):
+        return self.paths_ordered
 
     def move_blocking_container(self, cargo: Cargo):
         print (f"Move blocking container: {cargo.container_name}{cargo.pos}")

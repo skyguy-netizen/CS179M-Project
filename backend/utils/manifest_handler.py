@@ -1,13 +1,13 @@
 import pandas as pd
-from backend.models.cargo import Cargo
-from backend.models.ship import Ship
+from flask import jsonify
+from models.cargo import Cargo
+from models.ship import Ship
 from copy import deepcopy
 
 def convert_position(curr_index):
     x = curr_index//12
     y = curr_index%12
     return (x,y)
-    
 
 def set_file(file_):
     global file
@@ -16,7 +16,8 @@ def set_file(file_):
     list = []
     df = pd.read_csv(file_, header=None, delimiter = ', ', engine='python')
     matrix = df.to_numpy()
-    file = df.to_string()
+    matrix = matrix.tolist()
+    file = matrix
 
     shipgrid = [[None] * 12 for i in range(8)]
     
@@ -46,7 +47,6 @@ def set_file(file_):
     return ship
 
         
-            
 def set_name(name):
     global file_name
     file_name = name

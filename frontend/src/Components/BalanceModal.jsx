@@ -31,7 +31,7 @@ export default function BalanceModal() {
     };
 
     axios
-      .post(`${baseUrl}/fileUpload`, formData, config)
+      .post(`${baseUrl}/fileUploadBalance`, formData, config)
       .catch(err=>console.warn(err))
 
     toggleModal()
