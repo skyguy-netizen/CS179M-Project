@@ -53,7 +53,7 @@ def fileUploadBalance():
         file = request.files['file']
         file_name = file.filename
         ship = create_ship(file)
-        balance_instance = Balance(ship, file_name)
+        balance_instance = Balance(ship, file_name, LOG_FILE)
         balance_instance.balance()
         process = balance_instance.process
         return{"Success": 200}
