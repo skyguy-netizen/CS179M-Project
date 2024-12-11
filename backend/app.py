@@ -4,6 +4,7 @@ from models.user import set_user, get_user
 from utils.manifest_handler import set_file, set_name, get_file
 from models.transfermanager import TransferManager
 from models.balance import Balance
+from utils.log_handler import set_comment, get_comment
 from models.init_balance import create_ship
 from copy import deepcopy
 from models.cargo import Cargo
@@ -61,6 +62,17 @@ def login():
         set_user(first_name)
         return{"Success":200}
     return {'first_name': get_user()}
+
+@app.route("/comment", methods=["POST", "GET"])
+@cross_origin()
+def comment():
+    if (request.method == 'POST'):
+        comment = request.get_json()
+        if not comment:
+            return (jsonify({"Message": "You must include a comment"}), 400)
+        set_comment(comment)
+        return{"Success":200}
+    return {'comment': get_comment()}
 
 @app.route("/load", methods=["POST", "GET"])
 @cross_origin()

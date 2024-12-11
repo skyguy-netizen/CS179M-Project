@@ -1,0 +1,23 @@
+.card{
+    border: 1px solid hsla(0,0%,80%);
+    border-radius: 10px;
+    top: 50%;
+    left: 20%;
+    box-shadow: 5px 5px 5px hsla(0,0%,0%,0.1);
+    padding: 25px;
+    margin: 20px;
+    text-align: center;
+    min-width: 350px;
+    height: 190px;
+    background: hsla(0,0%,80%);
+    max-width: 250px;
+    display: inline-block;
+}
+
+.send-modal {
+    margin-top: 15px;
+}
+
+.con-name {
+    margin-top: 7px;
+}
