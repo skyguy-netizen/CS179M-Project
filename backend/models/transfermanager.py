@@ -136,7 +136,7 @@ class TransferManager:
 
         with open(self.log_file, 'a') as log:
             log_string = '\n'.join(self.container_log)
-            log.write(log_string)
+            log.write(log_string + "\n")
             
         print(f"\n Total Time Estimate: {self.time_estimate} minutes")
 
