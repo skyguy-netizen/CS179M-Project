@@ -8,7 +8,7 @@ from backend.models.ship import Ship
 from backend.utils.functions_util import get_path
 
 class TransferManager:
-    def __init__(self, load_list: List[Cargo], unload_list: List[Cargo], ship_grid: Ship):
+    def __init__(self, load_list: List[Cargo], unload_list: List[Cargo], ship_grid: Ship, log_file: str = None):
         self.load_list = load_list # Load list should have cargo object and the target for the cargo object
         self.unload_list = unload_list
         self.ship_grid = ship_grid
@@ -17,6 +17,9 @@ class TransferManager:
         self.load_paths = [] #(name, path, time)
         self.unload_paths = []
         self.paths_ordered = []
+        if not log_file:
+            raise Exception("Log file required!!")
+        self.log_file = log_file
 
     def set_goal_locations(self,):
         for cargo in self.unload_list:
@@ -131,6 +134,10 @@ class TransferManager:
                 self.print_grid()
                 print("\n")
 
+        with open(self.log_file, 'a') as log:
+            log_string = '\n'.join(self.container_log)
+            log.write(log_string)
+            
         print(f"\n Total Time Estimate: {self.time_estimate} minutes")
 
 

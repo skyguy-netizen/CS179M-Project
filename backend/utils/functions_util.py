@@ -20,7 +20,7 @@ def get_path(start, goal, load=False,):
         if x1 < x2:  # Moving "up" (increasing x)
             for x in range(x1 + 1, x2 + 1):
                 path.append((x, y1))
-        elif x1 > x2:  # Moving "down" (decreasing x)
+        elif x1 > x2:  # Moving "down" (decreasing x) 
             for x in range(x1 - 1, x2 - 1, -1):
                 path.append((x, y1))
 
@@ -79,6 +79,7 @@ def get_path_for_blocking(start, ship_grid):
                             # best_target_row = x
                             # best_target_column = adjacent_column
                             best_path = temp_path
+                            
                     break 
 
 
