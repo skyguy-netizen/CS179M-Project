@@ -1,3 +1,6 @@
+import datetime
+
+
 def get_path(start, goal, load=False,):
     x1, y1 = start
     x2, y2 = goal
@@ -100,3 +103,5 @@ def get_path_for_blocking(start, ship_grid):
 
     return path
 
+def get_curr_time(): #Return something in this format "YYYY-MM-DD HH-MM   "
+    return datetime.datetime.now().strftime("%Y-%m-%d %H:%M\t")
