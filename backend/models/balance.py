@@ -1,7 +1,7 @@
 import copy
-from models.ship import Ship
-from models.cargo import Cargo
-from models.buffer import Buffer
+from backend.models.ship import Ship
+from backend.models.cargo import Cargo
+from backend.models.buffer import Buffer
 
 def print_grid(grid):
         for row in reversed(grid):

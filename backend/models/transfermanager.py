@@ -78,6 +78,7 @@ class TransferManager:
         return self.paths_ordered
 
     def move_blocking_container(self, cargo: Cargo):
+        print (f"Move blocking container: {cargo.container_name}{cargo.pos}")
         curr_pos = cargo.pos
         if curr_pos[1] >= len(self.ship_grid.shipgrid[1]) - 1:
             goal_column = curr_pos[1] - 1
@@ -85,7 +86,7 @@ class TransferManager:
             goal_column = curr_pos[1] + 1
         new_pos = self.ship_grid.find_shortest_column(goal_column)
         move_cost = self.manhattan_distance_calculation(curr_pos,new_pos)
-        path_update = self.ship_grid.move_container(curr_pos, new_pos)
+        path_update = self.ship_grid.move_container(curr_pos, new_pos, blocking=True)
         self.unload_paths.append(path_update)
         self.paths_ordered.append(path_update)
         self.update_log(cargo,curr_pos,move_cost, load=False, move_blocking=True)
@@ -138,5 +139,18 @@ class TransferManager:
             self.container_log.append(f"Move {cargo.get_name()} from {start} to truck, Cost: {cost} minutes") 
         self.time_estimate += cost
 
-        
+    def update_manifest(self, output_file_name=None):
+        with open(output_file_name, "w") as f:
+            for y in range (8):
+                for x in range (12):
+                    cell = self.ship_grid.shipgrid[y][x]
+                    if isinstance(cell, Cargo): 
+                        if cell.container_name == "Blocked":
+                            line = f"[{y+1:02},{x+1:02}], {{00000}}, NAN\n"
+                        else:
+                            line = f"[{y+1:02},{x+1:02}], {{{cell.weight:05}}}, {cell.container_name}\n"
+                    elif cell == None: 
+                        line = f"[{y+1:02},{x+1:02}], {{00000}}, UNUSED\n"
+                    f.write(line)
+
     

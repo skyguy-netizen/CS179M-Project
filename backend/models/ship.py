@@ -1,6 +1,10 @@
-from models.cargo import Cargo
-from utils.functions_util import get_path
+import sys, os
 from typing import List
+
+sys.path.append(os.path.abspath(os.path.dirname(__file__)))
+
+from backend.models.cargo import Cargo
+from backend.utils.functions_util import get_path, get_path_for_blocking
 
 class Ship:
     OPEN_POS = (8, 0)
@@ -221,11 +225,16 @@ class Ship:
     def manhattan_distance_calculation(self,start, goal):
         return abs(start[0] - goal[0]) + abs(start[1] - goal[1])
 
-    def move_container(self, old_pos, new_pos):
+    def move_container(self, old_pos, new_pos, blocking = False):
         cargo = self.shipgrid[old_pos[0]][old_pos[1]]
 
-        path_trace = get_path(old_pos, new_pos)
-        move_cost = self.manhattan_distance_calculation(old_pos, new_pos) + 2
+        if blocking:
+            path_trace = get_path_for_blocking(old_pos,self.shipgrid)
+            new_pos = path_trace[-1]
+            move_cost = self.manhattan_distance_calculation(old_pos, new_pos) * 2 + 1
+        else:
+            path_trace = get_path(old_pos, new_pos)
+            move_cost = self.manhattan_distance_calculation(old_pos, new_pos) + 2
         name = cargo.get_name()
 
         self.shipgrid[old_pos[0]][old_pos[1]] = None
