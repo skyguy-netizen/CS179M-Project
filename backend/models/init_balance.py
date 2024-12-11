@@ -1,3 +1,7 @@
+import sys, os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from models.ship import Ship
 from models.cargo import Cargo
 from models.buffer import Buffer

@@ -1,7 +1,7 @@
 import sys, os
 from typing import List
 
-sys.path.append(os.path.abspath(os.path.dirname(__file__)))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 
 from backend.models.cargo import Cargo
 from backend.utils.functions_util import get_path, get_path_for_blocking

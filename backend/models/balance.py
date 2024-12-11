@@ -1,4 +1,8 @@
 import copy
+import sys, os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+
 from backend.models.ship import Ship
 from backend.models.cargo import Cargo
 from backend.models.buffer import Buffer

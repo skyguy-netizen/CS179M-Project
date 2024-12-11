@@ -1,12 +1,17 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
-from models.user import set_user, get_user
-from utils.manifest_handler import set_file, set_name, get_file
-from models.transfermanager import TransferManager
-from models.balance import Balance
-from models.init_balance import create_ship
 from copy import deepcopy
-from models.cargo import Cargo
+
+import sys, os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from backend.models.transfermanager import TransferManager
+from backend.models.balance import Balance
+from backend.models.init_balance import create_ship
+from backend.models.user import set_user, get_user
+from backend.utils.manifest_handler import set_file, set_name, get_file
+from backend.models.cargo import Cargo
 
 app = Flask(__name__)
 cors = CORS(app)
