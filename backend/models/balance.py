@@ -1,7 +1,11 @@
 import copy
-from models.ship import Ship
-from models.cargo import Cargo
-from models.buffer import Buffer
+import sys, os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+
+from backend.models.ship import Ship
+from backend.models.cargo import Cargo
+from backend.models.buffer import Buffer
 
 def print_grid(grid):
         for row in reversed(grid):
@@ -16,12 +20,13 @@ def print_grid(grid):
 
 
 class Balance:
-    def __init__ (self, ship: Ship, input_file):
+    def __init__ (self, ship: Ship, input_file, log_file):
         self.initial = ship
         self.input_file = input_file
         self.moves = []
         self.sub_moves = []
         self.process = []
+        self.log_file
 
     
     def balance(self):

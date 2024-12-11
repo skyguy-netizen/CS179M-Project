@@ -1,8 +1,8 @@
 class Cargo:
-    def __init__(self, container_name, position):
+    def __init__(self, container_name, position = None, weight = None):
         self.container_name = container_name
         self.pos = position # [x,y] in the grid
-        self.weight = None
+        self.weight = weight
         self.heuristic = None # We will start with Manhattan Distance as the heuristic
         self.g_score = 0
         self.f_score = 0

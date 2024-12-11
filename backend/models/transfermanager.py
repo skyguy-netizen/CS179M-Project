@@ -1,10 +1,14 @@
 from typing import List
-from models.cargo import Cargo
-from models.ship import Ship
-from utils.functions_util import get_path
+import sys, os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+
+from backend.models.cargo import Cargo
+from backend.models.ship import Ship
+from backend.utils.functions_util import get_path
 
 class TransferManager:
-    def __init__(self, load_list: List[Cargo], unload_list: List[Cargo], ship_grid: Ship):
+    def __init__(self, load_list: List[Cargo], unload_list: List[Cargo], ship_grid: Ship, log_file: str = None):
         self.load_list = load_list # Load list should have cargo object and the target for the cargo object
         self.unload_list = unload_list
         self.ship_grid = ship_grid
@@ -13,6 +17,9 @@ class TransferManager:
         self.load_paths = [] #(name, path, time)
         self.unload_paths = []
         self.paths_ordered = []
+        if not log_file:
+            raise Exception("Log file required!!")
+        self.log_file = log_file
 
     def set_goal_locations(self,):
         for cargo in self.unload_list:
@@ -78,6 +85,7 @@ class TransferManager:
         return self.paths_ordered
 
     def move_blocking_container(self, cargo: Cargo):
+        print (f"Move blocking container: {cargo.container_name}{cargo.pos}")
         curr_pos = cargo.pos
         if curr_pos[1] >= len(self.ship_grid.shipgrid[1]) - 1:
             goal_column = curr_pos[1] - 1
@@ -85,7 +93,7 @@ class TransferManager:
             goal_column = curr_pos[1] + 1
         new_pos = self.ship_grid.find_shortest_column(goal_column)
         move_cost = self.manhattan_distance_calculation(curr_pos,new_pos)
-        path_update = self.ship_grid.move_container(curr_pos, new_pos)
+        path_update = self.ship_grid.move_container(curr_pos, new_pos, blocking=True)
         self.unload_paths.append(path_update)
         self.paths_ordered.append(path_update)
         self.update_log(cargo,curr_pos,move_cost, load=False, move_blocking=True)
@@ -126,6 +134,10 @@ class TransferManager:
                 self.print_grid()
                 print("\n")
 
+        with open(self.log_file, 'a') as log:
+            log_string = '\n'.join(self.container_log)
+            log.write(log_string)
+            
         print(f"\n Total Time Estimate: {self.time_estimate} minutes")
 
 
@@ -138,5 +150,18 @@ class TransferManager:
             self.container_log.append(f"Move {cargo.get_name()} from {start} to truck, Cost: {cost} minutes") 
         self.time_estimate += cost
 
-        
+    def update_manifest(self, output_file_name=None):
+        with open(output_file_name, "w") as f:
+            for y in range (8):
+                for x in range (12):
+                    cell = self.ship_grid.shipgrid[y][x]
+                    if isinstance(cell, Cargo): 
+                        if cell.container_name == "Blocked":
+                            line = f"[{y+1:02},{x+1:02}], {{00000}}, NAN\n"
+                        else:
+                            line = f"[{y+1:02},{x+1:02}], {{{cell.weight:05}}}, {cell.container_name}\n"
+                    elif cell == None: 
+                        line = f"[{y+1:02},{x+1:02}], {{00000}}, UNUSED\n"
+                    f.write(line)
+
     

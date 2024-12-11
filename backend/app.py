@@ -7,7 +7,18 @@ from models.balance import Balance
 from utils.log_handler import set_comment, get_comment
 from models.init_balance import create_ship
 from copy import deepcopy
-from models.cargo import Cargo
+import datetime
+
+import sys, os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from backend.models.transfermanager import TransferManager
+from backend.models.balance import Balance
+from backend.models.init_balance import create_ship
+from backend.models.user import set_user, get_user
+from backend.utils.manifest_handler import set_file, set_name, get_file
+from backend.models.cargo import Cargo
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -16,6 +27,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 ship = None
 process = None
 moves = None
+LOG_FILE = None
 
 @app.route("/fileUploadLoad", methods=["POST", "GET"])
 @cross_origin()
@@ -93,7 +105,7 @@ def get_transfer_info():
             x, y = map(int, coord.strip("[]").split(","))
             unload_list.append(ship_grid[x - 1][ y - 1])
         print(unload_list)
-        tm = TransferManager(load_list,unload_list,ship)
+        tm = TransferManager(load_list,unload_list,ship, LOG_FILE)
         tm.set_goal_locations()
         tm.transfer_algorithm()
         moves = tm.get_paths()
@@ -117,5 +129,30 @@ def get_transfer_info():
 #   times: should match the above indices -> list
 # }    
 
+def init_log_file():
+    curr_year = datetime.datetime.now().year
+
+    log_file = None
+    suffix = "_log_file.log"
+
+    for file in os.listdir('.'):
+        if suffix in file:
+            log_file = file
+    
+    if log_file:
+        log_file_year = int(log_file.split('_')[0])
+        if log_file_year != curr_year:
+            os.remove(log_file)
+            log_file = None
+        
+    if not log_file:
+        log_file = f"{curr_year}{suffix}"
+
+        open(log_file, 'w').close()
+
+    global LOG_FILE
+    LOG_FILE = log_file
+
 if __name__ == '__main__':
+    init_log_file()
     app.run(debug=True)
