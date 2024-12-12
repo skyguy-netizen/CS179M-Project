@@ -101,7 +101,7 @@ def get_transfer_info():
         print(unload)
         ship_grid = [[None for _ in range(12)] for _ in range(8)]
         ship_grid = ship.shipgrid
-        load_list = [Cargo(name, None) for name in load]
+        load_list = [Cargo(container_name=item[0], weight = item[1]) for item in load]
         unload_list = []
         print(ship_grid)
         for coord in unload:
