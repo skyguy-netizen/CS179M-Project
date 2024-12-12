@@ -1,15 +1,12 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS, cross_origin
-from models.user import set_user, get_user
-from utils.manifest_handler import set_file, set_name, get_file
-from models.transfermanager import TransferManager
-from models.balance import Balance
-from utils.log_handler import set_comment, get_comment
-from models.init_balance import create_ship
 from copy import deepcopy
 import datetime
-
 import sys, os
+from io import BytesIO
+import textwrap
+from fpdf import FPDF
+
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
@@ -17,7 +14,8 @@ from backend.models.transfermanager import TransferManager
 from backend.models.balance import Balance
 from backend.models.init_balance import create_ship
 from backend.models.user import set_user, get_user
-from backend.utils.manifest_handler import set_file, set_name, get_file
+from backend.utils.manifest_handler import set_file, set_name, get_file, get_name
+from utils.log_handler import set_comment, get_comment
 from backend.models.cargo import Cargo
 
 app = Flask(__name__)
@@ -75,6 +73,13 @@ def login():
         return{"Success":200}
     return {'first_name': get_user()}
 
+@app.route("/get_fileName", methods=["GET", "POST"])
+@cross_origin()
+def get_fileName():
+    filename = get_name()
+    output_filename = filename[:-4] + "OUTBOUND.txt"
+    return {'file_name': output_filename}
+
 @app.route("/comment", methods=["POST", "GET"])
 @cross_origin()
 def comment():
@@ -117,17 +122,28 @@ def get_transfer_info():
             path.append(move[1])
             times.append(move[2])
         return{'paths': path, 'ids': ids, 'times': times}
-    
-# You will get a list of container ids to unload/load
-# Use that and create the load and unload lists and run the algorithm, algorithm should have the steps in lists, which you can get using .get_unload_paths and .get_load_paths
-# Also add container_id to the path lists, instead of name (or keep name it doesn't matter)
-# this will probably have to be converted into a dictionary like:
 
-# {
-#   paths: [all the paths] -> list of lists
-#   ids: should match the above indices -> list
-#   times: should match the above indices -> list
-# }    
+# @app.route("/log", methods=["GET"])
+# @cross_origin()
+# def log():
+#     curr_year = datetime.datetime.now().year
+#     file_name = str(curr_year) + "_log_file.log"
+#     return send_from_directory(app.static_folder, file_name)
+    
+@app.route("/manifest", methods=["GET"])
+@cross_origin(exposedHeaders = {"Content-Disposition"})
+def manifest():
+    file_name = get_name()
+    output_filename = file_name[:-4] + "OUTBOUND.txt"
+    static_folder_path = os.path.join(app.root_path, "static", "manifest")
+    
+    try:
+        response = send_from_directory(static_folder_path, output_filename, mimetype='text/plain', as_attachment=True, download_name=f'{output_filename}')
+        response.headers["Content-Disposition"] = f"attachment; filename={output_filename}"
+        return response
+    except Exception as e:
+        print(f"Error occurred while sending file: {e}")
+        return "File not found or error occurred", 404
 
 def init_log_file():
     curr_year = datetime.datetime.now().year

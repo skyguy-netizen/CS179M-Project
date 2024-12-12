@@ -7,11 +7,11 @@ import "./Comment.css";
 const baseUrl = "http://127.0.0.1:5000"
 
 export default function CommentModal() {
-  const [modal, setModal] = useState(false);
-  const [comment, setComment] = useState("");
+  const [modal_com, setModal_com] = useState(false);
+  const [comment_, setComment] = useState("");
 
   const toggleModal = () => {
-    setModal(!modal);
+    setModal_com(!modal_com);
   };
 
   function handleName(event) {
@@ -24,7 +24,7 @@ export default function CommentModal() {
       },
     };
     
-    const data = {comment: comment};
+    const data = {comment: comment_};
 
     axios
       .post(`${baseUrl}/comment`, JSON.stringify(data), config)
@@ -34,37 +34,38 @@ export default function CommentModal() {
     toggleModal();
   }
 
-  if(modal) {
-    document.body.classList.add('active-modal')
+  if(modal_com) {
+    document.body.classList.add('active-com-modal')
   } else {
-    document.body.classList.remove('active-modal')
+    document.body.classList.remove('active-com-modal')
   }
 
   return (
     <>
-      <button onClick={toggleModal} className="btn-modal">
-        Add comment to log
+      <button onClick={toggleModal} className="btn-modal-com" color = '#0087ff'>
+        Add Comment To Log
       </button>
 
-      {modal && (
-        <div className="modal">
-          <div onClick={toggleModal} className="overlay"></div>
-          <div className="modal-content">
-            <h2 className="modal-sign"> Sign In</h2>
-            <p className="modal-input">
-              Add Comment:  
+      {modal_com && (
+        <div className="modal-com">
+          <div onClick={toggleModal} className="overlay-com"></div>
+          <div className="modal-com-content">
+            <h2 className="modal-com-sign"> Comment</h2>
+            <h3>Add Comment To Log:  </h3>
+            <p className="modal-com-input">
               <input 
                 type="text"
-                id="comment"
-                value={comment}
+                id="comment_"
+                value={comment_}
                 onChange={(e) => setComment(e.target.value)}
+                style={{width: "370px"}}
               />
             </p>
-            <button className="close-modal" onClick={toggleModal}>
+            <button className="close-com-modal" onClick={toggleModal}>
               Close
             </button>
-            <button className="log-modal" onClick={handleName}>
-              Submit
+            <button className="log-com-modal" onClick={handleName}>
+              Submit 
             </button>
           </div>
         </div>

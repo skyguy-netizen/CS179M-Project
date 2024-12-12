@@ -20,13 +20,13 @@ def print_grid(grid):
 
 
 class Balance:
-    def __init__ (self, ship: Ship, input_file, log_file):
+    def __init__ (self, ship: Ship, input_file):
         self.initial = ship
         self.input_file = input_file
         self.moves = []
         self.sub_moves = []
         self.process = []
-        self.log_file
+        # self.log_file
 
     
     def balance(self):
@@ -201,7 +201,7 @@ class Balance:
     def update_manifest(self):
         print_grid(self.initial.shipgrid)
 
-        f = open("../" + self.input_file[:len(self.input_file)-4]+"OUTBOUND.txt", "w")
+        f = open("../static/manifest" + self.input_file[:len(self.input_file)-4]+"OUTBOUND.txt", "w")
 
         for y in range(8):
             for x in range(12):

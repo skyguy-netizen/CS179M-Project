@@ -1,17 +1,17 @@
 /* Credit: https://github.com/ecole-du-web/react-modal  */
 
-body.active-com-modal {
+body.active-load-modal {
     overflow-y: hidden;
 }
 
-.btn-modal-com {
+.btn-modal-load {
     padding: 8px 20px;
-    position: absolute;
+    position: relative;
     text-align: right;
-    top: 55%;
-    right: 6.75%;
-    max-width: 500px;
-    min-width: 220px;
+    top: 35%;     
+    right: 0%;
+    max-width: 290px;
+    min-width: 120px;
     height: 55px;
     display: block;
     margin: 0 auto;
@@ -21,7 +21,7 @@ body.active-com-modal {
     border-radius: 3px
 }
 
-.modal-com, .overlay-com {
+.modal-load, .overlay-load {
     width: 100vw;
     height: 100vh;
     top: 0;
@@ -31,10 +31,10 @@ body.active-com-modal {
     position: fixed;
 }
 
-.overlay-com {
+.overlay-load {
     background: rgba(49,49,49,0.8);
 }
-.modal-com-content {
+.modal-load-content {
     position: absolute;
     top: 40%;
     left: 40%;
@@ -45,23 +45,23 @@ body.active-com-modal {
     border-radius: 3px;
     max-width: 500px;
     min-width: 350px;
-    height: 170px;
+    height: 150px;
     text-align: center;
 }
 
-.log-com-modal {
+.log-load-modal {
     margin-top: 20px;
 }
 
-.modal-com-input {
+.modal-load-input {
     margin-top: 15px;
 }
 
-.modal-com-sign {
+.modal-load-sign {
     color:#0087ff;
 }
 
-.close-com-modal {
+.close-load-modal {
     position: absolute;
     top: 10px;
     right: 10px;

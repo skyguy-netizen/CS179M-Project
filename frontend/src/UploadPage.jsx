@@ -3,14 +3,18 @@ import axios from 'axios';
 import Phaser from 'phaser';
 import { PhaserGame } from './game/PhaserGame';
 import { useRef } from 'react';
+import SignInModal from './Components/SignInModal';
+import Card from './Components/Card';
+import CommentModal from './Components/CommentModal';
+import SubmitLoad from './Components/SubmitLoad'
 
 const baseUrl = "http://127.0.0.1:5000"
 
 const LoadPage = () => {
   const[manifest, setManifest] = useState(null)
+  const [manifestName, setManifestName] = useState("")
   const [unload, setUnload] = useState([])
   const [load, setLoad] = useState([])
-  const [loadName, setLoadName] = useState("")
   const [nextButton, setNextButton] = useState(false)
   const [containerUnloadIndex, setContainerUnloadIndex] = useState(0)
   const [containersToMoveLength, setContainersToMoveLength] = useState(0);
@@ -39,16 +43,12 @@ const LoadPage = () => {
       })
   }, [])
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setLoad(load.concat(loadName));
-    console.log(`Added ${loadName} to load list`)
-    setLoadName("");
-  }
+  const handleSubmit = (loadName) => {
+    setLoad((prevLoad) => [...prevLoad, loadName]); 
+    console.log(`Load updated: ${loadName}`);
+  };
 
-  function handleLoad(event) {
-    event.preventDefault()
-
+  const handleLoad = () => {
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -74,20 +74,51 @@ const LoadPage = () => {
     phaserRef.current.scene.events.emit('next-container');
   }
 
+  const get_fileName = () => {
+    axios
+    .get(`${baseUrl}/get_fileName`)
+    .then(async response => {
+      console.log(response.data.file_name)
+      setManifestName(response.data.file_name)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }
+
+  const get_manifest = () => {
+    axios({
+        url: `${baseUrl}/manifest`, 
+        method: 'GET',
+        responseType: 'blob',
+    }).then((response) => {
+        get_fileName()
+        const href = URL.createObjectURL(response.data);
+        const link = document.createElement('a');
+        link.href = href;
+        link.setAttribute('download', manifestName); 
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(href);
+    });
+};
+  
+
+
   return (
     <div className='w-screen h-screen flex justify-center items-center'>
+      <SignInModal/>
       {manifest !== null && <PhaserGame ref={phaserRef} currentActiveScene={currentScene} gameData={manifest} updateUnload={setUnload} />}
-      <button onClick={handleLoad}>Send</button>
-      <form onSubmit={handleSubmit}>
-        <input
-        type="text"
-        value={loadName}
-        onChange={(e) => {
-          setLoadName(e.target.value)
-        }}
-        />
-        {(containerUnloadIndex < containersToMoveLength) && <button onClick={handleAnimationChange}>Next</button>}
-      </form>
+      {(containerUnloadIndex < containersToMoveLength) && <button onClick={handleAnimationChange}>Next</button>}
+      <Card 
+      handleSubmit={handleSubmit}
+      />
+      <CommentModal/>
+      <SubmitLoad 
+      handleLoad={handleLoad}
+      />
+      <button onClick={get_manifest}> Click </button>
     </div>
   )
 }
