@@ -1,5 +1,4 @@
 import copy
-import copy
 import sys, os
 from models.ship import Ship
 from models.cargo import Cargo
