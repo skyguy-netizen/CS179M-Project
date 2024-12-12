@@ -33,7 +33,7 @@ export default function LoadModal() {
     };
 
     axios
-      .post(`${baseUrl}/fileUpload`, formData, config)
+      .post(`${baseUrl}/fileUploadLoad`, formData, config)
       .then(() => {
         navigate("/LoadPage")
       })

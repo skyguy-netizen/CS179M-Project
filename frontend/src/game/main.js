@@ -19,12 +19,14 @@ const config = {
         MainMenu,
         Game,
         GameOver
-    ]
+    ],
 };
 
-const StartGame = (parent) => {
-
-    return new Phaser.Game({ ...config, parent });
+const StartGame = (parent, gameData, updateUnload) => {
+    var game = new Phaser.Game({ ...config, parent });
+    game.registry.set('gameData', gameData);
+    game.registry.set('updateUnload', updateUnload);
+    return game;
 
 }
 

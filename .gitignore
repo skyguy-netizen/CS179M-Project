@@ -1,0 +1,4 @@
+backend/models/__pycache__/*
+backend/utils/__pycache__/*
+backend/__pycache__/*
+

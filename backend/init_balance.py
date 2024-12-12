@@ -1,9 +1,13 @@
-from models.ship import Ship
-from models.cargo import Cargo
-from models.buffer import Buffer
-from models.balance import Balance
+import sys, os
 
-input_file = "SilverQueen.txt"
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+
+from backend.models.ship import Ship
+from backend.models.cargo import Cargo
+from backend.models.buffer import Buffer
+from backend.models.balance import Balance
+
+input_file = "ShipCase5.txt"
 f = open(input_file, "r+")
 lines = f.readlines() 
 
@@ -27,9 +31,5 @@ for y in range(8,10):
 
 ship = Ship(initial_state)
 balance_instance = Balance(ship, input_file)
-balance_instance.balance()
-
-#list of lists [name, time for move, movement of container cell by cell (formated as a list of lists of (y,x)) ]
-print(balance_instance.process)
-
+balance_instance.det_bal_type()
 
