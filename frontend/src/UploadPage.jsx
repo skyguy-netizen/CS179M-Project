@@ -65,6 +65,8 @@ const LoadPage = () => {
         setNextButton(true);
         setContainerUnloadIndex(0);
         setContainersToMoveLength(response.data.ids.length);
+        setUnload([]);
+        setLoad([]);
       })
       .catch(err=>console.warn(err))
   }
@@ -103,8 +105,11 @@ const LoadPage = () => {
         URL.revokeObjectURL(href);
     });
 };
-  
 
+  function handleAddLoadContainer() {
+    phaserRef.current.scene.events.emit('load-container', loadName);
+    setLoadName("")
+  }
 
   return (
     <div className='w-screen h-screen flex justify-center items-center'>
