@@ -1,0 +1,34 @@
+Move Dog from (1, 1) to (1, 0), Cost: 2 minutes
+Move Cat from (0, 1) to truck, Cost: 11 minutesMove Dog from (1, 1) to (1, 0), Cost: 2 minutes
+Move Cat from (0, 1) to truck, Cost: 11 minutesMove Dog from (1, 1) to (1, 0), Cost: 2 minutes
+Move Cat from (0, 1) to truck, Cost: 11 minutesMove Dog from (1, 1) to (1, 0), Cost: 2 minutes
+Move Cat from (0, 1) to truck, Cost: 11 minutesMove Dog from (1, 1) to (1, 0), Cost: 2 minutes
+Move Cat from (0, 1) to truck, Cost: 11 minutes
+Loaded test2 from truck to (2, 0), Cost: 8 minutes
+Loaded test1 from truck to (3, 0), Cost: 7 minutesMove Dog from (1, 1) to (1, 0), Cost: 2 minutes
+Move Cat from (0, 1) to truck, Cost: 11 minutesMove Dog from (1, 1) to (1, 0), Cost: 2 minutes
+Move Cat from (0, 1) to truck, Cost: 11 minutesMove Dog from (1, 1) to (1, 0), Cost: 2 minutes
+Move Cat from (0, 1) to truck, Cost: 11 minutesMove Dog from (1, 1) to (1, 0), Cost: 2 minutes
+Move Cat from (0, 1) to truck, Cost: 11 minutesMove Dog from (1, 1) to (1, 0), Cost: 2 minutes
+Move Cat from (0, 1) to truck, Cost: 11 minutesMove Dog from (1, 1) to (1, 0), Cost: 2 minutes
+Move Cat from (0, 1) to truck, Cost: 11 minutesMove Dog from (1, 1) to (1, 0), Cost: 2 minutes
+Move Cat from (0, 1) to truck, Cost: 11 minutesMove Dog from (1, 1) to (1, 0), Cost: 2 minutes
+Move Cat from (0, 1) to truck, Cost: 11 minutesMove Dog from (1, 1) to (1, 0), Cost: 2 minutes
+Move Cat from (0, 1) to truck, Cost: 11 minutesMove Dog from (1, 1) to (1, 0), Cost: 2 minutes
+Move Cat from (0, 1) to truck, Cost: 11 minutesMove Dog from (1, 1) to (1, 0), Cost: 2 minutes
+Move Cat from (0, 1) to truck, Cost: 11 minutesMove Blocked from (0, 11) to truck, Cost: 21 minutesMove Dog from (1, 1) to (1, 0), Cost: 2 minutes
+Move Cat from (0, 1) to truck, Cost: 11 minutesMove Dog from (1, 1) to (1, 0), Cost: 2 minutes
+Move Cat from (0, 1) to truck, Cost: 11 minutesMove Blocked from (0, 11) to truck, Cost: 21 minutesMove Dog from (1, 1) to (1, 0), Cost: 2 minutes
+Move Cat from (0, 1) to truck, Cost: 11 minutesMove Blocked from (0, 11) to truck, Cost: 21 minutesMove Dog from (1, 1) to (1, 0), Cost: 2 minutes
+Move Cat from (0, 1) to truck, Cost: 11 minutesMove Blocked from (0, 11) to truck, Cost: 21 minutesMove Dog from (1, 1) to (1, 0), Cost: 2 minutes
+Move Cat from (0, 1) to truck, Cost: 11 minutesMove Blocked from (0, 11) to truck, Cost: 21 minutesLoaded test2 from truck to (1, 0), Cost: 9 minutes
+Loaded test1 from truck to (2, 0), Cost: 8 minutesLoaded test2 from truck to (1, 0), Cost: 9 minutes
+Loaded test1 from truck to (2, 0), Cost: 8 minutesLoaded test2 from truck to (1, 0), Cost: 9 minutes
+Loaded test1 from truck to (2, 0), Cost: 8 minutesLoaded test5 from truck to (1, 0), Cost: 9 minutes
+Loaded test4 from truck to (2, 0), Cost: 8 minutes
+Loaded test2 from truck to (3, 0), Cost: 7 minutes
+Loaded test1 from truck to (4, 0), Cost: 6 minutesLoaded test2 from truck to (5, 0), Cost: 5 minutes
+Loaded test1 from truck to (6, 0), Cost: 4 minutesMove Dog from (1, 1) to (1, 0), Cost: 2 minutes
+Move Cat from (0, 1) to truck, Cost: 11 minutesMove Blocked from (0, 11) to truck, Cost: 21 minutesLoaded test1 from truck to (1, 0), Cost: 9 minutesLoaded test2 from truck to (1, 0), Cost: 9 minutes
+Loaded test1 from truck to (2, 0), Cost: 8 minutesLoaded test2 from truck to (1, 0), Cost: 9 minutes
+Loaded test1 from truck to (2, 0), Cost: 8 minutes

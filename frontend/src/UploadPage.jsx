@@ -42,8 +42,7 @@ const LoadPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoad(load.concat(loadName));
-    console.log(`Added ${loadName} to load list`)
-    setLoadName("");
+    handleAddLoadContainer();
   }
 
   function handleLoad(event) {
@@ -65,6 +64,8 @@ const LoadPage = () => {
         setNextButton(true);
         setContainerUnloadIndex(0);
         setContainersToMoveLength(response.data.ids.length);
+        setUnload([]);
+        setLoad([]);
       })
       .catch(err=>console.warn(err))
   }
@@ -72,6 +73,11 @@ const LoadPage = () => {
   function handleAnimationChange() {
     setContainerUnloadIndex(containerUnloadIndex+1);
     phaserRef.current.scene.events.emit('next-container');
+  }
+
+  function handleAddLoadContainer() {
+    phaserRef.current.scene.events.emit('load-container', loadName);
+    setLoadName("")
   }
 
   return (
@@ -86,8 +92,9 @@ const LoadPage = () => {
           setLoadName(e.target.value)
         }}
         />
+        <button type="submit">Load</button>
+        </form>
         {(containerUnloadIndex < containersToMoveLength) && <button onClick={handleAnimationChange}>Next</button>}
-      </form>
     </div>
   )
 }

@@ -24,8 +24,8 @@ export class MainMenu extends Scene
         }
 
         // Crop name if too long to make it fit inside container
-        if(name.length > 3) {
-            name = name.substr(0, 3);
+        if(name.length > 5) {
+            name = name.substr(0, 5);
             name = name.concat("...");
         }
 
@@ -68,11 +68,28 @@ export class MainMenu extends Scene
     create ()
     {
         var unload = [];
+
+        // Loading containers list
+        const text1 = this.add.text(512, 100, "Containers to Load:", {
+            fontSize: '20px',
+            color: '#ffffff',
+            fontFamily: 'Arial',
+            align: 'center',
+        });
+
+        // Align to center of grid
+        text1.setPosition(text1.x - text1.width/2, text1.y);
+
+        // List to hold containers to be loaded
+        this.loadList = []
+
+        // Render grid
         this.add.grid(512, 460, 600, 400, 50, 50, 0xff0000, 1, 0x000000);
         var containers = this.game.registry.get('gameData')['message'];
         this.containersList = [];
 
         for(const c of containers) {
+            // string containing position to array
             var s = c[0];
             s = s.substr(1, s.length-2);
             const nums = s.split(',').map(num => Number(num));
@@ -80,19 +97,25 @@ export class MainMenu extends Scene
             curr && this.containersList.push(curr)
         }
 
+        // Add input to containers
         for(let i = 0;i < this.containersList.length;i++) {
+            // If container is clicked and has a name add it to unload list
             this.containersList[i].list[1]._text !== "" && this.containersList[i].on('pointerdown', (pointer, x, y, event) => {
                 if(!unload.find(c => c === this.containersList[i].list[2]._text))
                     unload = unload.concat(this.containersList[i].list[2]._text);
                 else
                     unload = unload.filter(c => c !== this.containersList[i].list[2]._text);
+
+                // State update from react
                 var updateUnloadFunc = this.game.registry.get('updateUnload');
                 updateUnloadFunc(unload);
                 console.log(`Unload list: ${unload}`);
+                console.log(this.containersList);
                 event.stopPropagation();
             })
         }
 
+        // Get moves for all containers
         this.events.on('move-container', (data) => {
             console.log(data);
             var containerMoves = data; 
@@ -105,6 +128,40 @@ export class MainMenu extends Scene
             }
         })
         
+        // Load new containers
+        this.events.on('load-container', (data) => {
+            console.log(this.loadList.length)
+            if(this.loadList.length == 0) {
+                var temp = this.createContainer(10, 1, data)
+                this.loadList.push(temp)
+                this.containersList.push(temp);
+                temp.on('pointerdown', () => {
+                    var cPos = temp.list[2]._text
+                    this.loadList = this.loadList.filter(c => c.list[2]._text !== cPos)
+                    temp.destroy()
+                    this.containersList = this.containersList.filter(c => c.active);
+                    console.log(this.containersList);
+                })
+            }
+            else {
+                // Increment x position of last container to add to load list
+                var pos = this.loadList[this.loadList.length-1].list[2]._text;
+                pos = pos.substr(1, pos.length-2);
+                var xPos = pos.split(',').map(num => Number(num))[1];
+                var temp = this.createContainer(10, xPos+1, data);
+                this.loadList.push(temp)
+                this.containersList.push(temp);
+                temp.on('pointerdown', () => {
+                    var cPos = temp.list[2]._text
+                    this.loadList = this.loadList.filter(c => c.list[2]._text !== cPos)
+                    temp.destroy()
+                    this.containersList = this.containersList.filter(c => c.active);
+                    console.log(this.containersList);
+                })
+            }
+        })
+
+        // Move on to next container animation
         this.events.on('next-container', () => {
             // Get container destination
             var moves = this.moves[this.containerIndex];
@@ -114,10 +171,14 @@ export class MainMenu extends Scene
             // Find container and set the position to the destination position
             var selectedContainer = this.containersList.find(c => c.list[1]._text === this.containersToMove[this.containerIndex]);
             selectedContainer.setPosition(xDest, yDest);
+            selectedContainer.list[2]._text = '[' + moves[moves.length-1][0] + ',' + moves[moves.length-1][1] + ']';
+            console.log(selectedContainer.list[2]._text);
 
             // If container is in unload position destroy it
             if(moves[moves.length-1][0] == 8 && moves[moves.length-1][1] == 0) {
                 selectedContainer.destroy();
+                this.containersList.filter(c => c.active);
+                console.log(this.containersList);
             }
 
             // Increment container
@@ -127,6 +188,7 @@ export class MainMenu extends Scene
             // If all containers have been moved set movesIndex to -1 to prevent update from running
             if(this.containerIndex >= this.containersToMove.length) {
                 this.movesIndex = -1;
+                unload = [];
             }
         })
 
@@ -142,19 +204,19 @@ export class MainMenu extends Scene
             if(!(selectedContainer.x === xDest
             && selectedContainer.y === yDest)) {
                 if(selectedContainer.x < xDest) {
-                    selectedContainer.setPosition(selectedContainer.x+2, selectedContainer.y)
+                    selectedContainer.setPosition(selectedContainer.x+1, selectedContainer.y)
                 }
 
                 if(selectedContainer.x > xDest) {
-                    selectedContainer.setPosition(selectedContainer.x-2, selectedContainer.y)
+                    selectedContainer.setPosition(selectedContainer.x-1, selectedContainer.y)
                 }
 
                 if(selectedContainer.y < yDest) {
-                    selectedContainer.setPosition(selectedContainer.x, selectedContainer.y+2)
+                    selectedContainer.setPosition(selectedContainer.x, selectedContainer.y+1)
                 }
 
                 if(selectedContainer.y > yDest) {
-                    selectedContainer.setPosition(selectedContainer.x, selectedContainer.y-2)
+                    selectedContainer.setPosition(selectedContainer.x, selectedContainer.y-1)
                 }
             }
             else {
