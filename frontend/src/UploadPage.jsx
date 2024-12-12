@@ -15,6 +15,7 @@ const LoadPage = () => {
   const [manifestName, setManifestName] = useState("")
   const [unload, setUnload] = useState([])
   const [load, setLoad] = useState([])
+  const [loadName, setLoadName] = useState([])
   const [nextButton, setNextButton] = useState(false)
   const [containerUnloadIndex, setContainerUnloadIndex] = useState(0)
   const [containersToMoveLength, setContainersToMoveLength] = useState(0);
@@ -45,7 +46,9 @@ const LoadPage = () => {
 
   const handleSubmit = (loadName) => {
     setLoad((prevLoad) => [...prevLoad, loadName]); 
+    setLoadName(loadName);
     console.log(`Load updated: ${loadName}`);
+    handleAddLoadContainer(); //THIS ADDS THE BLANK BLOCK IN ANIMATION AFTER PRESSING SUBMIT
   };
 
   const handleLoad = () => {
@@ -76,6 +79,12 @@ const LoadPage = () => {
     phaserRef.current.scene.events.emit('next-container');
   }
 
+  function handleAddLoadContainer() {
+    phaserRef.current.scene.events.emit('load-container', loadName);
+    setLoadName("")
+  }
+
+
   const get_fileName = () => {
     axios
     .get(`${baseUrl}/get_fileName`)
@@ -105,17 +114,13 @@ const LoadPage = () => {
         URL.revokeObjectURL(href);
     });
 };
+  
 
-  function handleAddLoadContainer() {
-    phaserRef.current.scene.events.emit('load-container', loadName);
-    setLoadName("")
-  }
 
   return (
     <div className='w-screen h-screen flex justify-center items-center'>
       <SignInModal/>
       {manifest !== null && <PhaserGame ref={phaserRef} currentActiveScene={currentScene} gameData={manifest} updateUnload={setUnload} />}
-      {(containerUnloadIndex < containersToMoveLength) && <button onClick={handleAnimationChange}>Next</button>}
       <Card 
       handleSubmit={handleSubmit}
       />
@@ -124,6 +129,7 @@ const LoadPage = () => {
       handleLoad={handleLoad}
       />
       <button onClick={get_manifest}> Click </button>
+      {(containerUnloadIndex < containersToMoveLength) && <button onClick={handleAnimationChange}>Next</button>}
     </div>
   )
 }
