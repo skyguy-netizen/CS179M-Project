@@ -16,6 +16,7 @@ const LoadPage = () => {
   const [unload, setUnload] = useState([])
   const [load, setLoad] = useState([])
   const [loadName, setLoadName] = useState([])
+  const [loadWeight, setLoadWeight] = useState("")
   const [nextButton, setNextButton] = useState(false)
   const [containerUnloadIndex, setContainerUnloadIndex] = useState(0)
   const [containersToMoveLength, setContainersToMoveLength] = useState(0);
@@ -45,9 +46,8 @@ const LoadPage = () => {
   }, [])
 
   const handleSubmit = (loadName) => {
-    setLoad((prevLoad) => [...prevLoad, loadName]); 
+    setLoad((prevLoad) => [...prevLoad, [loadName, Number(loadWeight)]]); 
     setLoadName(loadName);
-    console.log(loadName);
     console.log(`Load updated: ${loadName}`);
     handleAddLoadContainer(); //THIS ADDS THE BLANK BLOCK IN ANIMATION AFTER PRESSING SUBMIT
   };
@@ -128,6 +128,8 @@ const LoadPage = () => {
       handleSubmit={handleSubmit}
       loadName={loadName}
       setLoadName={setLoadName}
+      loadWeight={loadWeight}
+      setLoadWeight={setLoadWeight}
       />
       <CommentModal/>
       <SubmitLoad 
