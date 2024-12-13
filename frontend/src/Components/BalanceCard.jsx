@@ -14,7 +14,7 @@ function BalanceCard ({data, index, length}) {
           <h2> Estimated Time: {data.times[index]} minutes </h2>
           <h2> Container: {data.ids[index]} </h2>
           <h2> Source: { JSON.stringify(data.paths[index][0]) } </h2>
-          <h2> Destination: { JSON.stringify(data.paths[index][length - 1]) } </h2> 
+          <h2> Destination: { JSON.stringify(data.paths[index][data.paths[index].length - 1]) } </h2> 
         </div>
       );
 }
