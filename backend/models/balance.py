@@ -20,13 +20,16 @@ def print_grid(grid):
 
 
 class Balance:
-    def __init__ (self, ship: Ship, input_file):
+    def __init__ (self, ship: Ship, input_file, log_file):
         self.initial = ship
         self.input_file = input_file
         self.moves = []
         self.sub_moves = []
         self.process = []
         # self.log_file
+        if not log_file:
+            raise Exception("Log file required!!")
+        self.log_file = log_file
 
     
     def balance(self):
