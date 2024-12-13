@@ -112,7 +112,7 @@ def comment():
             return (jsonify({"Message": "You must include a comment"}), 400)
         set_comment(comment)
         with open(LOG_FILE, 'a') as log:
-            msg = get_curr_time() + f"Finished a cycle. Manifest {comment} was written to desktop, and a reminder pop-up to operator to send file was displayed\n"
+            msg = get_curr_time() + f"{get_comment()}\n"
             log.write(msg)
         return{"Success":200}
     return {'comment': get_comment()}
