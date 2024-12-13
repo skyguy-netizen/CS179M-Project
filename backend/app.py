@@ -26,6 +26,7 @@ ship = None
 process = None
 moves = None
 LOG_FILE = None
+manifest_name = None
 
 @app.route("/fileUploadLoad", methods=["POST", "GET"])
 @cross_origin()
@@ -35,7 +36,9 @@ def fileUploadLoad():
             return "File not found!", 400
         file = request.files['file']
         global ship
+        global manifest_name
         ship = set_file(file)
+        manifest_name = file.filename
         set_name(file.filename)
         return{"Success":200}
     return {'message': get_file()}
@@ -113,6 +116,8 @@ def get_transfer_info():
         tm = TransferManager(load_list,unload_list,ship, LOG_FILE)
         tm.set_goal_locations()
         tm.transfer_algorithm()
+        output_manifest = manifest_name.rsplit('.', 1)[0] + "OUTBOUND.txt"
+        tm.update_manifest(output_manifest)
         moves = tm.get_paths()
         path = []
         ids = []

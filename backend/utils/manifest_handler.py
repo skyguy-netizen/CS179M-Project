@@ -1,7 +1,7 @@
 import pandas as pd
 from flask import jsonify
-from models.cargo import Cargo
-from models.ship import Ship
+from backend.models.cargo import Cargo
+from backend.models.ship import Ship
 from copy import deepcopy
 
 def convert_position(curr_index):
