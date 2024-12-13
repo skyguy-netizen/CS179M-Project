@@ -2,8 +2,7 @@ import "./Card.css"
 import {useState} from 'react'
 import PropTypes from "prop-types";
 
-function Card ({handleSubmit}) {
-    const [loadName, setLoadName] = useState("")
+function Card ({handleSubmit, loadName, setLoadName}) {
 
     const handle = (e) => {
         e.preventDefault();

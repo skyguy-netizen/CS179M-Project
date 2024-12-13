@@ -47,6 +47,7 @@ const LoadPage = () => {
   const handleSubmit = (loadName) => {
     setLoad((prevLoad) => [...prevLoad, loadName]); 
     setLoadName(loadName);
+    console.log(loadName);
     console.log(`Load updated: ${loadName}`);
     handleAddLoadContainer(); //THIS ADDS THE BLANK BLOCK IN ANIMATION AFTER PRESSING SUBMIT
   };
@@ -59,6 +60,8 @@ const LoadPage = () => {
       },
     };
     
+    console.log(load);
+    console.log(unload);
     const data = {load: load, unload: unload};
 
     axios
@@ -123,6 +126,8 @@ const LoadPage = () => {
       {manifest !== null && <PhaserGame ref={phaserRef} currentActiveScene={currentScene} gameData={manifest} updateUnload={setUnload} />}
       <Card 
       handleSubmit={handleSubmit}
+      loadName={loadName}
+      setLoadName={setLoadName}
       />
       <CommentModal/>
       <SubmitLoad 
