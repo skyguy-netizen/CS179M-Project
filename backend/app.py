@@ -29,6 +29,7 @@ moves = None
 user = None
 LOG_FILE = None
 manifest_name = None
+file_name = None
 
 @app.route("/fileUploadLoad", methods=["POST", "GET"])
 @cross_origin()
@@ -46,7 +47,7 @@ def fileUploadLoad():
             msg = get_curr_time() + f"Manifest {file.filename} is loaded. There are {ship.get_containers()} containers on the ship\n"
             log.write(msg)
         
-
+        print("Returning what")
         set_name(file.filename)
         return{"Success":200}
     return {'message': get_file()}
@@ -58,15 +59,23 @@ def fileUploadBalance():
         if 'file' not in request.files:
             return "File not found!", 400
         file = request.files['file']
+        global file_name
+        global ship
         file_name = file.filename
         ship = create_ship(file)
-        balance_instance = Balance(ship, file_name, LOG_FILE)
-        balance_instance.balance()
-        process = balance_instance.process
         return{"Success": 200}
+    return {"message" : get_file()}
+    
+@app.route("/balance", methods=["POST"])
+@cross_origin()
+def get_balance_info():
+    balance_instance = Balance(ship, file_name, LOG_FILE)
+    balance_instance.balance()
+    process = balance_instance.process
     path = []
     ids = []
     times = []
+    print(process)
     for move in process:
         ids.append(move[0])
         times.append(move[1])
@@ -110,9 +119,12 @@ def comment():
         comment = request.get_json()
         if not comment:
             return (jsonify({"Message": "You must include a comment"}), 400)
-        set_comment(comment)
+        print(comment)
+        with open(LOG_FILE, 'a') as log:
+            msg = get_curr_time() + comment['comment']
+            log.write(msg)
         return{"Success":200}
-    return {'comment': get_comment()}
+    return {'comment': "No comment"}
 
 @app.route("/load", methods=["POST", "GET"])
 @cross_origin()
@@ -123,7 +135,7 @@ def get_transfer_info():
         load = data.get('load')
         unload = data.get('unload')
         print(load)
-        print(unload)
+        print(unload)        
         ship_grid = [[None for _ in range(12)] for _ in range(8)]
         ship_grid = ship.shipgrid
         load_list = [Cargo(container_name=item[0], weight = item[1]) for item in load]
@@ -132,7 +144,7 @@ def get_transfer_info():
         for coord in unload:
             x, y = map(int, coord.strip("[]").split(","))
             unload_list.append(ship_grid[x - 1][ y - 1])
-        print(unload_list)
+        unload_list_names = deepcopy(unload_list)
         tm = TransferManager(load_list,unload_list,ship, LOG_FILE)
         tm.set_goal_locations()
         tm.transfer_algorithm()
@@ -142,13 +154,25 @@ def get_transfer_info():
         path = []
         ids = []
         times = []
+
+        ops_order = []
+        load_names = [i[0] for i in load]
+        unload_names = [c.get_name() for c in unload_list_names]
+        print("Load: ", load_names)
+        print("Unload: ", unload_names)
         for move in moves:
             ids.append(move[0])
             path.append(move[1])
             times.append(move[2])
-
+            if move[0] in load_names:
+                ops_order.append("L")
+            elif move[0] in unload_names:
+                ops_order.append("UL")
+            else:
+                pass
+        print(ops_order)
         with open(LOG_FILE, 'a') as log:
-            msg = get_curr_time() + "Finished a cycle. Manifest {manifest_outbound_name} was written to desktop, and a reminder pop-up to operator to send file was displayed\n"
+            msg = get_curr_time() + f"Finished a cycle. Manifest {output_manifest} was written to desktop, and a reminder pop-up to operator to send file was displayed\n"
             log.write(msg)
         return{'paths': path, 'ids': ids, 'times': times}
 

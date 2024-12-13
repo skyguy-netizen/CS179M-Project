@@ -8,15 +8,18 @@ from backend.models.cargo import Cargo
 from backend.models.buffer import Buffer
 
 def print_grid(grid):
-        for row in reversed(grid):
-            for element in row:
-                if element == -1:
-                    print("N ",end="")
-                elif isinstance(element,Cargo):
-                    print(element.weight, end = " ")
-                else:
-                    print(str(element) + " ",end="")
-            print()
+    # print("In print grid")
+    # print(grid)
+    for row in reversed(grid):
+        for element in row:
+            if element == -1:
+                print("N ",end="")
+            elif isinstance(element, Cargo):
+                print(element.weight, end = " ")
+            else:
+                # print(element)
+                print(str(element) + " ",end="")
+    print()
 
 
 class Balance:
@@ -31,6 +34,9 @@ class Balance:
             raise Exception("Log file required!!")
         self.log_file = log_file
 
+
+    def check_balance(self):
+        return self.initial.goal_state
     
     def balance(self):
         self.initial.calculate_hx()
@@ -204,7 +210,7 @@ class Balance:
     def update_manifest(self):
         print_grid(self.initial.shipgrid)
 
-        f = open("../static/manifest" + self.input_file[:len(self.input_file)-4]+"OUTBOUND.txt", "w")
+        f = open(self.input_file[:len(self.input_file)-4]+"OUTBOUND.txt", "w")
 
         for y in range(8):
             for x in range(12):

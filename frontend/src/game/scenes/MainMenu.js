@@ -87,7 +87,8 @@ export class MainMenu extends Scene
         this.add.grid(512, 460, 600, 400, 50, 50, 0xff0000, 1, 0x000000);
         var containers = this.game.registry.get('gameData')['message'];
         this.containersList = [];
-
+        // console.log(`Containers list ${this.containersList}`)
+        console.log(`Containers from backend ${containers}`)
         for(const c of containers) {
             // string containing position to array
             var s = c[0];
@@ -96,7 +97,7 @@ export class MainMenu extends Scene
             var curr = this.createContainer(nums[0], nums[1], c[2], c[1], unload);
             curr && this.containersList.push(curr)
         }
-
+        console.log(`Containers list ${this.containersList}`)
         // Add input to containers
         for(let i = 0;i < this.containersList.length;i++) {
             // If container is clicked and has a name add it to unload list
@@ -125,7 +126,11 @@ export class MainMenu extends Scene
                 this.times = containerMoves.times;
                 this.containerIndex = 0;
                 this.movesIndex = 0;
+                console.log("TEST STRing");
+                console.log(`Moves: ${this.moves}`);
+                console.log(`Times: ${this.times}`);
             }
+            
         })
         
         // Load new containers
@@ -197,7 +202,11 @@ export class MainMenu extends Scene
 
     update() {
         if(this.movesIndex > -1) {
+            // console.log(`Container List in Update: ${this.containersToMove}`);
+            this.containersList = this.containersList.filter(c => c.active);
+
             var selectedContainer = this.containersList.find(c => c.list[1]._text === this.containersToMove[this.containerIndex]);
+            // var selectedContainer = this.containersToMove[this.containerIndex];
             var moves = this.moves[this.containerIndex];
             var xDest = this.gridToScreen(moves[this.movesIndex])[0];
             var yDest = this.gridToScreen(moves[this.movesIndex])[1];

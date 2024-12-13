@@ -4,6 +4,8 @@ from backend.models.cargo import Cargo
 from backend.models.ship import Ship
 from copy import deepcopy
 
+file = None
+
 def convert_position(curr_index):
     x = curr_index//12
     y = curr_index%12

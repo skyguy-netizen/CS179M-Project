@@ -9,8 +9,8 @@ from models.balance import Balance
 
 def create_ship(file):
     f = file
-    lines = f.readlines() 
-
+    lines = f.readlines()
+    # print(lines)
     initial_state = [[None for i in range(12)] for i in range(10)]
 
     for y in range(0,8):
@@ -18,15 +18,17 @@ def create_ship(file):
             if lines[12*y+x][18:] == "NAN\n":
                 initial_state[y][x] = -1
             elif int(lines[12*y+x][10:15]) > 0:
-                temp = Cargo(lines[12*y+x][18:], (x,y))
-                temp.weight = int(lines[12*y+x][10:15])
+                name = lines[12*y+x][18:].decode('utf-8').strip()
+                weight = int(lines[12*y+x][10:15].decode('utf-8'))
+                temp = Cargo(name, (x,y), weight)
                 initial_state[y][x] = temp
-
             else:
                 initial_state[y][x] = 0
+
     for y in range(8,10):
         for x in range(0,12):
             initial_state[y][x] = 0
 
-    return Ship(initial_state)
+    ship_object = Ship(initial_state)
+    return ship_object
 
