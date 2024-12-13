@@ -12,9 +12,8 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from backend.models.transfermanager import TransferManager
 from backend.models.balance import Balance
-from backend.models.init_balance import create_ship
 from backend.models.user import set_user, get_user
-from backend.utils.manifest_handler import set_file, set_name, get_file, get_name
+from backend.utils.manifest_handler import set_file, set_name, get_file, get_name, create_ship
 from utils.log_handler import set_comment, get_comment
 from backend.models.cargo import Cargo
 from backend.utils.functions_util import get_curr_time
@@ -30,6 +29,7 @@ user = None
 LOG_FILE = None
 manifest_name = None
 file_name = None
+balance_instance = None
 
 @app.route("/fileUploadLoad", methods=["POST", "GET"])
 @cross_origin()
@@ -50,6 +50,7 @@ def fileUploadLoad():
         print("Returning what")
         set_name(file.filename)
         return{"Success":200}
+    print(get_file())
     return {'message': get_file()}
 
 @app.route("/fileUploadBalance", methods=["POST", "GET"])
@@ -59,17 +60,30 @@ def fileUploadBalance():
         if 'file' not in request.files:
             return "File not found!", 400
         file = request.files['file']
-        global file_name
         global ship
+        global file_name
         file_name = file.filename
+        set_name(file_name)
+        # file_copy = deepcopy(file)
+
         ship = create_ship(file)
+        # file_data = create_file_object(file_copy)
         return{"Success": 200}
+    print(get_file())
     return {"message" : get_file()}
+
+@app.route("/checkbalance", methods=["GET"])
+@cross_origin()
+def check_balance():
+    global balance_instance
+    balance_instance = Balance(ship, file_name, LOG_FILE)
+    print(balance_instance.check_balance())
+    return {"balance" : balance_instance.check_balance()}
     
 @app.route("/balance", methods=["POST"])
 @cross_origin()
 def get_balance_info():
-    balance_instance = Balance(ship, file_name, LOG_FILE)
+    
     balance_instance.balance()
     process = balance_instance.process
     path = []
@@ -143,7 +157,10 @@ def get_transfer_info():
         print(ship_grid)
         for coord in unload:
             x, y = map(int, coord.strip("[]").split(","))
+            print(x, y)
             unload_list.append(ship_grid[x - 1][ y - 1])
+        
+        print("Unload list: ", unload_list)
         unload_list_names = deepcopy(unload_list)
         tm = TransferManager(load_list,unload_list,ship, LOG_FILE)
         tm.set_goal_locations()
@@ -171,6 +188,8 @@ def get_transfer_info():
             else:
                 pass
         print(ops_order)
+
+        tm.clear_paths()
         with open(LOG_FILE, 'a') as log:
             msg = get_curr_time() + f"Finished a cycle. Manifest {output_manifest} was written to desktop, and a reminder pop-up to operator to send file was displayed\n"
             log.write(msg)

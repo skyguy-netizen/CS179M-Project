@@ -135,7 +135,7 @@ const LoadPage = () => {
       <SubmitLoad 
       handleLoad={handleLoad}
       />
-      <button onClick={get_manifest}> Click </button>
+      {/* <button onClick={get_manifest}> Click </button> */}
       {(containerUnloadIndex < containersToMoveLength) && <button onClick={handleAnimationChange}>Next</button>}
     </div>
   )

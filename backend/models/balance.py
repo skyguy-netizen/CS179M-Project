@@ -80,7 +80,7 @@ class Balance:
                 self.sub_moves = current_grid.total_moves
 
                 for i in range(len(self.moves)):
-                    self.process.append([str(current_grid.names[i])[2:(len(current_grid.names[i]))], current_grid.distances[i], current_grid.total_moves[i]])
+                    self.process.append([str(current_grid.names[i]), current_grid.distances[i], current_grid.total_moves[i]])
 
                 break
 
