@@ -38,7 +38,13 @@ function SubmitLoad({handleLoad}) {
             <button className="close-load-modal" onClick={toggleModal}>
               Close
             </button>
-            <button className="log-load-modal" onClick={handle}>
+            <button 
+              className="log-load-modal" 
+              onClick={handle}
+              style = {{
+                
+              }}
+            >
               Submit
             </button>
           </div>

@@ -4,10 +4,12 @@ import { useState } from "react";
 import axios from 'axios';
 import "./Modal.css";
 import BalanceIcon from '../assets/balance.svg?react'
+import { useNavigate } from "react-router";
 
 const baseUrl = "http://127.0.0.1:5000"
 
 export default function BalanceModal() {
+  const navigate = useNavigate();
   const [modal, setModal] = useState(false);
   const [file, setFile] = useState();
 
@@ -32,6 +34,9 @@ export default function BalanceModal() {
 
     axios
       .post(`${baseUrl}/fileUploadBalance`, formData, config)
+      .then(() => {
+        navigate("/BalancePage")
+      })
       .catch(err=>console.warn(err))
 
     toggleModal()

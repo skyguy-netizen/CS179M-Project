@@ -70,7 +70,7 @@ export class MainMenu extends Scene
         var unload = [];
 
         // Loading containers list
-        const text1 = this.add.text(512, 100, "Containers to Load:", {
+        const text1 = this.add.text(512, 100, "Containers:", {
             fontSize: '20px',
             color: '#ffffff',
             fontFamily: 'Arial',
@@ -87,16 +87,18 @@ export class MainMenu extends Scene
         this.add.grid(512, 460, 600, 400, 50, 50, 0xff0000, 1, 0x000000);
         var containers = this.game.registry.get('gameData')['message'];
         this.containersList = [];
-
+        // console.log(`Containers list ${this.containersList}`)
+        console.log(`Containers from backend ${containers}`)
         for(const c of containers) {
             // string containing position to array
             var s = c[0];
             s = s.substr(1, s.length-2);
             const nums = s.split(',').map(num => Number(num));
+            console.log(`The Nums: ${nums}`);
             var curr = this.createContainer(nums[0], nums[1], c[2], c[1], unload);
             curr && this.containersList.push(curr)
         }
-
+        console.log(`Containers list ${this.containersList}`)
         // Add input to containers
         for(let i = 0;i < this.containersList.length;i++) {
             // If container is clicked and has a name add it to unload list
@@ -125,7 +127,11 @@ export class MainMenu extends Scene
                 this.times = containerMoves.times;
                 this.containerIndex = 0;
                 this.movesIndex = 0;
+                console.log("TEST STRing");
+                console.log(`Moves: ${this.moves}`);
+                console.log(`Times: ${this.times}`);
             }
+            
         })
         
         // Load new containers
@@ -154,7 +160,7 @@ export class MainMenu extends Scene
                 temp.on('pointerdown', () => {
                     var cPos = temp.list[2]._text
                     this.loadList = this.loadList.filter(c => c.list[2]._text !== cPos)
-                    temp.destroy()
+                    // temp.destroy()
                     this.containersList = this.containersList.filter(c => c.active);
                     console.log(this.containersList);
                 })
@@ -165,17 +171,21 @@ export class MainMenu extends Scene
         this.events.on('next-container', () => {
             // Get container destination
             var moves = this.moves[this.containerIndex];
-            var xDest = this.gridToScreen(moves[moves.length-1])[0];
-            var yDest = this.gridToScreen(moves[moves.length-1])[1];
+            var xDest = this.gridToScreen(moves[moves.length - 1])[0] + 1;
+            var yDest = this.gridToScreen(moves[moves.length - 1])[1] + 1;
 
             // Find container and set the position to the destination position
+            this.containersList = this.containersList.filter(c => c.active);
             var selectedContainer = this.containersList.find(c => c.list[1]._text === this.containersToMove[this.containerIndex]);
+            console.log(`The X and Y for next: ${xDest} -- ${yDest}`);
             selectedContainer.setPosition(xDest, yDest);
-            selectedContainer.list[2]._text = '[' + moves[moves.length-1][0] + ',' + moves[moves.length-1][1] + ']';
+            var xi = +moves[moves.length - 1][0] + 1;
+            var yi = +moves[moves.length - 1][1] + 1;
+            selectedContainer.list[2]._text = '[' + xi + ',' + yi + ']';
             console.log(selectedContainer.list[2]._text);
 
             // If container is in unload position destroy it
-            if(moves[moves.length-1][0] == 8 && moves[moves.length-1][1] == 0) {
+            if(moves[moves.length - 1][0] == 8 && moves[moves.length - 1][1] == 0) {
                 selectedContainer.destroy();
                 this.containersList.filter(c => c.active);
                 console.log(this.containersList);
@@ -197,7 +207,10 @@ export class MainMenu extends Scene
 
     update() {
         if(this.movesIndex > -1) {
+            // console.log(`Container List in Update: ${this.containersToMove}`);
+            this.containersList = this.containersList.filter(c => c.active);
             var selectedContainer = this.containersList.find(c => c.list[1]._text === this.containersToMove[this.containerIndex]);
+            // var selectedContainer = this.containersToMove[this.containerIndex];
             var moves = this.moves[this.containerIndex];
             var xDest = this.gridToScreen(moves[this.movesIndex])[0];
             var yDest = this.gridToScreen(moves[this.movesIndex])[1];
