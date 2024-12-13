@@ -204,7 +204,7 @@ class Balance:
     def update_manifest(self):
         print_grid(self.initial.shipgrid)
 
-        f = open("../static/manifest" + self.input_file[:len(self.input_file)-4]+"OUTBOUND.txt", "w")
+        f = open("../static/manifest/" + self.input_file[:len(self.input_file)-4]+"OUTBOUND.txt", "w")
 
         for y in range(8):
             for x in range(12):

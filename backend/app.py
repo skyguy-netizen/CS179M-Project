@@ -111,6 +111,9 @@ def comment():
         if not comment:
             return (jsonify({"Message": "You must include a comment"}), 400)
         set_comment(comment)
+        with open(LOG_FILE, 'a') as log:
+            msg = get_curr_time() + f"Finished a cycle. Manifest {comment} was written to desktop, and a reminder pop-up to operator to send file was displayed\n"
+            log.write(msg)
         return{"Success":200}
     return {'comment': get_comment()}
 
@@ -148,28 +151,19 @@ def get_transfer_info():
             times.append(move[2])
 
         with open(LOG_FILE, 'a') as log:
-            msg = get_curr_time() + "Finished a cycle. Manifest {manifest_outbound_name} was written to desktop, and a reminder pop-up to operator to send file was displayed\n"
+            msg = get_curr_time() + f"Finished a cycle. Manifest {output_manifest} was written to desktop, and a reminder pop-up to operator to send file was displayed\n"
             log.write(msg)
         return{'paths': path, 'ids': ids, 'times': times}
-
-# @app.route("/log", methods=["GET"])
-# @cross_origin()
-# def log():
-#     curr_year = datetime.datetime.now().year
-#     file_name = str(curr_year) + "_log_file.log"
-#     return send_from_directory(app.static_folder, file_name)
     
 @app.route("/manifest", methods=["GET"])
-@cross_origin(exposedHeaders = {"Content-Disposition"})
+@cross_origin()
 def manifest():
     file_name = get_name()
     output_filename = file_name[:-4] + "OUTBOUND.txt"
-    static_folder_path = os.path.join(app.root_path, "static", "manifest")
+    static_folder_path = "../static/manifest"
     
     try:
-        response = send_from_directory(static_folder_path, output_filename, mimetype='text/plain', as_attachment=True, download_name=f'{output_filename}')
-        response.headers["Content-Disposition"] = f"attachment; filename={output_filename}"
-        return response
+        return send_from_directory(static_folder_path, output_filename, mimetype='text/plain', as_attachment=True)
     except Exception as e:
         print(f"Error occurred while sending file: {e}")
         return "File not found or error occurred", 404

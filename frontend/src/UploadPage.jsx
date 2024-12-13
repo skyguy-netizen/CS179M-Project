@@ -19,7 +19,6 @@ const LoadPage = () => {
   const [nextButton, setNextButton] = useState(false)
   const [containerUnloadIndex, setContainerUnloadIndex] = useState(0)
   const [containersToMoveLength, setContainersToMoveLength] = useState(0);
-
   const [canMoveSprite, setCanMoveSprite] = useState(true);
     
     //  References to the PhaserGame component (game and scene are exposed)
@@ -38,6 +37,7 @@ const LoadPage = () => {
       .get(`${baseUrl}/fileUploadLoad`)
       .then(async response => {
         setManifest(response.data)
+        get_fileName()
       })
       .catch(err => {
         console.log(err)
@@ -106,7 +106,6 @@ const LoadPage = () => {
         method: 'GET',
         responseType: 'blob',
     }).then((response) => {
-        get_fileName()
         const href = URL.createObjectURL(response.data);
         const link = document.createElement('a');
         link.href = href;
@@ -135,8 +134,8 @@ const LoadPage = () => {
       />
       <button onClick={get_manifest}> Click </button>
       {(containerUnloadIndex < containersToMoveLength) && <button onClick={handleAnimationChange}>Next</button>}
-    </div>
-  )
-}
+      </div>
+    )
+};
 
 export default LoadPage
