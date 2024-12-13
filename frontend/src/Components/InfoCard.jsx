@@ -10,19 +10,18 @@ function InfoCard ({data, index}) {
     useEffect(() => {
       const operation = data.opsOrder[index];
       if (operation === "UL") {
-        setLoad("true");
-      } else if (operation === "L") {
         setLoad("false");
+      } else if (operation === "L") {
+        setLoad("true");
       }
       setString(JSON.stringify(data.paths[index]))
     }, [data.opsOrder, data.paths, index]);
-  
 
     function load_path(data) {
       if (load === "true") {
-        return JSON.stringify(data.paths[index][0]); 
+        return JSON.stringify(data.paths[index][string.length - 1]); 
       } else if (load === "false") {
-        return JSON.stringify(data.paths[index][string.length - 1]);
+        return JSON.stringify(data.paths[index][0]); 
       }
       return ""; 
     }
@@ -32,8 +31,8 @@ function InfoCard ({data, index}) {
           <h2> { load === "true" ? "Unload" : "Load" } </h2>
           <h2> Estimated Time: {data.times[index]} minutes </h2>
           <h2> Container: {data.ids[index]} </h2>
-          <h2> Source: { load === true ? "Truck" : load_path(data) } </h2>
-          <h2> Destination: { load === true ? load_path(data) : "Truck" } </h2> 
+          <h2> Source: { load === "true" ? "Truck" : load_path(data) } </h2>
+          <h2> Destination: { load === "true" ? load_path(data) : "Truck" } </h2> 
         </div>
       );
 }

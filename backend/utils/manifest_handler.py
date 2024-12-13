@@ -46,6 +46,7 @@ def set_file(file_):
     ship = Ship(shipgrid)
     return ship
 
+file_name = ""
         
 def set_name(name):
     global file_name
