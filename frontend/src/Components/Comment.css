@@ -8,8 +8,8 @@ body.active-com-modal {
     padding: 8px 20px;
     position: absolute;
     text-align: right;
-    top: 55%;
-    right: 6.75%;
+    top: 80%; 
+    right: 7%; 
     max-width: 500px;
     min-width: 220px;
     height: 55px;
@@ -37,7 +37,7 @@ body.active-com-modal {
 .modal-com-content {
     position: absolute;
     top: 40%;
-    left: 40%;
+    left: 50%;
     transform: translate(-50%, -50%);
     line-height: 1.4;
     background: #f1f1f1;

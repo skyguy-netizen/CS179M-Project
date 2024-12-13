@@ -1,4 +1,4 @@
-.card{
+.card-info{
     border: 1px solid hsla(0,0%,80%);
     border-radius: 10px;
     top: 28%;
@@ -28,10 +28,4 @@
     position: absolute;
     top: 148px;
     right: 150px
-}
-
-.weight {
-    position: relative;
-    top: 10px;
-    right: 5px
 }

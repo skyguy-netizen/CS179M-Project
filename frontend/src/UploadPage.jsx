@@ -6,7 +6,9 @@ import { useRef } from 'react';
 import SignInModal from './Components/SignInModal';
 import Card from './Components/Card';
 import CommentModal from './Components/CommentModal';
-import SubmitLoad from './Components/SubmitLoad'
+import SubmitLoad from './Components/SubmitLoad';
+import InfoCard from './Components/InfoCard';
+import ReminderModal from './Components/ReminderModal';
 
 const baseUrl = "http://127.0.0.1:5000"
 
@@ -21,6 +23,11 @@ const LoadPage = () => {
   const [containerUnloadIndex, setContainerUnloadIndex] = useState(0)
   const [containersToMoveLength, setContainersToMoveLength] = useState(0);
   const [canMoveSprite, setCanMoveSprite] = useState(true);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [data, setData] = useState({ paths: [], ids: [], times: [], opsOrder: [] });
+  const [index, setIndex] = useState(0);
+
+
     
     //  References to the PhaserGame component (game and scene are exposed)
     const phaserRef = useRef();
@@ -73,12 +80,16 @@ const LoadPage = () => {
         setContainersToMoveLength(response.data.ids.length);
         setUnload([]);
         setLoad([]);
+        setIsSubmitted(true);
+        setData(response.data)
+        setIndex(0)
       })
       .catch(err=>console.warn(err))
   }
 
   function handleAnimationChange() {
     setContainerUnloadIndex(containerUnloadIndex+1);
+    setIndex(index + 1)
     phaserRef.current.scene.events.emit('next-container');
   }
 
@@ -118,24 +129,72 @@ const LoadPage = () => {
 };
   
 
-
   return (
     <div className='w-screen h-screen flex justify-center items-center'>
       <SignInModal/>
       {manifest !== null && <PhaserGame ref={phaserRef} currentActiveScene={currentScene} gameData={manifest} updateUnload={setUnload} />}
-      <Card 
-      handleSubmit={handleSubmit}
-      loadName={loadName}
-      setLoadName={setLoadName}
-      loadWeight={loadWeight}
-      setLoadWeight={setLoadWeight}
+
+      {!isSubmitted && (
+      <>
+      <Card
+        handleSubmit={handleSubmit}
+        loadName={loadName}
+        setLoadName={setLoadName}
+        loadWeight={loadWeight}
+        setLoadWeight={setLoadWeight}
       />
+      <SubmitLoad handleLoad={handleLoad} />
+      </>
+      )}
+
       <CommentModal/>
-      <SubmitLoad 
-      handleLoad={handleLoad}
-      />
-      <button onClick={get_manifest}> Click </button>
-      {(containerUnloadIndex < containersToMoveLength) && <button onClick={handleAnimationChange}>Next</button>}
+
+      {isSubmitted && (containerUnloadIndex >= containersToMoveLength) && <button 
+        className = "btn-modal-manifest" 
+        onClick={get_manifest}
+        style={{
+          color: "#0087ff",
+          background: "#f1f1f1",
+          width:"10%",
+          height:"65px",
+          top: "35%", 
+          right: "10%",
+          position: "absolute",
+          'border-radius': "3px",
+          'font-size': '18px',
+          display: 'block',
+          fontWeight: 'bold',
+        }}>
+        Download Manifest 
+      </button>}
+
+      {isSubmitted && (containerUnloadIndex >= containersToMoveLength) && <ReminderModal/>}
+
+      {(containerUnloadIndex < containersToMoveLength)  && <InfoCard data={data} index={index}/>}
+
+      {(containerUnloadIndex < containersToMoveLength) && 
+      <button 
+        onClick={handleAnimationChange}
+        style={{
+          padding: '8px 20px',
+          position: 'relative',
+          'text-align': 'right',
+          top: '10%',     
+          right: '0%',
+          'max-width': '290px',
+          'min-width': '80px',
+          height: '55px',
+          display: 'block',
+          margin: '0 auto',
+          'font-size': '18px',
+          color: 'hsla(0,0%,0%)',
+          background: 'hsla(0,0%,80%)',
+          'border-radius': '3px'
+        }}
+        >
+        Next
+      </button>}
+
       </div>
     )
 };

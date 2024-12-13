@@ -136,6 +136,7 @@ def get_transfer_info():
             x, y = map(int, coord.strip("[]").split(","))
             unload_list.append(ship_grid[x - 1][ y - 1])
         print(unload_list)
+        unload_list_names = deepcopy(unload_list)
         tm = TransferManager(load_list,unload_list,ship, LOG_FILE)
         tm.set_goal_locations()
         tm.transfer_algorithm()
@@ -145,15 +146,28 @@ def get_transfer_info():
         path = []
         ids = []
         times = []
+        ops_order = []
+        load_names = [i[0] for i in load]
+        unload_names = [c.get_name() for c in unload_list_names]
+        print("Load: ", load_names)
+        print("Unload: ", unload_names)
         for move in moves:
             ids.append(move[0])
             path.append(move[1])
             times.append(move[2])
+            if move[0] in load_names:
+                ops_order.append("L")
+            elif move[0] in unload_names:
+                ops_order.append("UL")
+            else:
+                pass
+        print(ops_order)
 
         with open(LOG_FILE, 'a') as log:
             msg = get_curr_time() + f"Finished a cycle. Manifest {output_manifest} was written to desktop, and a reminder pop-up to operator to send file was displayed\n"
             log.write(msg)
-        return{'paths': path, 'ids': ids, 'times': times}
+            
+        return{'paths': path, 'ids': ids, 'times': times, 'opsOrder': ops_order}
     
 @app.route("/manifest", methods=["GET"])
 @cross_origin()
