@@ -2,13 +2,14 @@ import "./Card.css"
 import {useState} from 'react'
 import PropTypes from "prop-types";
 
-function Card ({handleSubmit, loadName, setLoadName}) {
+function Card ({handleSubmit, loadName, setLoadName, loadWeight, setLoadWeight}) {
 
     const handle = (e) => {
         e.preventDefault();
         handleSubmit(loadName)
         console.log(`Added ${loadName} to load list`)
         setLoadName("");
+        setLoadWeight("")
       }
 
     return (
@@ -19,6 +20,11 @@ function Card ({handleSubmit, loadName, setLoadName}) {
             type="text"
             value={loadName}
             onChange={(e) => setLoadName(e.target.value)}
+            />
+            <input className = 'con-name'
+            type="number"
+            value={loadWeight}
+            onChange={(e) => setLoadWeight(e.target.value)}
             />
             <button className = "button-name" onClick={handle}> Submit </button>
         </div>

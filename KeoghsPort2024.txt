@@ -1,0 +1,20 @@
+2024-12-12 22:03	Manifest ShipCaseDogOnTopOfCat.txt is loaded. There are 2 containers on the ship
+2024-12-12 22:03	Loaded test1 from truck to ship, Cost: 9 minutes
+2024-12-12 22:03	Finished a cycle. Manifest {manifest_outbound_name} was written to desktop, and a reminder pop-up to operator to send file was displayed
+2024-12-12 22:04	Manifest ShipCaseDogOnTopOfCat.txt is loaded. There are 2 containers on the ship
+2024-12-12 22:04	Loaded test2 from truck to ship, Cost: 9 minutes
+2024-12-12 22:04	Finished a cycle. Manifest {manifest_outbound_name} was written to desktop, and a reminder pop-up to operator to send file was displayed
+2024-12-12 22:04	Offloaded Dog to truck, Cost: 10 minutes
+2024-12-12 22:04	Finished a cycle. Manifest {manifest_outbound_name} was written to desktop, and a reminder pop-up to operator to send file was displayed
+2024-12-12 22:04	Offloaded Cat to truck, Cost: 11 minutes
+2024-12-12 22:04	Finished a cycle. Manifest {manifest_outbound_name} was written to desktop, and a reminder pop-up to operator to send file was displayed
+2024-12-12 22:05	Manifest ShipCaseDogOnTopOfCat.txt is loaded. There are 2 containers on the ship
+2024-12-12 22:05	Move Dog from (1, 1) to (1, 0), Cost: 2 minutes
+2024-12-12 22:05	Offloaded Cat to truck, Cost: 11 minutes
+2024-12-12 22:05	Finished a cycle. Manifest {manifest_outbound_name} was written to desktop, and a reminder pop-up to operator to send file was displayed
+2024-12-12 22:05	Offloaded Blocked to truck, Cost: 21 minutes
+2024-12-12 22:05	Finished a cycle. Manifest {manifest_outbound_name} was written to desktop, and a reminder pop-up to operator to send file was displayed
+2024-12-12 22:05	Manifest ShipCaseDogOnTopOfCat.txt is loaded. There are 2 containers on the ship
+2024-12-12 22:05	Move Dog from (1, 1) to (1, 0), Cost: 2 minutes
+2024-12-12 22:05	Offloaded Cat to truck, Cost: 11 minutes
+2024-12-12 22:05	Finished a cycle. Manifest {manifest_outbound_name} was written to desktop, and a reminder pop-up to operator to send file was displayed
