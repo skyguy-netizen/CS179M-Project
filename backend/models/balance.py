@@ -26,7 +26,9 @@ class Balance:
         self.moves = []
         self.sub_moves = []
         self.process = []
-        # self.log_file
+        if not log_file:
+            raise Exception("Log file required!!")
+        self.log_file = log_file
 
     
     def balance(self):

@@ -17,6 +17,7 @@ from backend.models.user import set_user, get_user
 from backend.utils.manifest_handler import set_file, set_name, get_file, get_name
 from utils.log_handler import set_comment, get_comment
 from backend.models.cargo import Cargo
+from backend.utils.functions_util import get_curr_time
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -25,7 +26,9 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 ship = None
 process = None
 moves = None
+user = None
 LOG_FILE = None
+manifest_name = None
 
 @app.route("/fileUploadLoad", methods=["POST", "GET"])
 @cross_origin()
@@ -35,7 +38,15 @@ def fileUploadLoad():
             return "File not found!", 400
         file = request.files['file']
         global ship
+        global manifest_name
         ship = set_file(file)
+        manifest_name = file.filename
+
+        with open(LOG_FILE, 'a') as log:
+            msg = get_curr_time() + f"Manifest {file.filename} is loaded. There are {ship.get_containers()} containers on the ship\n"
+            log.write(msg)
+        
+
         set_name(file.filename)
         return{"Success":200}
     return {'message': get_file()}
@@ -49,7 +60,7 @@ def fileUploadBalance():
         file = request.files['file']
         file_name = file.filename
         ship = create_ship(file)
-        balance_instance = Balance(ship, file_name)
+        balance_instance = Balance(ship, file_name, LOG_FILE)
         balance_instance.balance()
         process = balance_instance.process
         return{"Success": 200}
@@ -69,7 +80,19 @@ def login():
         first_name = request.get_json()
         if not first_name:
             return (jsonify({"Message": "You must include a first name."}), 400)
-        set_user(first_name)
+        
+        global user
+        prev_user = deepcopy(user)
+        user = first_name['first_name']
+
+        with open(LOG_FILE, 'a') as log:
+            time = get_curr_time()
+            msg = ""
+            if prev_user:
+                msg += f"{time}{prev_user} signs out\n"
+                
+            msg += f"{time}{user} signs in\n"
+            log.write(msg)
         return{"Success":200}
     return {'first_name': get_user()}
 
@@ -103,7 +126,7 @@ def get_transfer_info():
         print(unload)
         ship_grid = [[None for _ in range(12)] for _ in range(8)]
         ship_grid = ship.shipgrid
-        load_list = [Cargo(name, None) for name in load]
+        load_list = [Cargo(container_name=item[0], weight = item[1]) for item in load]
         unload_list = []
         print(ship_grid)
         for coord in unload:
@@ -113,6 +136,8 @@ def get_transfer_info():
         tm = TransferManager(load_list,unload_list,ship, LOG_FILE)
         tm.set_goal_locations()
         tm.transfer_algorithm()
+        output_manifest = manifest_name.rsplit('.', 1)[0] + "OUTBOUND.txt"
+        tm.update_manifest(output_manifest)
         moves = tm.get_paths()
         path = []
         ids = []
@@ -121,6 +146,10 @@ def get_transfer_info():
             ids.append(move[0])
             path.append(move[1])
             times.append(move[2])
+
+        with open(LOG_FILE, 'a') as log:
+            msg = get_curr_time() + "Finished a cycle. Manifest {manifest_outbound_name} was written to desktop, and a reminder pop-up to operator to send file was displayed\n"
+            log.write(msg)
         return{'paths': path, 'ids': ids, 'times': times}
 
 # @app.route("/log", methods=["GET"])
@@ -149,20 +178,20 @@ def init_log_file():
     curr_year = datetime.datetime.now().year
 
     log_file = None
-    suffix = "_log_file.log"
+    prefix = "KeoghsPort"
 
     for file in os.listdir('.'):
-        if suffix in file:
+        if prefix in file:
             log_file = file
     
     if log_file:
-        log_file_year = int(log_file.split('_')[0])
+        log_file_year = int(log_file.split('.')[0][-4:])
         if log_file_year != curr_year:
             os.remove(log_file)
             log_file = None
         
     if not log_file:
-        log_file = f"{curr_year}{suffix}"
+        log_file = f"{prefix}{curr_year}.txt"
 
         open(log_file, 'w').close()
 
