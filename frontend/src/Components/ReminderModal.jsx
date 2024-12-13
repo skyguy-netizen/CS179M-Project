@@ -2,12 +2,19 @@
 
 import { useState } from "react";
 import "./SubmitLoad.css";
+import { useNavigate } from "react-router";
 
 function ReminderModal() {
   const [modal_load, setModal_load] = useState(false);
+  const navigate = useNavigate();
 
   const toggleModal = () => {
     setModal_load(!modal_load);
+  };
+
+  const toggleComplete = () => {
+    setModal_load(!modal_load);
+    navigate("/")
   };
 
   if(modal_load) {
@@ -31,7 +38,7 @@ function ReminderModal() {
             <button className="close-load-modal" onClick={toggleModal}>
               Close
             </button>
-            <button className="log-load-modal" onClick={toggleModal}>
+            <button className="log-load-modal" onClick={toggleComplete}>
               Complete
             </button>
           </div>

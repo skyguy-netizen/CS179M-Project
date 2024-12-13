@@ -41,9 +41,6 @@ function SubmitLoad({handleLoad}) {
             <button 
               className="log-load-modal" 
               onClick={handle}
-              style = {{
-                
-              }}
             >
               Submit
             </button>

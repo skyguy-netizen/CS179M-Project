@@ -23,6 +23,13 @@
     margin-top: 7px;
 }
 
+.steps {
+    margin-top: 7px;
+    top: 0.5%;
+    right:3.5%;
+    position: absolute;
+}
+
 .button-name {
     margin-top: 7px;
     position: absolute;

@@ -26,7 +26,12 @@ function InfoCard ({data, index, length}) {
 
     return (
         <div className = 'card-info'>
-          <h2> { load === "true" ? "Load" : "Unload" } </h2>
+          <h2 className = 'steps'> Steps {index + 1} of {length} </h2>
+          <h2
+          style={{
+            'margin-top': '7px'
+          }}
+          > { load === "true" ? "Load" : "Unload" } </h2>
           <h2> Estimated Time: {data.times[index]} minutes </h2>
           <h2> Container: {data.ids[index]} </h2>
           <h2> Source: { load === "true" ? "Truck" : load_path(data) } </h2>
