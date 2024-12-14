@@ -8,6 +8,7 @@ const baseUrl = "http://127.0.0.1:5000"
 
 export default function SignInModal() {
   const [modal, setModal] = useState(false);
+  const [signedInName, setSignedInName] = useState(""); 
   const [firstName, setFirstName] = useState("");
 
   const toggleModal = () => {
@@ -25,6 +26,7 @@ export default function SignInModal() {
     };
     
     const data = {first_name: firstName};
+    setSignedInName(firstName);
 
     axios
       .post(`${baseUrl}/login`, JSON.stringify(data), config)
@@ -43,7 +45,7 @@ export default function SignInModal() {
   return (
     <>
       <button onClick={toggleModal} className="btn-modal">
-        Sign In
+        {signedInName === "" ? "Sign In" :  signedInName}
       </button>
 
       {modal && (

@@ -7,6 +7,12 @@ const NavButton = ({Icon, Text}) => {
       <Link to="/LoadPage" className='bg-white rounded-full w-48 h-48 flex justify-center items-center'>
         <Icon/>
       </Link>
+      <Link to="/BalancePage" className='bg-white rounded-full w-48 h-48 flex justify-center items-center'>
+        <Icon/>
+      </Link>
+      <Link to="/" className='bg-white rounded-full w-48 h-48 flex justify-center items-center'>
+        <Icon/>
+      </Link>
       <h2 className='mt-4 text-[#0087ff]'>{Text}</h2>
     </div>
   )

@@ -1,0 +1,90 @@
+2024-12-12 22:03	Manifest ShipCaseDogOnTopOfCat.txt is loaded. There are 2 containers on the ship
+2024-12-12 22:03	Loaded test1 from truck to ship, Cost: 9 minutes
+2024-12-12 22:03	Finished a cycle. Manifest {manifest_outbound_name} was written to desktop, and a reminder pop-up to operator to send file was displayed
+2024-12-12 22:04	Manifest ShipCaseDogOnTopOfCat.txt is loaded. There are 2 containers on the ship
+2024-12-12 22:04	Loaded test2 from truck to ship, Cost: 9 minutes
+2024-12-12 22:04	Finished a cycle. Manifest {manifest_outbound_name} was written to desktop, and a reminder pop-up to operator to send file was displayed
+2024-12-12 22:04	Offloaded Dog to truck, Cost: 10 minutes
+2024-12-12 22:04	Finished a cycle. Manifest {manifest_outbound_name} was written to desktop, and a reminder pop-up to operator to send file was displayed
+2024-12-12 22:04	Offloaded Cat to truck, Cost: 11 minutes
+2024-12-12 22:04	Finished a cycle. Manifest {manifest_outbound_name} was written to desktop, and a reminder pop-up to operator to send file was displayed
+2024-12-12 22:05	Manifest ShipCaseDogOnTopOfCat.txt is loaded. There are 2 containers on the ship
+2024-12-12 22:05	Move Dog from (1, 1) to (1, 0), Cost: 2 minutes
+2024-12-12 22:05	Offloaded Cat to truck, Cost: 11 minutes
+2024-12-12 22:05	Finished a cycle. Manifest {manifest_outbound_name} was written to desktop, and a reminder pop-up to operator to send file was displayed
+2024-12-12 22:05	Offloaded Blocked to truck, Cost: 21 minutes
+2024-12-12 22:05	Finished a cycle. Manifest {manifest_outbound_name} was written to desktop, and a reminder pop-up to operator to send file was displayed
+2024-12-12 22:05	Manifest ShipCaseDogOnTopOfCat.txt is loaded. There are 2 containers on the ship
+2024-12-12 22:05	Move Dog from (1, 1) to (1, 0), Cost: 2 minutes
+2024-12-12 22:05	Offloaded Cat to truck, Cost: 11 minutes
+2024-12-12 22:05	Finished a cycle. Manifest {manifest_outbound_name} was written to desktop, and a reminder pop-up to operator to send file was displayed
+2024-12-13 13:17	Manifest ShipCaseDogOnTopOfCat.txt is loaded. There are 2 containers on the ship
+2024-12-13 13:18	Move Dog from (1, 1) to (1, 0), Cost: 2 minutes
+2024-12-13 13:18	Offloaded Cat to truck, Cost: 11 minutes
+2024-12-13 13:18	Loaded Test8 from truck to ship, Cost: 8 minutes
+2024-12-13 13:18	Loaded Test4 from truck to ship, Cost: 7 minutes
+2024-12-13 13:18	Manifest ShipCaseDogOnTopOfCat.txt is loaded. There are 2 containers on the ship
+2024-12-13 13:18	Offloaded Dog to truck, Cost: 10 minutes
+2024-12-13 13:18	Loaded Test7 from truck to ship, Cost: 9 minutes
+2024-12-13 13:18	Manifest ShipCaseDogOnTopOfCat.txt is loaded. There are 2 containers on the ship
+2024-12-13 13:19	Offloaded Dog to truck, Cost: 10 minutes
+2024-12-13 13:19	Loaded Test1 from truck to ship, Cost: 9 minutes
+2024-12-13 14:34	Manifest ShipCaseDogOnTopOfCat.txt is loaded. There are 2 containers on the ship
+2024-12-13 14:34	Offloaded Dog to truck, Cost: 10 minutes
+2024-12-13 14:34	Loaded test1 from truck to ship, Cost: 9 minutes
+2024-12-13 15:03	test signs in
+2024-12-13 15:03	test signs out
+2024-12-13 15:03	test1 signs in
+2024-12-13 15:05	test1 signs out
+2024-12-13 15:05	test signs in
+2024-12-13 15:05	test signs out
+2024-12-13 15:05	test1 signs in
+2024-12-13 15:05	Manifest ShipCaseDogOnTopOfCat.txt is loaded. There are 2 containers on the ship
+2024-12-13 15:06	Move Dog from (1, 1) to (1, 0), Cost: 2 minutes
+2024-12-13 15:06	Offloaded Cat to truck, Cost: 11 minutes
+2024-12-13 15:06	Loaded test3 from truck to ship, Cost: 8 minutes
+2024-12-13 15:06	Finished a cycle. Manifest ShipCaseDogOnTopOfCatOUTBOUND.txt was written to desktop, and a reminder pop-up to operator to send file was displayed
+2024-12-13 15:09	Manifest ShipCaseDogOnTopOfCat.txt is loaded. There are 2 containers on the ship
+2024-12-13 15:36	Loaded test1 from truck to ship, Cost: 9 minutes
+2024-12-13 15:36	Finished a cycle. Manifest ShipCaseDogOnTopOfCatOUTBOUND.txt was written to desktop, and a reminder pop-up to operator to send file was displayed
+2024-12-13 15:38	Manifest ShipCaseDogOnTopOfCat.txt is loaded. There are 2 containers on the ship
+2024-12-13 15:45	Manifest ShipCaseDogOnTopOfCat.txt is loaded. There are 2 containers on the ship
+2024-12-13 16:03	Manifest ShipCaseDogOnTopOfCat.txt is loaded. There are 2 containers on the ship
+2024-12-13 16:03	Offloaded Dog to truck, Cost: 10 minutes
+2024-12-13 16:03	Finished a cycle. Manifest ShipCaseDogOnTopOfCatOUTBOUND.txt was written to desktop, and a reminder pop-up to operator to send file was displayed
+2024-12-13 16:04	Manifest ShipCaseDogOnTopOfCat.txt is loaded. There are 2 containers on the ship
+2024-12-13 16:04	Offloaded Dog to truck, Cost: 10 minutes
+2024-12-13 16:04	Finished a cycle. Manifest ShipCaseDogOnTopOfCatOUTBOUND.txt was written to desktop, and a reminder pop-up to operator to send file was displayed
+2024-12-13 16:05	Manifest ShipCaseDogOnTopOfCat.txt is loaded. There are 2 containers on the ship
+2024-12-13 16:05	Offloaded Dog to truck, Cost: 10 minutes
+2024-12-13 16:05	Finished a cycle. Manifest ShipCaseDogOnTopOfCatOUTBOUND.txt was written to desktop, and a reminder pop-up to operator to send file was displayed
+2024-12-13 16:05	Manifest ShipCaseDogOnTopOfCat.txt is loaded. There are 2 containers on the ship
+2024-12-13 16:05	Move Dog from (1, 1) to (1, 0), Cost: 2 minutes
+2024-12-13 16:05	Offloaded Cat to truck, Cost: 11 minutes
+2024-12-13 16:05	Finished a cycle. Manifest ShipCaseDogOnTopOfCatOUTBOUND.txt was written to desktop, and a reminder pop-up to operator to send file was displayed
+2024-12-13 16:06	Manifest ShipCaseDogOnTopOfCat.txt is loaded. There are 2 containers on the ship
+2024-12-13 16:06	Offloaded Dog to truck, Cost: 10 minutes
+2024-12-13 16:06	Finished a cycle. Manifest ShipCaseDogOnTopOfCatOUTBOUND.txt was written to desktop, and a reminder pop-up to operator to send file was displayed
+2024-12-13 16:07	Manifest ShipCaseDogOnTopOfCat.txt is loaded. There are 2 containers on the ship
+2024-12-13 16:07	Offloaded Dog to truck, Cost: 10 minutes
+2024-12-13 16:07	Finished a cycle. Manifest ShipCaseDogOnTopOfCatOUTBOUND.txt was written to desktop, and a reminder pop-up to operator to send file was displayed
+2024-12-13 16:07	Manifest ShipCaseDogOnTopOfCat.txt is loaded. There are 2 containers on the ship
+2024-12-13 16:07	Offloaded Dog to truck, Cost: 10 minutes
+2024-12-13 16:07	Finished a cycle. Manifest ShipCaseDogOnTopOfCatOUTBOUND.txt was written to desktop, and a reminder pop-up to operator to send file was displayed
+2024-12-13 16:08	Manifest ShipCaseDogOnTopOfCat.txt is loaded. There are 2 containers on the ship
+2024-12-13 16:08	Offloaded Dog to truck, Cost: 10 minutes
+2024-12-13 16:08	Finished a cycle. Manifest ShipCaseDogOnTopOfCatOUTBOUND.txt was written to desktop, and a reminder pop-up to operator to send file was displayed
+2024-12-13 16:09	Manifest ShipCaseDogOnTopOfCat.txt is loaded. There are 2 containers on the ship
+2024-12-13 16:09	Move Dog from (1, 1) to (1, 0), Cost: 2 minutes
+2024-12-13 16:09	Offloaded Cat to truck, Cost: 11 minutes
+2024-12-13 16:09	Finished a cycle. Manifest ShipCaseDogOnTopOfCatOUTBOUND.txt was written to desktop, and a reminder pop-up to operator to send file was displayed
+2024-12-13 16:13	Manifest ShipCaseDogOnTopOfCat.txt is loaded. There are 2 containers on the ship
+2024-12-13 16:13	Move Dog from (1, 1) to (1, 0), Cost: 2 minutes
+2024-12-13 16:13	Offloaded Cat to truck, Cost: 11 minutes
+2024-12-13 16:13	Finished a cycle. Manifest ShipCaseDogOnTopOfCatOUTBOUND.txt was written to desktop, and a reminder pop-up to operator to send file was displayed
+2024-12-13 16:16	Manifest ShipCaseDogOnTopOfCat.txt is loaded. There are 2 containers on the ship
+2024-12-13 16:16	Loaded test4 from truck to ship, Cost: 9 minutes
+2024-12-13 16:16	Finished a cycle. Manifest ShipCaseDogOnTopOfCatOUTBOUND.txt was written to desktop, and a reminder pop-up to operator to send file was displayed
+2024-12-13 16:19	Manifest ShipCaseDogOnTopOfCat.txt is loaded. There are 2 containers on the ship
+2024-12-13 16:23	Manifest ShipCaseDogOnTopOfCat.txt is loaded. There are 2 containers on the ship
+2024-12-13 16:24	Manifest ShipCaseDogOnTopOfCat.txt is loaded. There are 2 containers on the ship

@@ -5,7 +5,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '.
 
 from backend.models.cargo import Cargo
 from backend.models.ship import Ship
-from backend.utils.functions_util import get_path
+from backend.utils.functions_util import get_path, get_curr_time
 
 class TransferManager:
     def __init__(self, load_list: List[Cargo], unload_list: List[Cargo], ship_grid: Ship, log_file: str = None):
@@ -136,22 +136,23 @@ class TransferManager:
 
         with open(self.log_file, 'a') as log:
             log_string = '\n'.join(self.container_log)
-            log.write(log_string)
+            log.write(log_string + "\n")
             
         print(f"\n Total Time Estimate: {self.time_estimate} minutes")
 
 
     def update_log(self, cargo: Cargo, start, cost, load=True, move_blocking = False): 
         if move_blocking:
-            self.container_log.append(f"Move {cargo.get_name()} from {start} to {cargo.get_pos()}, Cost: {cost} minutes") 
+            self.container_log.append(f"{get_curr_time()}Move {cargo.get_name()} from {start} to {cargo.get_pos()}, Cost: {cost} minutes") 
         elif load:
-            self.container_log.append(f"Loaded {cargo.get_name()} from truck to {cargo.get_pos()}, Cost: {cost} minutes")
+            self.container_log.append(f"{get_curr_time()}Loaded {cargo.get_name()} from truck to ship, Cost: {cost} minutes")
         else:
-            self.container_log.append(f"Move {cargo.get_name()} from {start} to truck, Cost: {cost} minutes") 
+            self.container_log.append(f"{get_curr_time()}Offloaded {cargo.get_name()} to truck, Cost: {cost} minutes") 
         self.time_estimate += cost
 
     def update_manifest(self, output_file_name=None):
-        with open(output_file_name, "w") as f:
+        filePath = "../static/manifest" + output_file_name
+        with open(filePath, "w") as f:
             for y in range (8):
                 for x in range (12):
                     cell = self.ship_grid.shipgrid[y][x]

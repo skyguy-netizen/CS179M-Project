@@ -1,0 +1,69 @@
+/* Credit: https://github.com/ecole-du-web/react-modal  */
+
+body.active-load-modal {
+    overflow-y: hidden;
+}
+
+.btn-modal-load {
+    padding: 8px 20px;
+    position: relative;
+    text-align: right;
+    top: 10%;     
+    right: 0%;
+    max-width: 290px;
+    min-width: 120px;
+    height: 55px;
+    display: block;
+    margin: 0 auto;
+    font-size: 18px;
+    color:hsla(0,0%,0%);
+    background: hsla(0,0%,80%);
+    border-radius: 3px
+}
+
+.modal-load, .overlay-load {
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+}
+
+.overlay-load {
+    background: rgba(49,49,49,0.8);
+}
+.modal-load-content {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    line-height: 1.4;
+    background: #f1f1f1;
+    padding: 20px 28px;
+    border-radius: 3px;
+    max-width: 500px;
+    min-width: 350px;
+    height: 150px;
+    text-align: center;
+}
+
+.log-load-modal {
+    margin-top: 20px;
+}
+
+.modal-load-input {
+    margin-top: 15px;
+}
+
+.modal-load-sign {
+    color:#0087ff;
+}
+
+.close-load-modal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 7px;
+}

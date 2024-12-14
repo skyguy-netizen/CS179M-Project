@@ -33,7 +33,8 @@ class Balance:
         self.log_file = log_file
         self.total_time = 0
 
-
+    def check_balance(self):
+        return self.initial.goal_state
 
     
     def balance(self):
@@ -49,6 +50,7 @@ class Balance:
         self.update_log()
 
     def balance_iter(self):
+        print("itera bal")
         grids_states = []
         past_states = set()
 
@@ -58,6 +60,7 @@ class Balance:
             for y in range(0,8):
                 if isinstance(self.initial.shipgrid[y][x], Cargo):
                     containers.append(self.initial.shipgrid[y][x])
+                    print(self.initial.shipgrid[y][x].container_name)
                 elif self.initial.shipgrid[y][x] == 0:
                     break
 
@@ -66,20 +69,24 @@ class Balance:
         past_states.add(self.initial.compression)
 
         while True:
+            
             if len(grids_states) == 0:
                 self.sift()
                 break
 
             current_grid = grids_states[0][1]
+
+
             del grids_states[0]
             if current_grid.goal_state: 
+
                 self.initial = copy.deepcopy(current_grid)
 
                 self.moves = current_grid.moves
                 self.sub_moves = current_grid.total_moves
-
+                print_grid(self.initial.shipgrid)
                 for i in range(len(self.moves)):
-                    self.process.append([str(current_grid.names[i])[2:(len(current_grid.names[i]))], current_grid.distances[i], current_grid.total_moves[i]])
+                    self.process.append([str(current_grid.names[i]), current_grid.distances[i], current_grid.total_moves[i]])
 
                 break
 
@@ -95,13 +102,14 @@ class Balance:
                 for y in range(0,8):
                     if isinstance(current_grid.shipgrid[y][x], Cargo) :
                         container_location.append([y,x])
-                    elif current_grid.shipgrid[y][x] == 0:
-                        break
-            
+
+                    
+
             for container_y, container_x in container_location:
                 if current_grid.shipgrid[container_y+1][container_x] != 0:
                     continue
                 for space_y, space_x in empty_spaces:
+
                     if space_x == container_x:
                         continue
 
@@ -109,7 +117,13 @@ class Balance:
                     new_grid.shipgrid[space_y][space_x] = current_grid.shipgrid[container_y][container_x]
                     new_grid.shipgrid[container_y][container_x] = 0
                     
-                    dist, moves = current_grid.find_distance([container_y, container_x],[space_y, space_x])
+                    dist = current_grid.find_distance([container_y, container_x],[space_y, space_x])
+                    if dist == -1:
+                        continue
+
+                    moves=dist[1]
+                    dist=dist[0]
+                    
                     new_grid.total_moves.append(moves)
                     new_grid.moves.append([[container_y, container_x],[space_y, space_x]])
                     new_grid.names.append(current_grid.shipgrid[container_y][container_x].container_name)
@@ -125,6 +139,7 @@ class Balance:
                     new_grid.compress()
 
                     if not new_grid.compression in past_states:
+
                         grids_states.append((new_grid.fx,new_grid))
 
                         past_states.add(new_grid.compression)
@@ -293,8 +308,7 @@ class Balance:
 
 
     def update_manifest(self):
-
-        f = open("../" + self.input_file[:len(self.input_file)-4]+"OUTBOUND.txt", "w")
+        f = open("../static/manifest/" + self.input_file[:len(self.input_file)-4]+"OUTBOUND.txt", "w")
 
         for y in range(8):
             for x in range(12):
@@ -302,7 +316,7 @@ class Balance:
                 
                 if isinstance(self.initial.shipgrid[y][x],Cargo):
                     weight_zeros = 5-len(str(self.initial.shipgrid[y][x].weight))
-                    f.write("[0"+str(y)+","+ x_zeros*str("0")+str(x)+"], {"+weight_zeros*str("0") + str(self.initial.shipgrid[y][x].weight)+"}, "+str(self.initial.shipgrid[y][x].container_name)[2:len(self.initial.shipgrid[y][x].container_name)] + '\n')
+                    f.write("[0"+str(y)+","+ x_zeros*str("0")+str(x)+"], {"+weight_zeros*str("0") + str(self.initial.shipgrid[y][x].weight)+"}, "+str(self.initial.shipgrid[y][x].container_name)[:len(self.initial.shipgrid[y][x].container_name)] + '\n')
                 elif self.initial.shipgrid[y][x] == 0:
                     f.write("[0"+str(y)+","+  x_zeros*str("0")+str(x)+"], {00000}, UNUSED\n")
                 elif self.initial.shipgrid[y][x] == -1:
