@@ -29,7 +29,8 @@ export class MainMenu extends Scene
             fontFamily: 'Arial',
             align: 'center',
         });
-
+        
+        var fullname = name;
         // Crop name if too long to make it fit inside container
         if(name.length > 5) {
             name = name.substr(0, 5);
@@ -70,9 +71,36 @@ export class MainMenu extends Scene
         text1.setPosition(r.x-text1.width/2, r.y-text1.height/2);
         var c = this.add.container();
         c.add([r, text1, text2, text0, weightNum]);
-
+            
         c.setPosition((512-300) + (locY-1) * 50 + 25, (460+200) - (locX-1) * 50 - 25);
         c.setInteractive(new Phaser.Geom.Rectangle(-25, -25, 50, 50), Phaser.Geom.Rectangle.Contains)
+
+        const hoverText = this.add.text(0, 0, '', {
+            fontSize: '12px',
+            color: '#ffffff',
+            backgroundColor: '#000000',
+            fontFamily: 'Arial',
+            align: 'center',
+            padding: { left: 5, right: 5, top: 2, bottom: 2 },
+            alpha: 0, // Initially hidden
+        });
+        hoverText.setDepth(10); // Ensure it stays on top of other elements
+        
+        // Add hover behavior
+        c.on('pointerover', () => {
+            hoverText.setAlpha(1); // Make hover text visible
+            hoverText.setText(`Name: ${fullname}\nWeight: ${weight}\n`);
+            hoverText.setPosition(c.x + 30, c.y - 30); // Position near the container
+        });
+        
+        c.on('pointerout', () => {
+            hoverText.setAlpha(0); // Hide hover text
+        });
+        
+        c.on('pointermove', (pointer) => {
+            // Update hover text position dynamically based on the container
+            hoverText.setPosition(c.x + 30, c.y - 30);
+        });
 
         return c;
     }
@@ -161,9 +189,14 @@ export class MainMenu extends Scene
             
         })
         
+        // let id_count = 0;
         // Load new containers
         this.events.on('load-container', (data) => {
+            const existingCount = this.loadList.filter(c => c.list[1]._text === data[0]).length;
             console.log(this.loadList.length)
+            console.log(`Load List updated:`);
+            this.loadList.forEach(item => console.log(item.list));
+
             if(this.loadList.length == 0) {
                 var temp = this.createContainer(10, 1, data[0], 0, 0, data[1])
                 this.loadList.push(temp)
@@ -171,7 +204,7 @@ export class MainMenu extends Scene
                 temp.on('pointerdown', () => {
                     var cPos = temp.list[2]._text
                     this.loadList = this.loadList.filter(c => c.list[2]._text !== cPos)
-                    temp.destroy()
+                    // temp.destroy()
                     this.containersList = this.containersList.filter(c => c.active);
                     console.log(this.containersList);
                 })
@@ -181,7 +214,10 @@ export class MainMenu extends Scene
                 var pos = this.loadList[this.loadList.length-1].list[2]._text;
                 pos = pos.substr(1, pos.length-2);
                 var xPos = pos.split(',').map(num => Number(num))[1];
-                var temp = this.createContainer(10, xPos+1, data);
+                
+                console.log(`Same container: ${existingCount}`)
+                
+                var temp = this.createContainer(10, xPos+1, data[0], existingCount, 0, data[1]);
                 this.loadList.push(temp)
                 this.containersList.push(temp);
                 temp.on('pointerdown', () => {

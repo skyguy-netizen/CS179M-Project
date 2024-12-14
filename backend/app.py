@@ -27,8 +27,8 @@ moves = None
 user = None
 LOG_FILE = None
 manifest_name = None
-file_name = None
 balance_instance = None
+output_manifest_name = None
 
 @app.route("/fileUploadLoad", methods=["POST", "GET"])
 @cross_origin()
@@ -46,10 +46,10 @@ def fileUploadLoad():
             msg = get_curr_time() + f"Manifest {file.filename} is loaded. There are {ship.get_containers()} containers on the ship\n"
             log.write(msg)
         
-        print("Returning what")
+        # print("Returning what")
         set_name(file.filename)
         return{"Success":200}
-    print(get_file())
+    # print(get_file())
     return {'message': get_file()}
 
 @app.route("/fileUploadBalance", methods=["POST", "GET"])
@@ -60,29 +60,35 @@ def fileUploadBalance():
             return "File not found!", 400
         file = request.files['file']
         global ship
-        global file_name
-        file_name = file.filename
-        set_name(file_name)
+        global manifest_name
+        manifest_name = file.filename
+        set_name(manifest_name)
         # file_copy = deepcopy(file)
 
         ship = create_ship(file)
+        # print(type(ship))
+        with open(LOG_FILE, 'a') as log:
+            msg = get_curr_time() + f"Manifest {file.filename} is loaded. There are {ship.get_containers()} containers on the ship\n"
+            log.write(msg)
         # file_data = create_file_object(file_copy)
         return{"Success": 200}
-    print(get_file())
+    # print(get_file())
     return {"message" : get_file()}
 
 @app.route("/checkbalance", methods=["GET"])
 @cross_origin()
 def check_balance():
     global balance_instance
-    balance_instance = Balance(ship, file_name, LOG_FILE)
-    print(balance_instance.check_balance())
+    balance_instance = Balance(ship, manifest_name, LOG_FILE)
+    # print(balance_instance.check_balance())
     return {"balance" : balance_instance.check_balance()}
     
 @app.route("/balance", methods=["POST"])
 @cross_origin()
 def get_balance_info():
-    
+    global output_manifest_name
+    output_manifest_name = manifest_name.rsplit('.', 1)[0] + "OUTBOUND.txt"
+    balance_instance = Balance(ship, manifest_name, LOG_FILE)
     balance_instance.balance()
     process = balance_instance.process
     path = []
@@ -134,7 +140,7 @@ def comment():
             return (jsonify({"Message": "You must include a comment"}), 400)
         print(comment)
         with open(LOG_FILE, 'a') as log:
-            msg = get_curr_time() + comment['comment']
+            msg = get_curr_time() + comment['comment'] + '\n'
             log.write(msg)
         return{"Success":200}
     return {'comment': "No comment"}
@@ -142,29 +148,29 @@ def comment():
 @app.route("/load", methods=["POST", "GET"])
 @cross_origin()
 def get_transfer_info():
-    print("test")
+    # print("test")
     if(request.method == "POST"):
         data = request.get_json()
         load = data.get('load')
         unload = data.get('unload')
-        print(load)
-        print(unload)        
+        # print(load)
+        # print(unload)        
         ship_grid = [[None for _ in range(12)] for _ in range(8)]
         ship_grid = ship.shipgrid
         load_list = [Cargo(container_name=item[0], weight = item[1]) for item in load]
         unload_list = []
-        print(ship_grid)
+        # print(ship_grid)
         for coord in unload:
             x, y = map(int, coord.strip("[]").split(","))
-            print(x, y)
             unload_list.append(ship_grid[x - 1][ y - 1])
-        print("Unload list: ", unload_list)
+        # print("Unload list: ", unload_list)
         unload_list_names = deepcopy(unload_list)
         tm = TransferManager(load_list,unload_list,ship, LOG_FILE)
         tm.set_goal_locations()
         tm.transfer_algorithm()
-        output_manifest = manifest_name.rsplit('.', 1)[0] + "OUTBOUND.txt"
-        tm.update_manifest(output_manifest)
+        global output_manifest_name
+        output_manifest_name = manifest_name.rsplit('.', 1)[0] + "OUTBOUND.txt"
+        tm.update_manifest(output_manifest_name)
         moves = tm.get_paths()
         path = []
         ids = []
@@ -184,14 +190,17 @@ def get_transfer_info():
                 ops_order.append("UL")
             else:
                 pass
-        print(ops_order)
+        # print(ops_order)
 
         tm.clear_paths()
-        with open(LOG_FILE, 'a') as log:
-            msg = get_curr_time() + f"Finished a cycle. Manifest {output_manifest} was written to desktop, and a reminder pop-up to operator to send file was displayed\n"
-            log.write(msg)
-            
-        return{'paths': path, 'ids': ids, 'times': times, 'opsOrder': ops_order}
+        # with open(LOG_FILE, 'a') as log:
+        #     msg = get_curr_time() + f"Finished a cycle. Manifest {output_manifest} was written to desktop, and a reminder pop-up to operator to send file was displayed\n"
+        #     log.write(msg)
+        # import json
+        # print(json.dumps({'paths': path, 'ids': ids, 'times': times, 'opsOrder': ops_order}, indent=4))
+        print(ids)
+        print(path)
+        return {'paths': path, 'ids': ids, 'times': times, 'opsOrder': ops_order}
     
 @app.route("/manifest", methods=["GET"])
 @cross_origin()
@@ -206,29 +215,40 @@ def manifest():
         print(f"Error occurred while sending file: {e}")
         return "File not found or error occurred", 404
 
+@app.route("/complete_cycle", methods=["POST"])
+@cross_origin()
+def complete_cycle():
+    print("Cycle complete!")
+    with open(LOG_FILE, 'a') as log:
+        msg = get_curr_time() + f"Finished a cycle. Manifest {output_manifest_name} was written to desktop, and a reminder pop-up to operator to send file was displayed\n"
+        log.write(msg)
+    return {"Success" : 200}
+
 def init_log_file():
     curr_year = datetime.datetime.now().year
 
     log_file = None
     prefix = "KeoghsPort"
-
-    for file in os.listdir('.'):
+    home_directory = os.path.expanduser('~')  # Get the home directory cross-platform
+    print(home_directory)
+    for file in os.listdir(home_directory):
         if prefix in file:
             log_file = file
     
     if log_file:
         log_file_year = int(log_file.split('.')[0][-4:])
         if log_file_year != curr_year:
-            os.remove(log_file)
+            os.remove(os.path.join(home_directory, log_file))
             log_file = None
         
     if not log_file:
         log_file = f"{prefix}{curr_year}.txt"
 
-        open(log_file, 'w').close()
+        open(os.path.join(home_directory, log_file), 'w').close()
 
     global LOG_FILE
-    LOG_FILE = log_file
+    LOG_FILE = os.path.join(home_directory, log_file)
+    print("Log file location: ", os.path.join(home_directory, log_file))
 
 if __name__ == '__main__':
     init_log_file()

@@ -68,6 +68,9 @@ class TransferManager:
                 cargo.pos = open_pos
                 self.update_log(cargo,open_pos,move_cost)
                 return
+            else:
+                print("None found")
+        
         
 
     def print_moves(self,):
@@ -122,7 +125,7 @@ class TransferManager:
                 print(f"Unloading {cargo.container_name} from {cargo.pos}.")
                 self.unload(cargo)
                 print(f"Unloaded {cargo.container_name} from {cargo.pos}.")
-                self.print_grid()
+                # self.print_grid()
                 print("\n")
 
             # Process LoadList
@@ -151,7 +154,7 @@ class TransferManager:
         self.time_estimate += cost
 
     def update_manifest(self, output_file_name=None):
-        filePath = output_file_name
+        filePath = "../static/manifest/" + output_file_name
         with open(filePath, "w") as f:
             for y in range (8):
                 for x in range (12):

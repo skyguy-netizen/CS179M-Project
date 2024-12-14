@@ -53,14 +53,20 @@ const LoadPage = () => {
   }, [])
 
   const handleSubmit = (loadName, setError) => {
-    console.log(loadWeight)
-    if(loadName == "" || loadName == "NAN") {
-      setError("Enter valid name")
+    console.log(loadWeight);
+    const trimmedName = loadName.trim();
+
+    if (!trimmedName || trimmedName.toLowerCase() === "nan" || trimmedName.toLowerCase() === "unused") {
+      setError("Enter a valid name (not blank, NaN, or UNUSED)");
       return;
     }
-    else {
-      setError("")
+    
+    if (!loadWeight || isNaN(loadWeight) || Number(loadWeight) <= 0) {
+      setError("Enter a valid weight greater than 0");
+      return;
     }
+  
+    setError("");
     setLoad((prevLoad) => [...prevLoad, [loadName, Number(loadWeight)]]); 
     setLoadName(loadName);
     console.log(`Load updated: ${loadName}`);
