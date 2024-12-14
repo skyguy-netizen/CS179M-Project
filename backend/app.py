@@ -5,7 +5,6 @@ import datetime
 import sys, os
 from io import BytesIO
 import textwrap
-from fpdf import FPDF
 
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
