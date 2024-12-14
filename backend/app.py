@@ -67,6 +67,9 @@ def fileUploadBalance():
         # file_copy = deepcopy(file)
 
         ship = create_ship(file)
+        with open(LOG_FILE, 'a') as log:
+            msg = get_curr_time() + f"Manifest {file.filename} is loaded. There are {ship.get_containers()} containers on the ship\n"
+            log.write(msg)
         # file_data = create_file_object(file_copy)
         return{"Success": 200}
     print(get_file())
@@ -135,7 +138,7 @@ def comment():
             return (jsonify({"Message": "You must include a comment"}), 400)
         print(comment)
         with open(LOG_FILE, 'a') as log:
-            msg = get_curr_time() + comment['comment']
+            msg = get_curr_time() + comment['comment'] + '\n'
             log.write(msg)
         return{"Success":200}
     return {'comment': "No comment"}
