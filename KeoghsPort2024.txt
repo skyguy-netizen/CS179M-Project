@@ -124,3 +124,23 @@
 2024-12-13 22:57	Manifest SilverQueen.txt is loaded. There are 4 containers on the ship
 2024-12-13 22:57	Offloaded Rations for US Army to truck, Cost: 10 minutes
 2024-12-13 22:57	Finished a cycle. Manifest SilverQueenOUTBOUND.txt was written to desktop, and a reminder pop-up to operator to send file was displayed
+2024-12-13 23:05	Manifest SilverQueen.txt is loaded. There are 4 containers on the ship
+2024-12-13 23:06	Manifest SilverQueen.txt is loaded. There are 4 containers on the ship
+2024-12-13 23:07	Manifest SilverQueen.txt is loaded. There are 4 containers on the ship
+2024-12-13 23:10	Manifest SilverQueen.txt is loaded. There are 4 containers on the ship
+2024-12-13 23:12	Manifest SilverQueen.txt is loaded. There are 4 containers on the ship
+2024-12-13 23:13	Manifest SilverQueen.txt is loaded. There are 4 containers on the ship
+2024-12-13 23:13	Manifest SilverQueen.txt is loaded. There are 4 containers on the ship
+2024-12-13 23:14	Manifest SilverQueen.txt is loaded. There are 4 containers on the ship
+2024-12-13 23:15	Manifest SilverQueen.txt is loaded. There are 4 containers on the ship
+2024-12-13 23:17	Manifest SilverQueen.txt is loaded. There are 4 containers on the ship
+2024-12-13 23:19	Manifest SilverQueen.txt is loaded. There are 4 containers on the ship
+2024-12-13 23:20	Manifest SilverQueen.txt is loaded. There are 4 containers on the ship
+2024-12-13 23:21	Manifest SilverQueen.txt is loaded. There are 4 containers on the ship
+2024-12-13 23:22	Manifest SilverQueen.txt is loaded. There are 4 containers on the ship
+2024-12-13 23:22	Manifest SilverQueen.txt is loaded. There are 4 containers on the ship
+2024-12-13 23:23	Manifest SilverQueen.txt is loaded. There are 4 containers on the ship
+2024-12-13 23:23	Loaded test1 from truck to ship, Cost: 9 minutes
+2024-12-13 23:24	Manifest SilverQueen.txt is loaded. There are 4 containers on the ship
+2024-12-13 23:24	Loaded test from truck to ship, Cost: 9 minutes
+2024-12-13 23:24	Finished a cycle. Manifest SilverQueenOUTBOUND.txt was written to desktop, and a reminder pop-up to operator to send file was displayed

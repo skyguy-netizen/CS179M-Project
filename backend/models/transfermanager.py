@@ -151,7 +151,7 @@ class TransferManager:
         self.time_estimate += cost
 
     def update_manifest(self, output_file_name=None):
-        filePath = "../static/manifest/" + output_file_name
+        filePath = output_file_name
         with open(filePath, "w") as f:
             for y in range (8):
                 for x in range (12):

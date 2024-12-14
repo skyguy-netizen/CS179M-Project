@@ -53,6 +53,7 @@ const LoadPage = () => {
   }, [])
 
   const handleSubmit = (loadName, setError) => {
+    console.log(loadWeight)
     if(loadName == "" || loadName == "NAN") {
       setError("Enter valid name")
       return;
@@ -101,7 +102,7 @@ const LoadPage = () => {
   }
 
   function handleAddLoadContainer() {
-    phaserRef.current.scene.events.emit('load-container', loadName);
+    phaserRef.current.scene.events.emit('load-container', [loadName, loadWeight]);
     setLoadName("")
   }
 
