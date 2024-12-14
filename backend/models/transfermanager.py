@@ -152,7 +152,11 @@ class TransferManager:
 
     def update_manifest(self, output_file_name=None):
         filePath = "../static/manifest/" + output_file_name
-        with open(filePath, "w") as f:
+        if os.path.exists(filePath):
+            print("file exists")
+        else:
+            print("file does not exist")
+        with open(output_file_name, "w") as f:
             for y in range (8):
                 for x in range (12):
                     cell = self.ship_grid.shipgrid[y][x]

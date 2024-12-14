@@ -69,6 +69,10 @@ export class MainMenu extends Scene
     {
         var unload = [];
 
+        this.add.image(300, 500, 'crane');
+
+        this.craneLine = this.add.line(0, 0, 0, 0, 0, 0, 0x000000, 1).setLineWidth(3).setDepth(1);
+
         // Loading containers list
         const text1 = this.add.text(512, 100, "Containers:", {
             fontSize: '20px',
@@ -103,10 +107,14 @@ export class MainMenu extends Scene
         for(let i = 0;i < this.containersList.length;i++) {
             // If container is clicked and has a name add it to unload list
             this.containersList[i].list[1]._text !== "" && this.containersList[i].on('pointerdown', (pointer, x, y, event) => {
-                if(!unload.find(c => c === this.containersList[i].list[2]._text))
+                if(!unload.find(c => c === this.containersList[i].list[2]._text)) {
                     unload = unload.concat(this.containersList[i].list[2]._text);
-                else
+                    this.containersList[i].list[0].setStrokeStyle(1, 0xFFFFFF);
+                }
+                else {
                     unload = unload.filter(c => c !== this.containersList[i].list[2]._text);
+                    this.containersList[i].list[0].setStrokeStyle(1, 0x000000);
+                }
 
                 // State update from react
                 var updateUnloadFunc = this.game.registry.get('updateUnload');
@@ -199,6 +207,7 @@ export class MainMenu extends Scene
             if(this.containerIndex >= this.containersToMove.length) {
                 this.movesIndex = -1;
                 unload = [];
+                this.craneLine.setTo(0, 0, 0, 0);
             }
         })
 
@@ -211,6 +220,7 @@ export class MainMenu extends Scene
             this.containersList = this.containersList.filter(c => c.active);
             var selectedContainer = this.containersList.find(c => c.list[1]._text === this.containersToMove[this.containerIndex]);
             // var selectedContainer = this.containersToMove[this.containerIndex];
+            this.craneLine.setTo(selectedContainer.x, selectedContainer.y-25, selectedContainer.x, 93);
             var moves = this.moves[this.containerIndex];
             var xDest = this.gridToScreen(moves[this.movesIndex])[0];
             var yDest = this.gridToScreen(moves[this.movesIndex])[1];

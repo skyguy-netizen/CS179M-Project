@@ -1,0 +1,14 @@
+2024-12-13 14:41	Manifest ShipCaseDogOnTopOfCat.txt is loaded. There are 2 containers on the ship
+2024-12-13 14:41	Offloaded Dog to truck, Cost: 10 minutes
+2024-12-13 14:42	Manifest ShipCaseDogOnTopOfCat.txt is loaded. There are 2 containers on the ship
+2024-12-13 14:42	Offloaded Dog to truck, Cost: 10 minutes
+2024-12-13 14:46	Manifest ShipCaseDogOnTopOfCat.txt is loaded. There are 2 containers on the ship
+2024-12-13 14:46	Offloaded Dog to truck, Cost: 10 minutes
+2024-12-13 14:47	Manifest ShipCaseDogOnTopOfCat.txt is loaded. There are 2 containers on the ship
+2024-12-13 14:47	Offloaded Dog to truck, Cost: 10 minutes
+2024-12-13 14:48	Manifest ShipCaseDogOnTopOfCat.txt is loaded. There are 2 containers on the ship
+2024-12-13 14:48	Offloaded Dog to truck, Cost: 10 minutes
+2024-12-13 14:48	Finished a cycle. Manifest ShipCaseDogOnTopOfCatOUTBOUND.txt was written to desktop, and a reminder pop-up to operator to send file was displayed
+2024-12-13 14:50	test signs in
+2024-12-13 14:50	test signs out
+2024-12-13 14:50	test signs in
