@@ -17,7 +17,7 @@ function InfoCard ({data, index, length}) {
 
     function load_path(data) {
       if (load === "true") {
-        return JSON.stringify(data.paths[index][length - 1]); 
+        return JSON.stringify(data.paths[index][data.paths[index].length - 1]); 
       } else if (load === "false") {
         return JSON.stringify(data.paths[index][0]); 
       }
