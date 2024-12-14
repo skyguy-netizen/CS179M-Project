@@ -52,7 +52,15 @@ const LoadPage = () => {
       })
   }, [])
 
-  const handleSubmit = (loadName) => {
+  const handleSubmit = (loadName, setError) => {
+    if(loadName == "") {
+      console.log("test")
+      setError("Enter valid name")
+      return;
+    }
+    else {
+      setError("")
+    }
     setLoad((prevLoad) => [...prevLoad, [loadName, Number(loadWeight)]]); 
     setLoadName(loadName);
     console.log(`Load updated: ${loadName}`);
