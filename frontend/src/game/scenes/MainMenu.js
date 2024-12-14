@@ -23,6 +23,13 @@ export class MainMenu extends Scene
             color = 0x808080;
         }
 
+        const text0 = this.add.text(0, 0, name, {
+            fontSize: '0px',
+            color: '#ffffff',
+            fontFamily: 'Arial',
+            align: 'center',
+        });
+
         // Crop name if too long to make it fit inside container
         if(name.length > 5) {
             name = name.substr(0, 5);
@@ -49,7 +56,7 @@ export class MainMenu extends Scene
     
         text1.setPosition(r.x-text1.width/2, r.y-text1.height/2);
         var c = this.add.container();
-        c.add([r, text1, text2]);
+        c.add([r, text1, text2, text0]);
 
         c.setPosition((512-300) + (locY-1) * 50 + 25, (460+200) - (locX-1) * 50 - 25);
         c.setInteractive(new Phaser.Geom.Rectangle(-25, -25, 50, 50), Phaser.Geom.Rectangle.Contains)
@@ -184,7 +191,7 @@ export class MainMenu extends Scene
 
             // Find container and set the position to the destination position
             this.containersList = this.containersList.filter(c => c.active);
-            var selectedContainer = this.containersList.find(c => c.list[1]._text === this.containersToMove[this.containerIndex]);
+            var selectedContainer = this.containersList.find(c => c.list[3]._text === this.containersToMove[this.containerIndex]);
             console.log(`The X and Y for next: ${xDest} -- ${yDest}`);
             selectedContainer.setPosition(xDest, yDest);
             var xi = +moves[moves.length - 1][0] + 1;
@@ -218,7 +225,7 @@ export class MainMenu extends Scene
         if(this.movesIndex > -1) {
             // console.log(`Container List in Update: ${this.containersToMove}`);
             this.containersList = this.containersList.filter(c => c.active);
-            var selectedContainer = this.containersList.find(c => c.list[1]._text === this.containersToMove[this.containerIndex]);
+            var selectedContainer = this.containersList.find(c => c.list[3]._text === this.containersToMove[this.containerIndex]);
             // var selectedContainer = this.containersToMove[this.containerIndex];
             this.craneLine.setTo(selectedContainer.x, selectedContainer.y-25, selectedContainer.x, 93);
             var moves = this.moves[this.containerIndex];
