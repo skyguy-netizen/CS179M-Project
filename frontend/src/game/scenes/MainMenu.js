@@ -11,7 +11,7 @@ export class MainMenu extends Scene
     }
 
     // Creates individual container
-    createContainer = (locX, locY, name, itemID, unload) => {
+    createContainer = (locX, locY, name, itemID, unload, weight) => {
         var color = 0x0000ff;
         // If unused return NULL
         if(name == "UNUSED")
@@ -48,6 +48,19 @@ export class MainMenu extends Scene
             align: 'center',
         });
 
+        // Add weight
+        // Add text
+        const weightNum = this.add.text(-5, 10, weight, {
+            fontSize: '10px',
+            color: '#ffffff',
+            fontFamily: 'Arial',
+            align: 'center',
+        });
+
+        if(name == "") {
+            weightNum.setAlpha(0);
+        }
+
         // Add location as 2nd text to send to backend
         let pos = '[' + locX + ',' + locY + ']';
         const text2 = this.add.text(0, 0, pos, {
@@ -56,7 +69,7 @@ export class MainMenu extends Scene
     
         text1.setPosition(r.x-text1.width/2, r.y-text1.height/2);
         var c = this.add.container();
-        c.add([r, text1, text2, text0]);
+        c.add([r, text1, text2, text0, weightNum]);
 
         c.setPosition((512-300) + (locY-1) * 50 + 25, (460+200) - (locX-1) * 50 - 25);
         c.setInteractive(new Phaser.Geom.Rectangle(-25, -25, 50, 50), Phaser.Geom.Rectangle.Contains)
@@ -97,16 +110,15 @@ export class MainMenu extends Scene
         // Render grid
         this.add.grid(512, 460, 600, 400, 50, 50, 0xff0000, 1, 0x000000);
         var containers = this.game.registry.get('gameData')['message'];
+        console.log(containers)
         this.containersList = [];
-        // console.log(`Containers list ${this.containersList}`)
-        console.log(`Containers from backend ${containers}`)
         for(const c of containers) {
             // string containing position to array
             var s = c[0];
             s = s.substr(1, s.length-2);
             const nums = s.split(',').map(num => Number(num));
-            console.log(`The Nums: ${nums}`);
-            var curr = this.createContainer(nums[0], nums[1], c[2], c[1], unload);
+            const weight = Number(c[1].substr(1, c[1].length-2));
+            var curr = this.createContainer(nums[0], nums[1], c[2], c[1], unload, weight);
             curr && this.containersList.push(curr)
         }
         console.log(`Containers list ${this.containersList}`)
@@ -153,7 +165,7 @@ export class MainMenu extends Scene
         this.events.on('load-container', (data) => {
             console.log(this.loadList.length)
             if(this.loadList.length == 0) {
-                var temp = this.createContainer(10, 1, data)
+                var temp = this.createContainer(10, 1, data[0], 0, 0, data[1])
                 this.loadList.push(temp)
                 this.containersList.push(temp);
                 temp.on('pointerdown', () => {
