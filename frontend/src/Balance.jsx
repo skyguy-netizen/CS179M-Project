@@ -148,47 +148,7 @@ const BalancePage = () => {
     <div className='w-screen h-screen flex justify-center items-center'>
       <SignInModal/>
       {manifest !== null && <PhaserGame ref={phaserRef} currentActiveScene={currentScene} gameData={manifest}/>}
-      <button 
-        onClick={checkBalance}
-        style={{
-          color: 'hsla(0,0%,0%)',
-          background: 'hsla(0,0%,80%)',
-          width:"10%",
-          height:"65px",
-          top: "20%", 
-          right: "10%",
-          position: "absolute",
-          'border-radius': "3px",
-          'font-size': '18px',
-          display: 'block',
-          fontWeight: 'bold',
-        }}
-      > 
-      Check Balance </button>
       <CommentModal/>
-      {(containerUnloadIndex < containersToMoveLength) && <div 
-        className='balance-section'
-        style={{
-          color: "#0087ff",
-          background: "#f1f1f1",
-          width:"10%",
-          height:"65px",
-          top: "20%", 
-          right: "10%",
-          position: "absolute",
-          'border-radius': "3px",
-          'font-size': '18px',
-          display: 'block',
-          fontWeight: 'bold',
-        }}
-      >
-        {isBalanced ? (
-          <p className='text-green-500'>Balanced!</p>
-        ) : (
-          <p className='text-red-500'>Not Balanced!</p>
-        )}
-
-        </div>}
 
         {!isSubmitted && (
           <button 

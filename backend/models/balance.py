@@ -328,7 +328,7 @@ class Balance:
     def update_log(self):
         with open(self.log_file, 'a') as log:
             for i in range(len(self.moves)):
-                log.write(f"{get_curr_time()}Move {self.process[i][0][:-1]} from {self.moves[i][0]} to {self.moves[i][1]}, Cost: {self.process[i][1]} minutes\n")
+                log.write(f"{get_curr_time()}Move {self.process[i][0]} from {self.moves[i][0]} to {self.moves[i][1]}, Cost: {self.process[i][1]} minutes\n")
                 self.total_time += self.process[i][1]
 
             
