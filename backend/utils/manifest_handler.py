@@ -31,12 +31,12 @@ def create_ship(file_):
     
     
     
-    print(lines)
+   
     initial_state = [[None for i in range(12)] for i in range(10)]
 
     for y in range(0,8):
         for x in range(0,12):
-            if lines[12*y+x][18:] == "NAN\n":
+            if lines[12*y+x][18:].decode('utf-8').strip() == "NAN":
                 initial_state[y][x] = -1
             elif int(lines[12*y+x][10:15]) > 0:
                 name = lines[12*y+x][18:].decode('utf-8').strip()
