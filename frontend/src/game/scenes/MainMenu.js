@@ -71,7 +71,7 @@ export class MainMenu extends Scene
         text1.setPosition(r.x-text1.width/2, r.y-text1.height/2);
         var c = this.add.container();
         c.add([r, text1, text2, text0, weightNum]);
-
+            
         c.setPosition((512-300) + (locY-1) * 50 + 25, (460+200) - (locX-1) * 50 - 25);
         c.setInteractive(new Phaser.Geom.Rectangle(-25, -25, 50, 50), Phaser.Geom.Rectangle.Contains)
 
@@ -189,9 +189,14 @@ export class MainMenu extends Scene
             
         })
         
+        // let id_count = 0;
         // Load new containers
         this.events.on('load-container', (data) => {
+            const existingCount = this.loadList.filter(c => c.list[1]._text === data[0]).length;
             console.log(this.loadList.length)
+            console.log(`Load List updated:`);
+            this.loadList.forEach(item => console.log(item.list));
+
             if(this.loadList.length == 0) {
                 var temp = this.createContainer(10, 1, data[0], 0, 0, data[1])
                 this.loadList.push(temp)
@@ -209,7 +214,10 @@ export class MainMenu extends Scene
                 var pos = this.loadList[this.loadList.length-1].list[2]._text;
                 pos = pos.substr(1, pos.length-2);
                 var xPos = pos.split(',').map(num => Number(num))[1];
-                var temp = this.createContainer(10, xPos+1, data[0], 0, 0, data[1]);
+                
+                console.log(`Same container: ${existingCount}`)
+                
+                var temp = this.createContainer(10, xPos+1, data[0], existingCount, 0, data[1]);
                 this.loadList.push(temp)
                 this.containersList.push(temp);
                 temp.on('pointerdown', () => {

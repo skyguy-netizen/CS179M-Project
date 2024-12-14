@@ -68,6 +68,9 @@ class TransferManager:
                 cargo.pos = open_pos
                 self.update_log(cargo,open_pos,move_cost)
                 return
+            else:
+                print("None found")
+        
         
 
     def print_moves(self,):
@@ -131,7 +134,7 @@ class TransferManager:
                 print(f"Loading {cargo.container_name}")
                 self.load(cargo)
                 print(f"Loaded {cargo.container_name}")
-                # self.print_grid()
+                self.print_grid()
                 print("\n")
 
         with open(self.log_file, 'a') as log:

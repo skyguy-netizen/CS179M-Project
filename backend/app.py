@@ -88,6 +88,7 @@ def check_balance():
 def get_balance_info():
     global output_manifest_name
     output_manifest_name = manifest_name.rsplit('.', 1)[0] + "OUTBOUND.txt"
+    balance_instance = Balance(ship, manifest_name, LOG_FILE)
     balance_instance.balance()
     process = balance_instance.process
     path = []
@@ -189,14 +190,17 @@ def get_transfer_info():
                 ops_order.append("UL")
             else:
                 pass
-        print(ops_order)
+        # print(ops_order)
 
         tm.clear_paths()
         # with open(LOG_FILE, 'a') as log:
         #     msg = get_curr_time() + f"Finished a cycle. Manifest {output_manifest} was written to desktop, and a reminder pop-up to operator to send file was displayed\n"
         #     log.write(msg)
-            
-        return{'paths': path, 'ids': ids, 'times': times, 'opsOrder': ops_order}
+        # import json
+        # print(json.dumps({'paths': path, 'ids': ids, 'times': times, 'opsOrder': ops_order}, indent=4))
+        print(ids)
+        print(path)
+        return {'paths': path, 'ids': ids, 'times': times, 'opsOrder': ops_order}
     
 @app.route("/manifest", methods=["GET"])
 @cross_origin()

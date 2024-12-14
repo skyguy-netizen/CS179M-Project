@@ -176,6 +176,20 @@ const BalancePage = () => {
         )}
 
       {isSubmitted && (containerUnloadIndex >= containersToMoveLength) && <ReminderModal/>}
+      
+      {isSubmitted && (containerUnloadIndex >= containersToMoveLength) && <p 
+        className = "txt-modal-manifest"
+        style={{
+          color: "green",
+          fontSize: "18px",
+          fontWeight: "bold",
+          position: "absolute",
+          top: "50%",
+          right: "15%",
+          transform: "translate(-50%, -50%)",
+        }}>
+        Balanced! 
+      </p>}
 
       {isSubmitted && (containerUnloadIndex >= containersToMoveLength) && <button 
         className = "btn-modal-manifest" 
