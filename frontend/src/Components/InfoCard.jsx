@@ -36,7 +36,6 @@ function InfoCard ({data, index, length}) {
           <h2> Container: {data.ids[index]} </h2>
           <h2> Source: { load === "true" ? "Truck" : load_path(data) } </h2>
           <h2> Destination: { load === "true" ? load_path(data) : "Truck" } </h2> 
-          <u1> {data.paths.map((path, index) => (<li key = {index}>{path}</li>))}</u1>
         </div>
       );
 }
