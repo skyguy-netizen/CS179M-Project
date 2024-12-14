@@ -3,10 +3,11 @@ import {useState} from 'react'
 import PropTypes from "prop-types";
 
 function Card ({handleSubmit, loadName, setLoadName, loadWeight, setLoadWeight}) {
+    const [error, setError] = useState("")
 
     const handle = (e) => {
         e.preventDefault();
-        handleSubmit(loadName)
+        handleSubmit(loadName, setError)
         console.log(`Added ${loadName} to load list`)
         setLoadName("");
         setLoadWeight("")
@@ -32,7 +33,10 @@ function Card ({handleSubmit, loadName, setLoadName, loadWeight, setLoadWeight})
                 onChange={(e) => setLoadWeight(e.target.value)}
             />
             </p>
-            <button className = "button-name" onClick={handle}> Submit </button>
+            <div className="flex flex-row">
+                {error !== "" && <p className="m-4 error">{error}</p>}
+                <button onClick={handle} className="flex-1 m-4"> Submit </button>
+            </div>
         </div>
     );
 }

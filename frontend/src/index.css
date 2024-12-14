@@ -19,4 +19,10 @@
     button {
       @apply font-body;
     }
+    .error {
+      @apply text-sm;
+      @apply font-bold;
+      @apply font-body;
+      @apply text-red-600;
+    }
   }

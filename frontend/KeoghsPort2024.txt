@@ -12,3 +12,29 @@
 2024-12-13 14:50	test signs in
 2024-12-13 14:50	test signs out
 2024-12-13 14:50	test signs in
+2024-12-13 19:56	Manifest ShipCase4.txt is loaded. There are 7 containers on the ship
+2024-12-13 19:56	Move Pig from (7, 4) to (1, 3), Cost: 7 minutes
+2024-12-13 19:56	Move Doe from (6, 4) to (2, 3), Cost: 6 minutes
+2024-12-13 19:56	Move Owl from (5, 4) to (3, 3), Cost: 5 minutes
+2024-12-13 19:56	Move Ewe from (4, 4) to (4, 3), Cost: 4 minutes
+2024-12-13 19:56	Move Cow from (3, 4) to (5, 3), Cost: 3 minutes
+2024-12-13 19:56	Move Dog from (2, 4) to (1, 5), Cost: 2 minutes
+2024-12-13 19:56	Offloaded Cat to truck, Cost: 13 minutes
+2024-12-13 19:56	Finished a cycle. Manifest ShipCase4OUTBOUND.txt was written to desktop, and a reminder pop-up to operator to send file was displayed
+2024-12-13 20:04	Manifest ShipCase4.txt is loaded. There are 7 containers on the ship
+2024-12-13 20:10	Manifest ShipCase4.txt is loaded. There are 7 containers on the ship
+2024-12-13 20:11	Manifest ShipCase4.txt is loaded. There are 7 containers on the ship
+2024-12-13 20:11	Manifest ShipCase4.txt is loaded. There are 7 containers on the ship
+2024-12-13 20:11	Manifest ShipCase4.txt is loaded. There are 7 containers on the ship
+2024-12-13 20:17	Manifest ShipCase4.txt is loaded. There are 7 containers on the ship
+2024-12-13 20:17	Manifest ShipCase4.txt is loaded. There are 7 containers on the ship
+2024-12-13 20:18	Manifest ShipCase4.txt is loaded. There are 7 containers on the ship
+2024-12-13 20:20	Manifest ShipCase4.txt is loaded. There are 7 containers on the ship
+2024-12-13 20:22	Manifest ShipCase4.txt is loaded. There are 7 containers on the ship
+2024-12-13 20:27	Manifest ShipCase4.txt is loaded. There are 7 containers on the ship
+2024-12-13 20:29	Manifest ShipCase4.txt is loaded. There are 7 containers on the ship
+2024-12-13 20:30	Manifest ShipCase4.txt is loaded. There are 7 containers on the ship
+2024-12-13 20:44	Manifest ShipCase4.txt is loaded. There are 7 containers on the ship
+2024-12-13 20:45	Manifest ShipCase4.txt is loaded. There are 7 containers on the ship
+2024-12-13 20:45	Manifest ShipCase4.txt is loaded. There are 7 containers on the ship
+2024-12-13 20:45	Manifest ShipCase4.txt is loaded. There are 7 containers on the ship
