@@ -53,8 +53,7 @@ const LoadPage = () => {
   }, [])
 
   const handleSubmit = (loadName, setError) => {
-    if(loadName == "") {
-      console.log("test")
+    if(loadName == "" || loadName == "NAN") {
       setError("Enter valid name")
       return;
     }

@@ -34,3 +34,7 @@
 2024-12-13 20:27	Manifest ShipCase4.txt is loaded. There are 7 containers on the ship
 2024-12-13 20:29	Manifest ShipCase4.txt is loaded. There are 7 containers on the ship
 2024-12-13 20:30	Manifest ShipCase4.txt is loaded. There are 7 containers on the ship
+2024-12-13 20:44	Manifest ShipCase4.txt is loaded. There are 7 containers on the ship
+2024-12-13 20:45	Manifest ShipCase4.txt is loaded. There are 7 containers on the ship
+2024-12-13 20:45	Manifest ShipCase4.txt is loaded. There are 7 containers on the ship
+2024-12-13 20:45	Manifest ShipCase4.txt is loaded. There are 7 containers on the ship
