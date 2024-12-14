@@ -30,7 +30,7 @@ class Ship:
         cnt = 0
         for i in self.shipgrid:
             for j in i:
-                cnt += 1 if (j and j.get_name().lower() != "blocked") else 0
+                cnt += 1 if (j and isinstance(j, Cargo) and j.get_name().lower() != "blocked") else 0
         return cnt 
     
     def calculate_hx(self):

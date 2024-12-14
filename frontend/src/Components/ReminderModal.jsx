@@ -3,6 +3,9 @@
 import { useState } from "react";
 import "./SubmitLoad.css";
 import { useNavigate } from "react-router";
+import axios from 'axios';
+
+const baseUrl = "http://127.0.0.1:5000"
 
 function ReminderModal() {
   const [modal_load, setModal_load] = useState(false);
@@ -10,6 +13,18 @@ function ReminderModal() {
 
   const toggleModal = () => {
     setModal_load(!modal_load);
+  };
+
+  const completeCycle = () => {
+    toggleModal(!modal_load);
+    axios
+    .post(`${baseUrl}/complete_cycle`)
+    .then(async response => {
+      console.log("Cycle completed: ", response.data)
+    })
+    .catch(err => {
+      console.log(err)
+    })
   };
 
   const toggleComplete = () => {
@@ -25,7 +40,7 @@ function ReminderModal() {
 
   return (
     <>
-      <button onClick={toggleModal} className="btn-modal-load">
+      <button onClick={completeCycle} className="btn-modal-load">
         Completed Cycle
       </button>
 
