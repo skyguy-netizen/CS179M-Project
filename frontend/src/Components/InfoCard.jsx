@@ -14,13 +14,18 @@ function InfoCard ({data, index, length}) {
       }
     }, [data.opsOrder, data.paths, index]);
 
-    function load_path(data) {
-      if (load === "true") {
-        return JSON.stringify(data.paths[index][data.paths[index].length - 1]); 
-      } else if (load === "false") {
-        return JSON.stringify(data.paths[index][0]); 
+    function load_path_end(data) {
+      if (JSON.stringify(data.paths[index][data.paths[index].length - 1]) === "[8,0]") {
+        return "Truck"; 
       }
-      return ""; 
+      return JSON.stringify(data.paths[index][data.paths[index].length - 1]); 
+    }
+
+    function load_path_front(data) {
+      if (JSON.stringify(data.paths[index][0]) === "[8,0]") {
+        return "Truck"; 
+      }
+      return JSON.stringify(data.paths[index][0]); 
     }
 
     function allTime() {
@@ -42,8 +47,8 @@ function InfoCard ({data, index, length}) {
           <h3> Overall Time Remaining: {allTime()} minutes </h3>
           <h3> Estimated Time: {data.times[index]} minutes </h3>
           <h3> Container: {data.ids[index]} </h3>
-          <h3> Source: { load === "true" ? "Truck" : load_path(data) } </h3>
-          <h3> Destination: { load === "true" ? load_path(data) : "Truck" } </h3> 
+          <h3> Source: { load_path_front(data) } </h3>
+          <h3> Destination: { load_path_end(data) } </h3> 
         </div>
       );
 }
