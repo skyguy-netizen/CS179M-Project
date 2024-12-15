@@ -44,17 +44,15 @@ def get_path_for_blocking(start, ship_grid):
     num_rows = len(ship_grid)
     num_columns = len(ship_grid[0])
 
-    # Initialize variables to store the best target
-    # best_target_column = None
-    # best_target_row = None
+
     best_path = None
     smallest_vertical_diff = float('inf')
 
     for offset in [-1,1]:  # Check both adjacent columns
         adjacent_column = y1 + offset
-        if 0 <= adjacent_column < num_columns:  # Ensure the column is within bounds
-            for x in range(num_rows):  # Search from bottom to top
-                if ship_grid[x][adjacent_column] is None:  # Found an open space
+        if 0 <= adjacent_column < num_columns:  
+            for x in range(num_rows):  # Search
+                if ship_grid[x][adjacent_column] is None: 
                     is_valid = all(ship_grid[row][adjacent_column] is not None for row in range(x))
                     if is_valid:
                         # Generate the path to this position
@@ -98,32 +96,30 @@ def get_path_for_blocking(start, ship_grid):
                                 else:
                                     temp_path.append((move_x, adjacent_column))
 
-                        # Calculate the vertical distance (absolute difference)
+                        # Calculate distance 
                         vertical_diff = abs(x1 - x)
 
                         # Choose the column with the smallest vertical difference
                         if vertical_diff < smallest_vertical_diff:
                             smallest_vertical_diff = vertical_diff
-                            # best_target_row = x
-                            # best_target_column = adjacent_column
                             best_path = temp_path       
                            
 
                     break 
 
 
-    # If a valid adjacent column is found, return the best path
+
     if best_path is not None:
         return best_path
 
-    # If no adjacent columns are available, move vertically to the top of the current column
+
     for x in range(x1, num_rows):
         if ship_grid[x][y1] is None: 
             is_valid = all(
                 ship_grid[row][y1] not in (None, "Blocked") for row in range(x)
             )
             if is_valid:
-                for move_x in range(x1, x + 1):  # Add vertical movement
+                for move_x in range(x1, x + 1): 
                     path.append((move_x, y1))
                 break
 

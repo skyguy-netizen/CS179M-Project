@@ -46,10 +46,9 @@ def fileUploadLoad():
             msg = get_curr_time() + f"Manifest {file.filename} is loaded. There are {ship.get_containers()} containers on the ship\n"
             log.write(msg)
         
-        # print("Returning what")
+
         set_name(file.filename)
         return{"Success":200}
-    # print(get_file())
     return {'message': get_file()}
 
 @app.route("/fileUploadBalance", methods=["POST", "GET"])
@@ -63,16 +62,13 @@ def fileUploadBalance():
         global manifest_name
         manifest_name = file.filename
         set_name(manifest_name)
-        # file_copy = deepcopy(file)
 
         ship = create_ship(file)
-        # print(type(ship))
         with open(LOG_FILE, 'a') as log:
             msg = get_curr_time() + f"Manifest {file.filename} is loaded. There are {ship.get_containers()} containers on the ship\n"
             log.write(msg)
         # file_data = create_file_object(file_copy)
         return{"Success": 200}
-    # print(get_file())
     return {"message" : get_file()}
 
 @app.route("/checkbalance", methods=["GET"])
@@ -80,7 +76,6 @@ def fileUploadBalance():
 def check_balance():
     global balance_instance
     balance_instance = Balance(ship, manifest_name, LOG_FILE)
-    # print(balance_instance.check_balance())
     return {"balance" : balance_instance.check_balance()}
     
 @app.route("/balance", methods=["POST"])
@@ -153,17 +148,16 @@ def get_transfer_info():
         data = request.get_json()
         load = data.get('load')
         unload = data.get('unload')
-        # print(load)
-        # print(unload)        
+
         ship_grid = [[None for _ in range(12)] for _ in range(8)]
         ship_grid = ship.shipgrid
         load_list = [Cargo(container_name=item[0], weight = item[1]) for item in load]
         unload_list = []
-        # print(ship_grid)
+
         for coord in unload:
             x, y = map(int, coord.strip("[]").split(","))
             unload_list.append(ship_grid[x - 1][ y - 1])
-        # print("Unload list: ", unload_list)
+
         unload_list_names = deepcopy(unload_list)
         tm = TransferManager(load_list,unload_list,ship, LOG_FILE)
         tm.set_goal_locations()
@@ -190,7 +184,7 @@ def get_transfer_info():
                 ops_order.append("UL")
             else:
                 pass
-        # print(ops_order)
+
 
         tm.clear_paths()
         # with open(LOG_FILE, 'a') as log:
@@ -229,7 +223,7 @@ def init_log_file():
 
     log_file = None
     prefix = "KeoghsPort"
-    home_directory = os.path.expanduser('~')  # Get the home directory cross-platform
+    home_directory = os.path.expanduser('~') 
     print(home_directory)
     for file in os.listdir(home_directory):
         if prefix in file:

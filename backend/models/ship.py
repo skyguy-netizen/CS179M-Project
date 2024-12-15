@@ -253,7 +253,6 @@ class Ship:
 
     def top_most_container(self, col):
         # This will go top to bottom and find the highest occupied spot
-        # print(self.shipgrid)
         for row in range(self.rows - 1, -1, -1):        
             if self.shipgrid[row][col]:
                 return (row,col)

@@ -60,7 +60,6 @@ class Balance:
             for y in range(0,8):
                 if isinstance(self.initial.shipgrid[y][x], Cargo):
                     containers.append(self.initial.shipgrid[y][x])
-                    # print(self.initial.shipgrid[y][x].container_name)
                 elif self.initial.shipgrid[y][x] == 0:
                     break
 
@@ -84,7 +83,6 @@ class Balance:
 
                 self.moves = current_grid.moves
                 self.sub_moves = current_grid.total_moves
-                # print_grid(self.initial.shipgrid)
                 for i in range(len(self.moves)):
                     self.process.append([str(current_grid.names[i]), current_grid.distances[i], current_grid.total_moves[i]])
 
@@ -227,7 +225,6 @@ class Balance:
                     self.process.append([current_grid.names[i], current_grid.distances[i], current_grid.total_moves[i]])
              
 
-                # print_grid(current_grid.shipgrid)
                 break
 
             empty_spaces = []
